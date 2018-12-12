@@ -1,6 +1,5 @@
 *~
 *.pyc
 var
-msconfig/vlayers.map
-msconfig/rlayers.map
-msconfig/landat.map
+*.tif
+*.tiff
