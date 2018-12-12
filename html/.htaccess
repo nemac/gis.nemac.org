@@ -11,3 +11,51 @@ Header set Access-Control-Allow-Origin "*"
     Allow from all
     SetHandler cgi-script
 </Files>
+<Files "landat-vector">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "samab">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "optin">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "wnc">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "brf">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "samab-built">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "samab-economic">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "samab-natural">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "samab-human">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "nfwf">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "brrc">
+    Allow from all
+    SetHandler cgi-script
+</Files>
+<Files "brrc-data">
+    Allow from all
+    SetHandler cgi-script
+</Files>

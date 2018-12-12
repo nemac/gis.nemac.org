@@ -1,0 +1,1555 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+     #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_landat
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC SAMAB WMS"
+            "wms_abstract"           "NEMAC SAMAB WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/samab-natural"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+    END
+   
+    LAYER # gdb layer begins here
+        NAME Primary_LandOwnerProtectedAreas
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "Cons_Partner_samab"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "Dom_PAD"
+		CLASS
+            NAME ""
+			EXPRESSION "USFS"
+            STYLE
+                COLOR       94 183 49
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "State"
+            STYLE
+                COLOR      225 85 0
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "NPS"
+            STYLE
+                COLOR       0 77 168
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "OFed"
+            STYLE
+                COLOR       190 253 130
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Prvt"
+            STYLE
+                COLOR       130 130 130
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "OGov"
+            STYLE
+                COLOR       255 255 0
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "None"
+            STYLE
+                COLOR       115 0 0
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "DODE"
+            STYLE
+                COLOR       104 169 242
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "Primary_LandOwnerProtectedAreas"
+            "wms_abstract"       "Primary_LandOwnerProtectedAreas"
+            "gml_include_items"  "Dom_PAD"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME PADUS_SAMAB
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "PADUS_SAMAB"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "Own_Name"
+		CLASS
+            NAME ""
+			EXPRESSION "0130"
+            STYLE
+                COLOR       94 183 49
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0710,0660,0650"
+            STYLE
+                COLOR       237 137 56
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0100"
+            STYLE
+                COLOR       230 76 0
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0310"
+            STYLE
+                COLOR       162 168 210
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0330"
+            STYLE
+                COLOR       145 121 208
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0800,0910"
+            STYLE
+                COLOR       96 185 154
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0370,0390,0315,0350,0340,0395"
+            STYLE
+                COLOR       234 229 51
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0520,0420"
+            STYLE
+                COLOR       172 60 67
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0510"
+            STYLE
+                COLOR       185 178 120
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0145"
+            STYLE
+                COLOR       104 151 89
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0620"
+            STYLE
+                COLOR       215 38 117
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0630"
+            STYLE
+                COLOR       206 98 124
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0135"
+            STYLE
+                COLOR       145 82 48
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0220"
+            STYLE
+                COLOR      210 166 82
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "0125"
+            STYLE
+                COLOR       61 177 207
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "PADUS_SAMAB"
+            "wms_abstract"       "PADUS_SAMAB"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Eco_Level_III_US_Project
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "Eco_Level_III_US_Project"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "NA_L3NAME"
+		
+		CLASS
+            NAME ""
+			EXPRESSION "Piedmont"
+            STYLE
+                COLOR       196 227 150
+                 OUTLINECOLOR 178 178 178
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Northern Piedmont"
+            STYLE
+                COLOR       224 201 168
+                 OUTLINECOLOR 178 178 178
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Blue Ridge"
+            STYLE
+                COLOR       105 255 77
+                 OUTLINECOLOR 178 178 178
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Ridge and Valley"
+            STYLE
+                COLOR      255 224 84
+                 OUTLINECOLOR 178 178 178
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Southwestern Appalachians"
+            STYLE
+                COLOR       189 255 107
+                 OUTLINECOLOR 178 178 178
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Central Appalachians"
+            STYLE
+                COLOR       158 255 41
+                OUTLINECOLOR 178 178 178
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "Eco_Level_III_US_Project"
+            "wms_abstract"       "Eco_Level_III_US_Project"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME percent_forested_samab
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "percent_forested_samab"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "pct_forest"
+		CLASS
+            NAME ""
+			EXPRESSION ([pct_forest] >= 15 AND [pct_forest] <= 40)
+            STYLE
+                COLOR       255 255 230
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pct_forest] > 40 AND [pct_forest] <= 55)
+            STYLE
+                COLOR       217 240 163
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pct_forest] > 55 AND [pct_forest] <= 70)
+            STYLE
+                COLOR       121 199 124
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pct_forest] > 70 AND [pct_forest] <= 80)
+            STYLE
+                COLOR       36 133 68
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pct_forest] > 80 AND [pct_forest] <= 95)
+            STYLE
+                COLOR        0 69 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "percent_forested_samab"
+            "wms_abstract"       "percent_forested_samab"
+            "gml_include_items"  "pct_forest"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME landcover11_r_ProjectRaster
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/landcover11_r_ProjectRaster1.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "pct_forest"
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] = 1)
+            STYLE
+                COLOR       255 0 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] = 2)
+            STYLE
+                COLOR       115 76 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] = 3)
+            STYLE
+                COLOR       56 168 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] = 4)
+            STYLE
+                COLOR       255 255 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] = 5)
+            STYLE
+                COLOR      0 197 255
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "landcover11_r_ProjectRaster"
+            "wms_abstract"       "landcover11_r_ProjectRaster"
+            "gml_include_items"  "pct_forest"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Southeast_Resilience_samab
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/Southeast_Resilience_samab1.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "pct_forest"
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] > 2000 and [pixel] <=6612)
+            STYLE
+                COLOR       23 122 13
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] > 1000 and [pixel] <=2000)
+            STYLE
+                COLOR       96 166 66
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] > 500 and [pixel] <=1000)
+            STYLE
+                COLOR       171 209 125
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] > -500 and [pixel] <=500)
+            STYLE
+                COLOR       255 255 191
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] > -1000 and [pixel] <=-500)
+            STYLE
+                COLOR      207 186 118
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] > -2000 and [pixel] <=-1000)
+            STYLE
+                COLOR      161 126 58
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([pixel] > -8000 and [pixel] <=-2000)
+            STYLE
+                COLOR      115 77 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "Southeast_Resilience_samab"
+            "wms_abstract"       "Southeast_Resilience_samab"
+            "gml_include_items"  "value_0"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME ConservationForestBlocks_proj
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/new_datasets.gdb"
+        DATA             "ConservationForestBlocks_proj"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "ind_score"
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 90)
+            STYLE
+                COLOR       0 97 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 80)
+            STYLE
+                COLOR       73 138 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 70)
+            STYLE
+                COLOR       139 181 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 60)
+            STYLE
+                COLOR       214 230 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 50)
+            STYLE
+                COLOR       255 229 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 40)
+            STYLE
+                COLOR       255 166 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 30)
+            STYLE
+                COLOR       255 111 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([ind_score] = 20)
+            STYLE
+                COLOR       255 34 0
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "ConservationForestBlocks_proj"
+            "wms_abstract"       "ConservationForestBlocks_proj"
+            "gml_include_items"  "ind_score"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME NormalMeanTemp_1981_2010
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/NormalMeanTemp_1981_20101.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 43 and [pixel] <=53)
+		   STYLE
+			  COLORRANGE 255 255 0 255 166 0
+			  DATARANGE 43 53
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 53 and [pixel] <=63)
+		   STYLE
+			  COLORRANGE 255 166 0 255 0 0
+			  DATARANGE 54 63
+		   END
+		END
+		
+        METADATA
+            "wms_title"          "NormalMeanTemp_1981_2010"
+            "wms_abstract"       "NormalMeanTemp_1981_2010"
+            "gml_include_items"  "value_0"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME NormalPrecip_1981_2010
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/NormalPrecip_1981_20101.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 30 and [pixel] <=50)
+		   STYLE
+			  COLORRANGE 194 82 60 255 255 0
+			  DATARANGE 30 50
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 50 and [pixel] <=60)
+		   STYLE
+			  COLORRANGE 255 255 0 0 219 0
+			  DATARANGE 51 60
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 60 and [pixel] <=70)
+		   STYLE
+			  COLORRANGE 0 219 0 32 153 143
+			  DATARANGE 61 70
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 70 and [pixel] <=101)
+		   STYLE
+			  COLORRANGE 32 153 143 11 44 122
+			  DATARANGE 71 101
+		   END
+		END
+		
+        METADATA
+            "wms_title"          "NormalPrecip_1981_2010"
+            "wms_abstract"       "NormalPrecip_1981_2010"
+            "gml_include_items"  "value_0"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME F2F_per_insectdiseasethreat
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "F2F_per_insectdiseasethreat"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_INSEC3"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] >= -999 AND [PER_INSEC3] <= -0.99999)
+            STYLE
+                COLOR       178 178 178
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > -0.99999 AND [PER_INSEC3] <= 0.000010)
+            STYLE
+                COLOR   255 255 255    
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 0.000010 AND [PER_INSEC3] <= 10)
+            STYLE
+                COLOR       255 255 128
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 10 AND [PER_INSEC3] <= 20)
+            STYLE
+                COLOR       190 247 92
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 20 AND [PER_INSEC3] <= 30)
+            STYLE
+                COLOR        129 237 57
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 30 AND [PER_INSEC3] <= 40)
+            STYLE
+                COLOR        54 224 7
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 40 AND [PER_INSEC3] <= 50)
+            STYLE
+                COLOR        62 199 80
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 50 AND [PER_INSEC3] <= 60)
+            STYLE
+                COLOR        55 171 126
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 60 AND [PER_INSEC3] <= 70)
+            STYLE
+                COLOR        26 147 171
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 70 AND [PER_INSEC3] <= 80)
+            STYLE
+                COLOR        31 97 156
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 80 AND [PER_INSEC3] <= 90)
+            STYLE
+                COLOR        25 55 138
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INSEC3] > 90 AND [PER_INSEC3] <= 100)
+            STYLE
+                COLOR        7 7 120
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "F2F_per_insectdiseasethreat"
+            "wms_abstract"       "F2F_per_insectdiseasethreat"
+            "gml_include_items"  "PER_INSEC3"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME F2F_perWildfireThreat
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "F2F_per_insectdiseasethreat"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_FIRE3"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] >= -999 AND [PER_FIRE3] <= -0.99999)
+            STYLE
+                COLOR       178 178 178
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > -0.99999 AND [PER_FIRE3] <= 0.000010)
+            STYLE
+                COLOR   255 255 255    
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 0.000010 AND [PER_FIRE3] <= 10)
+            STYLE
+                COLOR       255 255 128
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 10 AND [PER_FIRE3] <= 20)
+            STYLE
+                COLOR       190 247 92
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 20 AND [PER_FIRE3] <= 30)
+            STYLE
+                COLOR        129 237 57
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 30 AND [PER_FIRE3] <= 40)
+            STYLE
+                COLOR        54 224 7
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 40 AND [PER_FIRE3] <= 50)
+            STYLE
+                COLOR        62 199 80
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 50 AND [PER_FIRE3] <= 60)
+            STYLE
+                COLOR        55 171 126
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 60 AND [PER_FIRE3] <= 70)
+            STYLE
+                COLOR        26 147 171
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 70 AND [PER_FIRE3] <= 80)
+            STYLE
+                COLOR        31 97 156
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 80 AND [PER_FIRE3] <= 90)
+            STYLE
+                COLOR        25 55 138
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_FIRE3] > 90 AND [PER_FIRE3] <= 100)
+            STYLE
+                COLOR        7 7 120
+                # OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "F2F_perWildfireThreat"
+            "wms_abstract"       "F2F_perWildfireThreat"
+            "gml_include_items"  "PER_FIRE3"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Terrain_Elevation
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/Terrain_Elevation1.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 90 and [pixel] <=250)
+		   STYLE
+			  COLORRANGE 175 240 233 255 255 179
+			  DATARANGE 90 250
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 250 and [pixel] <=500)
+		   STYLE
+			  COLORRANGE 255 255 179 0 128 64
+			  DATARANGE 251 500
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 500 and [pixel] <=750)
+		   STYLE
+			  COLORRANGE 0 128 64 252 186 3
+			  DATARANGE 501 750
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 750 and [pixel] <=1000)
+		   STYLE
+			  COLORRANGE 252 186 3 128 0 0
+			  DATARANGE 751 1000
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 1000 and [pixel] <=2000)
+		   STYLE
+			  COLORRANGE 128 0 0 255 252 255
+			  DATARANGE 1001 2000
+		   END
+		END
+		
+        METADATA
+            "wms_title"          "Terrain_Elevation"
+            "wms_abstract"       "Terrain_Elevation"
+            "gml_include_items"  "value_0"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Slope_SAMAB_ProjectRaster
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/Slope_SAMAB_ProjectRaster1.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <=5)
+		   STYLE
+			  COLORRANGE 0 97 0 255 255 0
+			  DATARANGE 0 5
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5 and [pixel] <=8)
+		   STYLE
+			  COLORRANGE 255 255 0 255 0 0
+			  DATARANGE 5 8
+		   END
+		END
+		
+		
+        METADATA
+            "wms_title"          "Slope_SAMAB_ProjectRaster"
+            "wms_abstract"       "Slope_SAMAB_ProjectRaster"
+            "gml_include_items"  "value_0"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME HUC4_Watersheds_samab
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "HUC4_Watersheds_samab"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "PER_FIRE3"
+		CLASS
+            NAME ""
+			#EXPRESSION ([PER_FIRE3] >= -999 AND [PER_FIRE3] <= -0.99999)
+            STYLE
+                COLOR       103 196 230
+                OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "HUC4_Watersheds_samab"
+            "wms_abstract"       "HUC4_Watersheds_samab"
+            "gml_include_items"  "Name"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME HUC12_watersheds_samab
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "HUC12_watersheds_samab"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "PER_FIRE3"
+		CLASS
+            NAME ""
+			#EXPRESSION ([PER_FIRE3] >= -999 AND [PER_FIRE3] <= -0.99999)
+            STYLE
+                COLOR       103 196 230
+                OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "HUC12_watersheds_samab"
+            "wms_abstract"       "HUC12_watersheds_samab"
+            "gml_include_items"  "NAME"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME SAMAB_Lakes_reservoirs
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/new_datasets.gdb"
+        DATA             "SAMAB_Lakes_reservoirs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "PER_FIRE3"
+		CLASS
+            NAME ""
+			#EXPRESSION ([PER_FIRE3] >= -999 AND [PER_FIRE3] <= -0.99999)
+            STYLE
+                COLOR       115 178 255
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "SAMAB_Lakes_reservoirs"
+            "wms_abstract"       "SAMAB_Lakes_reservoirs"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME SAMAB_rivers
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/new_datasets.gdb"
+        DATA             "SAMAB_rivers"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             LINE
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "PER_FIRE3"
+		CLASS
+            NAME ""
+			#EXPRESSION ([PER_FIRE3] >= -999 AND [PER_FIRE3] <= -0.99999)
+            STYLE
+                COLOR       115 178 255
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "SAMAB_Lakes_reservoirs"
+            "wms_abstract"       "SAMAB_Lakes_reservoirs"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Eastern_continental_divide
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "Eastern_continental_divide"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             LINE
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "PER_FIRE3"
+		CLASS
+            NAME ""
+			#EXPRESSION ([PER_FIRE3] >= -999 AND [PER_FIRE3] <= -0.99999)
+            STYLE
+                COLOR       255 0 0 
+				WIDTH 		2
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "Eastern_continental_divide"
+            "wms_abstract"       "Eastern_continental_divide"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME TVA_ReservoirLands
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        DATA       "/fsdata1/samab/Natural/TVA_Res_Lands.shp"
+        #DATA             "TVA_ReservoirLands"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "PER_FIRE3"
+		CLASS
+            NAME ""
+			#EXPRESSION ([PER_FIRE3] >= -999 AND [PER_FIRE3] <= -0.99999)
+            STYLE
+                COLOR       230 152 0
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "TVA_ReservoirLands"
+            "wms_abstract"       "TVA_ReservoirLands"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME SAMAB_Geology_Project
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "SAMAB_Geology_Project"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "KB_GEOLOGY"
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] >= 4000 AND [KB_GEOLOGY] <= 6460)
+            STYLE
+                COLOR       230 152 0
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] > 6460 AND [KB_GEOLOGY] <= 7291)
+            STYLE
+                COLOR       158 57 119
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] = 7292)
+            STYLE
+                COLOR       120 67 176
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] > 7292 AND [KB_GEOLOGY] <= 8900)
+            STYLE
+                COLOR       36 32 145
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] > 8900 AND [KB_GEOLOGY] <= 12810)
+            STYLE
+                COLOR       36 171 112
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] = 12811)
+            STYLE
+                COLOR       66 75 140 
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] > 12811 AND [KB_GEOLOGY] <= 12845)
+            STYLE
+                COLOR       124 130 53
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] = 12846)
+            STYLE
+                COLOR       173 49 55
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] > 12846 AND [KB_GEOLOGY] <= 12881)
+            STYLE
+                COLOR       83 121 173
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] = 12882)
+            STYLE
+                COLOR       120 67 176
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([KB_GEOLOGY] > 12882 AND [KB_GEOLOGY] <= 13000)
+            STYLE
+                COLOR       173 49 55
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		
+		
+        METADATA
+            "wms_title"          "SAMAB_Geology_Project"
+            "wms_abstract"       "SAMAB_Geology_Project"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME NEF_LandscapeStructuralConn
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/new_datasets.gdb"
+        DATA       "/fsdata1/samab/Natural/nef_landscape.shp"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "desc1"
+		CLASS
+            NAME ""
+			EXPRESSION "HUBS"
+            STYLE
+                COLOR       76 115 0
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "allcon corridor"
+            STYLE
+                COLOR       171 205 102
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "corridor computer"
+            STYLE
+                COLOR       171 205 102
+                #OUTLINECOLOR 0 78 181
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "jrr corridor"
+            STYLE
+                COLOR       171 205 102
+                #OUTLINECOLOR 0 78 181
+            END
+        END	
+        METADATA
+            "wms_title"          "NEF_LandscapeStructuralConn"
+            "wms_abstract"       "NEF_LandscapeStructuralConn"
+            "gml_include_items"  "desc1"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Wetness_Index_MV
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/wetness_index.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] = 1)
+		   COLOR 255 255 255
+		END
+		CLASS
+		   EXPRESSION ([pixel] = 2)
+		   COLOR 179 179 179
+		END
+		CLASS
+		   EXPRESSION ([pixel] = 3)
+		   COLOR 103 103 103
+		END
+		CLASS
+		   EXPRESSION ([pixel] = 4)
+		   COLOR 0 197 255
+		END
+		CLASS
+		   EXPRESSION ([pixel] = 5)
+		   COLOR 0 135 184
+		END
+		CLASS
+		   EXPRESSION ([pixel] = 6)
+		   COLOR 0 102 128
+		END
+		CLASS
+		   EXPRESSION ([pixel] = 7)
+		   COLOR 0 36 116
+		END
+		
+		
+        METADATA
+            "wms_title"          "Wetness_Index_MV"
+            "wms_abstract"       "Wetness_Index_MV"
+            "gml_include_items"  "value_0"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Mature_Forests
+        PROJECTION
+            "init=epsg:4326"
+        END
+        #CONNECTIONTYPE   ogr
+        #CONNECTION       "/fsdata1/samab/Natural/default.gdb"
+        DATA             "/fsdata1/samab/Mature_Forests1.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] = 0)
+		   COLOR 255 255 255
+		END
+		CLASS
+		   EXPRESSION ([pixel] = 1)
+		   COLOR 38 115 0
+		END
+				
+        METADATA
+            "wms_title"          "Mature_Forests"
+            "wms_abstract"       "Mature_Forests"
+            "gml_include_items"  "value_0"
+        END  # end METADATA
+    END # end Layer
+	
+END # end MAP

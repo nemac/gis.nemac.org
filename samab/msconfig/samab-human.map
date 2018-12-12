@@ -1,0 +1,1695 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+     #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_landat
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC SAMAB WMS"
+            "wms_abstract"           "NEMAC SAMAB WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/samab-human"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+    END
+   
+    LAYER # gdb layer begins here
+        NAME Demogs_TotPop13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "TOTPOP_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13] >= 2000 AND [TOTPOP_13] <= 10000)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13] > 10000 AND [TOTPOP_13] <= 30000)
+            STYLE
+                COLOR       255 228 145
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13] > 30000 AND [TOTPOP_13] <= 65000)
+            STYLE
+                COLOR       255 196 79
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13] > 65000 AND [TOTPOP_13] <= 125000)
+            STYLE
+                COLOR        255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13] > 125000 AND [TOTPOP_13] <= 250000)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13] > 250000 AND [TOTPOP_13] <= 460000)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_TotPop13"
+            "wms_abstract"       "Demogs_TotPop13"
+            "gml_include_items"  "TOTPOP_13"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_PerChngPop
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs_2"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_CHG_POP"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_POP] >= -14 AND [PER_CHG_POP] <= -2.259015)
+            STYLE
+                COLOR        255 255 128
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_POP] > -2.259015 AND [PER_CHG_POP] <= 6.749543)
+            STYLE
+                COLOR       250 209 85
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_POP] > 6.749543 AND [PER_CHG_POP] <= 16.241271)
+            STYLE
+                COLOR       242 167 46
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_POP] > 16.241271 AND [PER_CHG_POP] <= 42.586601)
+            STYLE
+                COLOR        173 83 19
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_POP] > 42.586601 AND [PER_CHG_POP] <= 78.352150)
+            STYLE
+                COLOR        107 0 0
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_PerChngPop"
+            "wms_abstract"       "Demogs_PerChngPop"
+            "gml_include_items"  "PER_CHG_POP"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_TotPopDens
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "TOTPOP_13 / SQMI_1"
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13]/[SQMI_1] >= 5.4 AND [TOTPOP_13]/[SQMI_1] <= 50)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13]/[SQMI_1] > 50 AND [TOTPOP_13]/[SQMI_1] <= 150)
+            STYLE
+                COLOR       255 228 145
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13]/[SQMI_1] > 150 AND [TOTPOP_13]/[SQMI_1] <= 500)
+            STYLE
+                COLOR       255 196 79
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13]/[SQMI_1] > 500 AND [TOTPOP_13]/[SQMI_1] <= 1000)
+            STYLE
+                COLOR        255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13]/[SQMI_1] > 1000 AND [TOTPOP_13]/[SQMI_1] <= 2000)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTPOP_13]/[SQMI_1] > 2000 AND [TOTPOP_13]/[SQMI_1] <= 4300)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_TotPopDens"
+            "wms_abstract"       "Demogs_TotPopDens"
+            "gml_include_items"  "TOTPOP_13"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_MedAge
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MEDAGE_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDAGE_13] >= 21 AND [MEDAGE_13] <= 28.8)
+            STYLE
+                COLOR        255 236 227
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDAGE_13] > 28.8 AND [MEDAGE_13] <= 40.2)
+            STYLE
+                COLOR       250 180 185
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDAGE_13] > 40.2 AND [MEDAGE_13] <= 43.9)
+            STYLE
+                COLOR       247 104 161
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDAGE_13] > 43.9 AND [MEDAGE_13] <= 47.5)
+            STYLE
+                COLOR        196 27 137
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDAGE_13] > 47.5 AND [MEDAGE_13] <= 58.2)
+            STYLE
+                COLOR        122 1 120
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_MedAge"
+            "wms_abstract"       "Demogs_MedAge"
+            "gml_include_items"  "MEDAGE_13"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_PerChngMedAge
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs_3"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_CHG_MA"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_MA] >= -6 AND [PER_CHG_MA] <= 0)
+            STYLE
+                COLOR        43 170 255
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_MA] > 0 AND [PER_CHG_MA] <= 5)
+            STYLE
+                COLOR       211 184 217
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_MA] > 5 AND [PER_CHG_MA] <= 10)
+            STYLE
+                COLOR       201 149 201
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_MA] > 10 AND [PER_CHG_MA] <= 13)
+            STYLE
+                COLOR        222 29 119
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_CHG_MA] > 13 AND [PER_CHG_MA] <= 17)
+            STYLE
+                COLOR        153 0 66
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_PerChngMedAge"
+            "wms_abstract"       "Demogs_PerChngMedAge"
+            "gml_include_items"  "PER_CHG_MA"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME LandCast_2030
+        PROJECTION
+            "init=epsg:4326"
+        END
+        # CONNECTIONTYPE   ogr
+        # CONNECTION       "/fsdata1/samab/Economic/SEF_RecreationPotential11.tif"
+        DATA             "/fsdata1/samab/LandCast2030/LandCast_2030_Clip11.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM 	"Energy_type_A"
+		
+		
+		# CLASS
+		   # EXPRESSION ([pixel] >= 0 AND [pixel] < 100)
+		   # STYLE
+			  # COLORRANGE 255 255 190 255 170 0
+			  # DATARANGE 0 100
+		   # END
+		# END
+		CLASS
+		   EXPRESSION ([pixel] <1)
+		   COLOR 255 255 255
+		END
+		CLASS
+		   EXPRESSION ([pixel] >= 1 AND [pixel] <= 5)
+		   COLOR 255 255 190
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5 AND [pixel] <= 25)
+		   COLOR 255 255 115
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 25 AND [pixel] <= 50)
+		   COLOR 255 255 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 50 AND [pixel] <= 100)
+		   COLOR 255 170 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 100 AND [pixel] <= 500)
+		   COLOR 255 102 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 500 AND [pixel] <= 2500)
+		   COLOR 255 0 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 2500 AND [pixel] <= 5000)
+		   COLOR 204 0 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5000)
+		   COLOR 115 0 0
+		END
+		
+		
+        METADATA
+            "wms_title"          "LandCast_2030"
+            "wms_abstract"       "LandCast_2030"
+			"gml_include_items"     "value_0"
+            #"gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME LandCast_2050
+        PROJECTION
+            "init=epsg:4326"
+        END
+        # CONNECTIONTYPE   ogr
+        # CONNECTION       "/fsdata1/samab/Economic/SEF_RecreationPotential11.tif"
+        DATA             "/fsdata1/samab/LandCast_2050_Clip1.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM 	"Energy_type_A"
+		
+		
+		# CLASS
+		   # EXPRESSION ([pixel] >= 0 AND [pixel] < 100)
+		   # STYLE
+			  # COLORRANGE 255 255 190 255 170 0
+			  # DATARANGE 0 100
+		   # END
+		# END
+		CLASS
+		   EXPRESSION ([pixel] <1)
+		   COLOR 255 255 255
+		END
+		CLASS
+		   EXPRESSION ([pixel] >= 1 AND [pixel] <= 5)
+		   COLOR 255 255 190
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5 AND [pixel] <= 25)
+		   COLOR 255 255 115
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 25 AND [pixel] <= 50)
+		   COLOR 255 255 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 50 AND [pixel] <= 100)
+		   COLOR 255 170 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 100 AND [pixel] <= 500)
+		   COLOR 255 102 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 500 AND [pixel] <= 2500)
+		   COLOR 255 0 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 2500 AND [pixel] <= 5000)
+		   COLOR 204 0 0
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5000)
+		   COLOR 115 0 0
+		END
+		
+		
+        METADATA
+            "wms_title"          "LandCast_2050"
+            "wms_abstract"       "LandCast_2050"
+			"gml_include_items"     "value_0"
+            #"gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME EJ_Screen_MINORPCT
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "EJ_Screen"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MINORPCT"
+		CLASS
+            NAME ""
+			EXPRESSION ([MINORPCT] >= 0 AND [MINORPCT] <= 0.1)
+            STYLE
+                COLOR        241 250 232
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MINORPCT] > 0.1 AND [MINORPCT] <= 0.2)
+            STYLE
+                COLOR       186 227 188
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MINORPCT] > 0.2 AND [MINORPCT] <= 0.4)
+            STYLE
+                COLOR       122 204 196
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MINORPCT] > 0.4 AND [MINORPCT] <= 0.65)
+            STYLE
+                COLOR        66 161 201
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MINORPCT] > 0.65 AND [MINORPCT] <= 1)
+            STYLE
+                COLOR        9 103 171
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "EJ_Screen_MINORPCT"
+            "wms_abstract"       "EJ_Screen_MINORPCT"
+            "gml_include_items"  "MINORPCT"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME EJ_Screen_LESSHSPCT
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "EJ_Screen"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "LESSHSPCT"
+		CLASS
+            NAME ""
+			EXPRESSION ([LESSHSPCT] >= 0 AND [LESSHSPCT] <= 0.1)
+            STYLE
+                COLOR        240 244 255
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LESSHSPCT] > 0.1 AND [LESSHSPCT] <= 0.18)
+            STYLE
+                COLOR       190 216 232
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LESSHSPCT] > 0.18 AND [LESSHSPCT] <= 0.28)
+            STYLE
+                COLOR       107 175 214
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LESSHSPCT] > 0.28 AND [LESSHSPCT] <= 0.4)
+            STYLE
+                COLOR        49 131 189
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LESSHSPCT] > 0.4 AND [LESSHSPCT] <= 1)
+            STYLE
+                COLOR        8 82 156
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "EJ_Screen_LESSHSPCT"
+            "wms_abstract"       "EJ_Screen_LESSHSPCT"
+            "gml_include_items"  "LESSHSPCT"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME EJ_Screen_UNDER5PCT
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "EJ_Screen"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "UNDER5PCT"
+		CLASS
+            NAME ""
+			EXPRESSION ([UNDER5PCT] >= 0 AND [UNDER5PCT] <= 0.025)
+            STYLE
+                COLOR        255 255 179
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UNDER5PCT] > 0.025 AND [UNDER5PCT] <= 0.05)
+            STYLE
+                COLOR       255 203 92
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UNDER5PCT] > 0.05 AND [UNDER5PCT] <= 0.09)
+            STYLE
+                COLOR       252 141 61
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UNDER5PCT] > 0.09 AND [UNDER5PCT] <= 0.13)
+            STYLE
+                COLOR        240 59 31
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UNDER5PCT] > 0.13 AND [UNDER5PCT] <= 0.3)
+            STYLE
+                COLOR        189 0 38
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "EJ_Screen_UNDER5PCT"
+            "wms_abstract"       "EJ_Screen_UNDER5PCT"
+            "gml_include_items"  "UNDER5PCT"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME EJ_Screen_OVER64PCT
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "EJ_Screen"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "OVER64PCT"
+		CLASS
+            NAME ""
+			EXPRESSION ([OVER64PCT] >= 0 AND [OVER64PCT] <= 0.10)
+            STYLE
+                COLOR        255 255 179
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([OVER64PCT] > 0.10 AND [OVER64PCT] <= 0.15)
+            STYLE
+                COLOR       255 203 92
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([OVER64PCT] > 0.15 AND [OVER64PCT] <= 0.23)
+            STYLE
+                COLOR       252 141 61
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([OVER64PCT] > 0.23 AND [OVER64PCT] <= 0.35)
+            STYLE
+                COLOR        240 59 31
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([OVER64PCT] > 0.35 AND [OVER64PCT] <= 0.1)
+            STYLE
+                COLOR        189 0 38
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "EJ_Screen_OVER64PCT"
+            "wms_abstract"       "EJ_Screen_OVER64PCT"
+            "gml_include_items"  "OVER64PCT"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME EJ_Screen_LINGISOPCT
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "EJ_Screen"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "LINGISOPCT"
+		CLASS
+            NAME ""
+			EXPRESSION ([LINGISOPCT] = 0)
+            STYLE
+                COLOR        235 247 250
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LINGISOPCT] > 0 AND [LINGISOPCT] <= 0.02)
+            STYLE
+                COLOR       179 206 227
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LINGISOPCT] > 0.02 AND [LINGISOPCT] <= 0.04)
+            STYLE
+                COLOR       141 151 199
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LINGISOPCT] > 0.04 AND [LINGISOPCT] <= 0.08)
+            STYLE
+                COLOR        135 85 166
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LINGISOPCT] > 0.08 AND [LINGISOPCT] <= 1)
+            STYLE
+                COLOR        130 16 124
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "EJ_Screen_LINGISOPCT"
+            "wms_abstract"       "EJ_Screen_LINGISOPCT"
+            "gml_include_items"  "LINGISOPCT"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME EJ_Screen_VULEOPCT
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "EJ_Screen"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "VULEOPCT"
+		CLASS
+            NAME ""
+			EXPRESSION ([VULEOPCT] >= 0 AND [VULEOPCT] <= 0.15)
+            STYLE
+                COLOR        241 250 232
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([VULEOPCT] > 0.15 AND [VULEOPCT] <= 0.25)
+            STYLE
+                COLOR       186 227 188
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([VULEOPCT] > 0.25 AND [VULEOPCT] <= 0.40)
+            STYLE
+                COLOR       122 204 196
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([VULEOPCT] > 0.40 AND [VULEOPCT] <= 0.60)
+            STYLE
+                COLOR        66 161 201
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([VULEOPCT] > 0.60 AND [VULEOPCT] <= 1)
+            STYLE
+                COLOR       9 103 171
+                #OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "EJ_Screen_VULEOPCT"
+            "wms_abstract"       "EJ_Screen_VULEOPCT"
+            "gml_include_items"  "VULEOPCT"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME PerDiabetes
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "SAMAB_Health"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_DB_2012"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_DB_2012] >= 7 AND [PER_DB_2012] <= 9)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_DB_2012] > 9 AND [PER_DB_2012] <= 10.1)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_DB_2012] > 10.1 AND [PER_DB_2012] <= 11.2)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_DB_2012] > 11.2 AND [PER_DB_2012] <= 12.3)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_DB_2012] > 12.3 AND [PER_DB_2012] <= 14)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PerDiabetes"
+            "wms_abstract"       "PerDiabetes"
+            "gml_include_items"  "PER_DB_2012"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME PerObesity
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "SAMAB_Health"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_OB_2012"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_OB_2012] >= 22 AND [PER_OB_2012] <= 26.7)
+            STYLE
+                COLOR        255 236 227
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_OB_2012] > 26.7 AND [PER_OB_2012] <= 29.2)
+            STYLE
+                COLOR       250 180 185
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_OB_2012] > 29.2 AND [PER_OB_2012] <= 31.6)
+            STYLE
+                COLOR       247 104 161
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_OB_2012] > 31.6 AND [PER_OB_2012] <= 34.3)
+            STYLE
+                COLOR        196 27 137
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_OB_2012] > 34.3 AND [PER_OB_2012] <= 38.1)
+            STYLE
+                COLOR        122 1 120
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PerObesity"
+            "wms_abstract"       "PerObesity"
+            "gml_include_items"  "PER_OB_2012"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME PerPhysicallyIn
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "SAMAB_Health"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PI_PER_2012"
+		CLASS
+            NAME ""
+			EXPRESSION ([PI_PER_2012] >= 18 AND [PI_PER_2012] <= 22.1)
+            STYLE
+                COLOR        255 204 0
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PI_PER_2012] > 22.1 AND [PI_PER_2012] <= 25.7)
+            STYLE
+                COLOR       250 161 17
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PI_PER_2012] > 25.7 AND [PI_PER_2012] <= 29.8)
+            STYLE
+                COLOR       245 122 22
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PI_PER_2012] > 29.8 AND [PI_PER_2012] <= 34.2)
+            STYLE
+                COLOR        237 79 26
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PI_PER_2012] > 34.2 AND [PI_PER_2012] <= 38.8)
+            STYLE
+                COLOR        227 25 28
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PerPhysicallyIn"
+            "wms_abstract"       "PerPhysicallyIn"
+            "gml_include_items"  "PI_PER_2012"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME Food_Deserts
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Food_Deserts"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "LILATracts_1And10"
+		CLASS
+            NAME ""
+			EXPRESSION ([LILATracts_1And10] = 0)
+            STYLE
+                COLOR        38 115 0
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([LILATracts_1And10] = 1)
+            STYLE
+                COLOR       240 113 21
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "Food_Deserts"
+            "wms_abstract"       "Food_Deserts"
+            "gml_include_items"  "LILATracts_1And10"
+        END  # end METADATA
+    END # end Layer	
+
+	LAYER # gdb layer begins here
+        NAME Registry_Historic_Places
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Registry_Historic_Places"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POINT
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "LILATracts_1And10"
+		CLASS
+            NAME ""
+			STYLE
+                SYMBOL 'circle'
+                SIZE 5
+                COLOR 0 158 137
+				OUTLINECOLOR 10 10 10
+            END
+        END
+		
+        METADATA
+            "wms_title"          "Registry_Historic_Places"
+            "wms_abstract"       "Registry_Historic_Places"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_POP25_HS
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "POP25OVR_HS"
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_HS] >= 18 AND [POP25OVR_HS] <= 25)
+            STYLE
+                COLOR       240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_HS] > 25 AND [POP25OVR_HS] <= 30)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_HS] > 30 AND [POP25OVR_HS] <= 35)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_HS] > 35 AND [POP25OVR_HS] <= 40)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_HS] > 40 AND [POP25OVR_HS] <= 55)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_POP25_HS"
+            "wms_abstract"       "Demogs_POP25_HS"
+            "gml_include_items"  "POP25OVR_HS"
+        END  # end METADATA
+    END # end Layer		
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_POP25OVR_BACH
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "POP25OVR_BACH"
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_BACH] >= 4 AND [POP25OVR_BACH] <= 8)
+            STYLE
+                COLOR       240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_BACH] > 8 AND [POP25OVR_BACH] <= 12)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_BACH] > 12 AND [POP25OVR_BACH] <= 15)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_BACH] > 15 AND [POP25OVR_BACH] <= 20)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POP25OVR_BACH] > 20 AND [POP25OVR_BACH] <= 31)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_POP25OVR_BACH"
+            "wms_abstract"       "Demogs_POP25OVR_BACH"
+            "gml_include_items"  "POP25OVR_BACH"
+        END  # end METADATA
+    END # end Layer	
+
+	LAYER # gdb layer begins here
+        NAME Demogs_PupilExp
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs_Pupil"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PPCSTOT"
+		CLASS
+            NAME ""
+			EXPRESSION ([PPCSTOT] >= 7000 AND [PPCSTOT] <= 7700)
+            STYLE
+                COLOR       240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PPCSTOT] > 7700 AND [PPCSTOT] <= 8500)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PPCSTOT] > 8500 AND [PPCSTOT] <= 9207)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PPCSTOT] > 9207 AND [PPCSTOT] <= 12000)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PPCSTOT] > 12000 AND [PPCSTOT] <= 17500)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_PupilExp"
+            "wms_abstract"       "Demogs_PupilExp"
+            "gml_include_items"  "PPCSTOT"
+        END  # end METADATA
+    END # end Layer	
+
+	LAYER # gdb layer begins here
+        NAME Demogs_PupilTeachRat
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs_Pupil2"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PUP_TEACH_RAT"
+		CLASS
+            NAME ""
+			EXPRESSION ([PUP_TEACH_RAT] >= 0 AND [PUP_TEACH_RAT] <= 12.9)
+            STYLE
+                COLOR       240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PUP_TEACH_RAT] > 12.9 AND [PUP_TEACH_RAT] <= 14.17)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PUP_TEACH_RAT] > 14.17 AND [PUP_TEACH_RAT] <= 15.1)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PUP_TEACH_RAT] > 15.1 AND [PUP_TEACH_RAT] <= 16.15)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PUP_TEACH_RAT] > 16.15 AND [PUP_TEACH_RAT] <= 17.81)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_PupilTeachRat"
+            "wms_abstract"       "Demogs_PupilTeachRat"
+            "gml_include_items"  "PUP_TEACH_RAT"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_POV_25OVR_HS
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "POV_25OVR_HS"
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_HS] >= 0 AND [POV_25OVR_HS] <= 10)
+            STYLE
+                COLOR       255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_HS] > 10 AND [POV_25OVR_HS] <= 14)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_HS] > 14 AND [POV_25OVR_HS] <= 17)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_HS] > 17 AND [POV_25OVR_HS] <= 20)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_HS] > 20 AND [POV_25OVR_HS] <= 25)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_POV_25OVR_HS"
+            "wms_abstract"       "Demogs_POV_25OVR_HS"
+            "gml_include_items"  "POV_25OVR_HS"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_POV_25OVR_LSHS1
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "POV_25OVR_LSHS1"
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_LSHS1] >= 0 AND [POV_25OVR_LSHS1] <= 3)
+            STYLE
+                COLOR       255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_LSHS1] > 3 AND [POV_25OVR_LSHS1] <= 5)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_LSHS1] > 5 AND [POV_25OVR_LSHS1] <= 7)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_LSHS1] > 7 AND [POV_25OVR_LSHS1] <= 11)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([POV_25OVR_LSHS1] > 11 AND [POV_25OVR_LSHS1] <= 16)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_POV_25OVR_LSHS1"
+            "wms_abstract"       "Demogs_POV_25OVR_LSHS1"
+            "gml_include_items"  "POV_25OVR_LSHS1"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_MEDINC_25HS
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MEDINC_25HS"
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25HS] >= 15000 AND [MEDINC_25HS] <= 22000)
+            STYLE
+                COLOR       235 247 250
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25HS] > 22000 AND [MEDINC_25HS] <= 24500)
+            STYLE
+                COLOR       179 227 227
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25HS] > 24500 AND [MEDINC_25HS] <= 27000)
+            STYLE
+                COLOR       103 194 163
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25HS] > 27000 AND [MEDINC_25HS] <= 30000)
+            STYLE
+                COLOR       44 163 96
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25HS] > 30000 AND [MEDINC_25HS] <= 35000)
+            STYLE
+                COLOR        0 110 44
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_MEDINC_25HS"
+            "wms_abstract"       "Demogs_MEDINC_25HS"
+            "gml_include_items"  "MEDINC_25HS"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Demogs_MEDINC_25BACH
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Human/new_datasets.gdb"
+        DATA             "Demogs"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MEDINC_25_BACH"
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25_BACH] >= 19000 AND [MEDINC_25_BACH] <= 33000)
+            STYLE
+                COLOR       235 247 250
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25_BACH] > 33000 AND [MEDINC_25_BACH] <= 39000)
+            STYLE
+                COLOR       179 227 227
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25_BACH] > 39000 AND [MEDINC_25_BACH] <= 44000)
+            STYLE
+                COLOR       103 194 163
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25_BACH] > 44000 AND [MEDINC_25_BACH] <= 50000)
+            STYLE
+                COLOR       44 163 96
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MEDINC_25_BACH] > 50000 AND [MEDINC_25_BACH] <= 70000)
+            STYLE
+                COLOR        0 110 44
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Demogs_MEDINC_25BACH"
+            "wms_abstract"       "Demogs_MEDINC_25BACH"
+            "gml_include_items"  "MEDINC_25_BACH"
+        END  # end METADATA
+    END # end Layer	
+	
+END # end MAP

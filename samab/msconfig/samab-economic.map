@@ -1,0 +1,1063 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+     #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_samab_economic
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC SAMAB WMS"
+            "wms_abstract"           "NEMAC SAMAB WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/samab-economic"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+    END
+   
+    LAYER # gdb layer begins here
+        NAME PER_INDPOV_13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_INDPOV_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INDPOV_13] >= 6 AND [PER_INDPOV_13] <= 12.1)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INDPOV_13] > 12.1 AND [PER_INDPOV_13] <= 16.7)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INDPOV_13] > 16.7 AND [PER_INDPOV_13] <= 21.3)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INDPOV_13] > 21.3 AND [PER_INDPOV_13] <= 27.5)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_INDPOV_13] > 27.5 AND [PER_INDPOV_13] <= 37.7)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PER_INDPOV_13"
+            "wms_abstract"       "PER_INDPOV_13"
+            "gml_include_items"  "PER_INDPOV_13"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME PER_IND18_13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_IND18_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_IND18_13] >= 6 AND [PER_IND18_13] <= 15.9)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_IND18_13] > 15.9 AND [PER_IND18_13] <= 23.1)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_IND18_13] > 23.1 AND [PER_IND18_13] <= 29.2)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_IND18_13] > 29.2 AND [PER_IND18_13] <= 35.5)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_IND18_13] > 35.5 AND [PER_IND18_13] <= 47.8)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PER_IND18_13"
+            "wms_abstract"       "PER_IND18_13"
+            "gml_include_items"  "PER_IND18_13"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME PERPOV65_13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PERPOV65_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([PERPOV65_13] >= 3 AND [PERPOV65_13] <= 7.5)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERPOV65_13] > 7.5 AND [PERPOV65_13] <= 10.0)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERPOV65_13] > 10.0 AND [PERPOV65_13] <= 12.7)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERPOV65_13] > 12.7 AND [PERPOV65_13] <= 16.6)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERPOV65_13] > 16.6 AND [PERPOV65_13] <= 30.8)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PERPOV65_13"
+            "wms_abstract"       "PERPOV65_13"
+            "gml_include_items"  "PERPOV65_13"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME PER_SNAP13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_SNAP13"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_SNAP13] >= 3 AND [PER_SNAP13] <= 8.6)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_SNAP13] > 8.6 AND [PER_SNAP13] <= 13.0)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_SNAP13] > 13.0 AND [PER_SNAP13] <= 17.1)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_SNAP13] > 17.1 AND [PER_SNAP13] <= 21.2)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_SNAP13] > 21.2 AND [PER_SNAP13] <= 38.0)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PER_SNAP13"
+            "wms_abstract"       "PER_SNAP13"
+            "gml_include_items"  "PER_SNAP13"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME MED_HHI_13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MED_HHI_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HHI_13] >= 23000 AND [MED_HHI_13] <= 34000)
+            STYLE
+                COLOR        235 247 250
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HHI_13] > 34000 AND [MED_HHI_13] <= 40000)
+            STYLE
+                COLOR       179 227 227
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HHI_13] > 40000 AND [MED_HHI_13] <= 47000)
+            STYLE
+                COLOR       103 194 163
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HHI_13] > 47000 AND [MED_HHI_13] <= 57000)
+            STYLE
+                COLOR        44 163 96
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HHI_13] > 57000 AND [MED_HHI_13] <= 87000)
+            STYLE
+                COLOR        0 110 44
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "MED_HHI_13"
+            "wms_abstract"       "MED_HHI_13"
+            "gml_include_items"  "MED_HHI_13"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME MN_HHI_13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MN_HHI_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([MN_HHI_13] >= 33000 AND [MN_HHI_13] <= 46000)
+            STYLE
+                COLOR        235 247 250
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MN_HHI_13] > 46000 AND [MN_HHI_13] <= 53500)
+            STYLE
+                COLOR       179 227 227
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MN_HHI_13] > 53500 AND [MN_HHI_13] <= 61900)
+            STYLE
+                COLOR       103 194 163
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MN_HHI_13] > 61900 AND [MN_HHI_13] <= 76300)
+            STYLE
+                COLOR        44 163 96
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MN_HHI_13] > 76300 AND [MN_HHI_13] <= 105000)
+            STYLE
+                COLOR        0 110 44
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "MN_HHI_13"
+            "wms_abstract"       "MN_HHI_13"
+            "gml_include_items"  "MN_HHI_13"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME PERCHG_EMP
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PERCHG_EMP"
+		CLASS
+            NAME ""
+			EXPRESSION ([PERCHG_EMP] >= -18 AND [PERCHG_EMP] <= -8)
+            STYLE
+                COLOR        166 96 27
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERCHG_EMP] > -8 AND [PERCHG_EMP] <= 0)
+            STYLE
+                COLOR       222 193 124
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERCHG_EMP] > 0 AND [PERCHG_EMP] <= 8)
+            STYLE
+                COLOR       245 245 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERCHG_EMP] > 8 AND [PERCHG_EMP] <= 36)
+            STYLE
+                COLOR        126 204 192
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PERCHG_EMP] > 36 AND [PERCHG_EMP] <= 80)
+            STYLE
+                COLOR        1 133 113
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PERCHG_EMP"
+            "wms_abstract"       "PERCHG_EMP"
+            "gml_include_items"  "PERCHG_EMP"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME PER_UNEMP_13
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_UNEMP_13"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_UNEMP_13] >= 1.6 AND [PER_UNEMP_13] <= 6)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_UNEMP_13] > 6 AND [PER_UNEMP_13] <= 8.9)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_UNEMP_13] > 8.9 AND [PER_UNEMP_13] <= 11.1)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_UNEMP_13] > 11.1 AND [PER_UNEMP_13] <= 13.6)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_UNEMP_13] > 13.6 AND [PER_UNEMP_13] <= 17.5)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "PER_UNEMP_13"
+            "wms_abstract"       "PER_UNEMP_13"
+            "gml_include_items"  "PER_UNEMP_13"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME SEF_RecreationPotential1
+        PROJECTION
+            "init=epsg:4326"
+        END
+        # CONNECTIONTYPE   ogr
+        # CONNECTION       "/fsdata1/samab/Economic/SEF_RecreationPotential11.tif"
+        DATA             "/fsdata1/samab/Economic/SEF_RecreationPotential11.tif"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             RASTER
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM 	"Energy_type_A"
+		
+		CLASS
+		   STYLE
+			  COLORRANGE 255 255 255 0 70 155
+			  DATARANGE 0 255
+		   END
+		END
+        METADATA
+            "wms_title"          "SEF_RecreationPotential1"
+            "wms_abstract"       "SEF_RecreationPotential1"
+			"gml_include_items"     "value_0"
+            #"gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME CoHeFi_Timber_Jobs
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ2"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "Timber_Jobs"
+		CLASS
+            NAME ""
+			EXPRESSION ([Timber_Jobs] >= 0 AND [Timber_Jobs] <= 85)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Timber_Jobs] > 85 AND [Timber_Jobs] <= 229)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Timber_Jobs] > 229 AND [Timber_Jobs] <= 428)
+            STYLE
+                COLOR       103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Timber_Jobs] > 428 AND [Timber_Jobs] <= 879)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Timber_Jobs] > 879 AND [Timber_Jobs] <= 1314)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "CoHeFi_Timber_Jobs"
+            "wms_abstract"       "CoHeFi_Timber_Jobs"
+            "gml_include_items"  "Timber_Jobs"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME CoHeFi_Pct_Tmbr_Jbs
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ2"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "Pct_Tmbr_Jbs"
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Tmbr_Jbs] >= 0 AND [Pct_Tmbr_Jbs] <= 1.26)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Tmbr_Jbs] > 1.26 AND [Pct_Tmbr_Jbs] <= 3.37)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Tmbr_Jbs] > 3.37 AND [Pct_Tmbr_Jbs] <= 6.41)
+            STYLE
+                COLOR       103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Tmbr_Jbs] > 6.41 AND [Pct_Tmbr_Jbs] <= 10.2)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Tmbr_Jbs] > 10.2 AND [Pct_Tmbr_Jbs] <= 35.66)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "CoHeFi_Pct_Tmbr_Jbs"
+            "wms_abstract"       "CoHeFi_Pct_Tmbr_Jbs"
+            "gml_include_items"  "Pct_Tmbr_Jbs"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME CoHeFi_Pct_Agric
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ2"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "Pct_Agric"
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Agric] >= 0 AND [Pct_Agric] <= 10)
+            STYLE
+                COLOR        255 255 128
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Agric] > 10 AND [Pct_Agric] <= 25)
+            STYLE
+                COLOR       250 209 85
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Agric] > 25 AND [Pct_Agric] <= 40)
+            STYLE
+                COLOR       242 167 46
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Agric] > 40 AND [Pct_Agric] <= 60)
+            STYLE
+                COLOR        173 83 19
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([Pct_Agric] > 60 AND [Pct_Agric] <= 95)
+            STYLE
+                COLOR        107 0 0
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "CoHeFi_Pct_Agric"
+            "wms_abstract"       "CoHeFi_Pct_Agric"
+            "gml_include_items"  "Pct_Agric"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Ag_TOTFRMS12
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Ag"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "TOTFRMS12"
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTFRMS12] >= 0 AND [TOTFRMS12] <= 320)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTFRMS12] > 320 AND [TOTFRMS12] <= 528)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTFRMS12] > 528 AND [TOTFRMS12] <= 833)
+            STYLE
+                COLOR       103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTFRMS12] > 833 AND [TOTFRMS12] <= 1437)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOTFRMS12] > 1437 AND [TOTFRMS12] <= 2529)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Ag_TOTFRMS12"
+            "wms_abstract"       "Ag_TOTFRMS12"
+            "gml_include_items"  "TOTFRMS12"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Ag_PerFamOwnFrms12
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Ag"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "FAMOFRM12 / TOTFRMS12"
+		CLASS
+            NAME ""
+			EXPRESSION ([FAMOFRM12] / [TOTFRMS12]>= 0 AND [FAMOFRM12] / [TOTFRMS12]<= 0.85)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([FAMOFRM12] / [TOTFRMS12]> 0.85 AND [FAMOFRM12] / [TOTFRMS12]<= 0.88)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([FAMOFRM12] / [TOTFRMS12]> 0.88 AND [FAMOFRM12] / [TOTFRMS12]<= 0.92)
+            STYLE
+                COLOR       103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([FAMOFRM12] / [TOTFRMS12]> 0.92 AND [FAMOFRM12] / [TOTFRMS12]<= 0.94)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([FAMOFRM12] / [TOTFRMS12]> 0.94 AND [FAMOFRM12] / [TOTFRMS12]<= 0.98)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Ag_PerFamOwnFrms12"
+            "wms_abstract"       "Ag_PerFamOwnFrms12"
+            "gml_include_items"  "FAMOFRM12"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Ag_PerChngFAMOFRM12
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Ag"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PCFAMOFRM"
+		CLASS
+            NAME ""
+			EXPRESSION ([PCFAMOFRM] >= -31 AND [PCFAMOFRM] <= -20)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PCFAMOFRM] > -20 AND [PCFAMOFRM] <= -10)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PCFAMOFRM] > -10 AND [PCFAMOFRM] <= 0)
+            STYLE
+                COLOR       103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PCFAMOFRM] > 0 AND [PCFAMOFRM] <= 5)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PCFAMOFRM] > 5 AND [PCFAMOFRM] <= 17)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Ag_PerChngFAMOFRM12"
+            "wms_abstract"       "Ag_PerChngFAMOFRM12"
+            "gml_include_items"  "PCFAMOFRM"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME CoHeFi_EconType
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Economic/new_datasets.gdb"
+        DATA             "SAMAB_Econ2"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "EconType"
+		CLASS
+            NAME ""
+			EXPRESSION "Mnfg"
+            STYLE
+                COLOR        59 67 121
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "NoSp"
+            STYLE
+                COLOR        255 255 195
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Serv"
+            STYLE
+                COLOR        137 205 101
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Gov"
+            STYLE
+                COLOR        177 177 177
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Farm"
+            STYLE
+                COLOR        135 87 63
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION "Mine"
+            STYLE
+                COLOR        52 52 52
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "CoHeFi_EconType"
+            "wms_abstract"       "CoHeFi_EconType"
+            "gml_include_items"  "EconType"
+        END  # end METADATA
+    END # end Layer	
+	
+END # end MAP

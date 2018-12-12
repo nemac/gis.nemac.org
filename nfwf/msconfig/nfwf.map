@@ -1,0 +1,4101 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+     #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_nfwf
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC NFWF WMS"
+            "wms_abstract"           "NEMAC NFWF WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/nfwf"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913 EPSG:102003 EPSG:3857"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+		STATUS on
+    END
+
+    LAYER # counties polygon layer begins here
+        NAME Counties
+        
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+        CONNECTIONTYPE   postgis
+        CONNECTION       "host=postgis2.cj0oborxdlge.us-east-1.rds.amazonaws.com port=5432 dbname=efetac user=readonly  password=d$Kp%23r4"
+        DATA             "geom from dtl_counties"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Counties"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "Counties"
+            "wms_abstract"       "Counties"
+            "gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer	 	
+
+    LAYER 
+        NAME Target_Watersheds
+        
+      PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+      END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_target_watersheds.shp"
+        DATA             "/fsdata1/nfwf/TargetWatershedBoundaries_080417.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Target Watersheds"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "Target Watersheds"
+            "wms_abstract"       "Target Watersheds"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer 
+
+# REGIONAL BOUNDARIES	
+
+    LAYER 
+        NAME Gulf_Coast_Boundary
+        
+    PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+    END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_coastal_watersheds.shp"
+        DATA             "/fsdata1/nfwf/Gulf_Watershed_Dissolve.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Gulf of Mexico Coastal Watersheds"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "Gulf Coast Boundary"
+            "wms_abstract"       "Gulf Coast Boundary"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer	
+	
+    LAYER 
+        NAME North_Atlantic_Boundary
+        
+    PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+    END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_coastal_watersheds.shp"
+        DATA             "/fsdata1/nfwf/NAregion_dissolve.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "North Atlantic Coastal Watersheds"
+            STYLE
+                OUTLINECOLOR 255 0 0
+            END
+        END
+        METADATA
+            "wms_title"          "North Atlantic Boundary"
+            "wms_abstract"       "North Atlantic Boundary"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer 
+	
+    LAYER 
+        NAME South_Atlantic_Boundary
+        
+    PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+    END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_coastal_watersheds.shp"
+        DATA             "/fsdata1/nfwf/S_Atlantic_coastal_watersheds.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "South Atlantic Coastal Watersheds"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "South Atlantic Boundary"
+            "wms_abstract"       "South Atlantic Boundary"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer	
+	
+    LAYER 
+        NAME Cape_Fear_River_Watershed
+        
+    PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+    END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/Cape_Fear_Watershed.shp"
+        DATA             "/fsdata1/nfwf/Cape_Fear_Watershed.shp"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Cape Fear Coastal Watersheds"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "Cape Fear Watershed"
+            "wms_abstract"       "Cape Fear Watershed"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer	
+
+    LAYER 
+        NAME NFWF_East_Region_Boundaries
+        
+    PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+    END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/Cape_Fear_Watershed.shp"
+        DATA             "/fsdata1/nfwf/NFWF_3Regions_merge_dissolve.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Regional Watershed Boundaries"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "Regional Watershed Boundaries"
+            "wms_abstract"       "Regional Watershed Boundaries"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer	
+
+    LAYER 
+        NAME NFWF_California_Boundary
+        
+    PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+    END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/Cape_Fear_Watershed.shp"
+        DATA             "/fsdata1/nfwf/California_watershed_boundary.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "California Watershed Boundary"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "California Watershed Boundary"
+            "wms_abstract"       "California Watershed Boundary"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer	
+	
+# END REGIONAL BOUNDARIES	
+	
+# HUC12 BOUNDARIES	
+	
+    LAYER 
+        NAME HUC12_East_Boundary
+        
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+        END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_coastal_watersheds.shp"
+        DATA             "/fsdata1/nfwf/HUC12_East_merge.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "HUC-12 Boundary"
+            STYLE
+                OUTLINECOLOR 255 255 0
+            END
+        END
+        METADATA
+            "wms_title"          "HUC-12 Boundary"
+            "wms_abstract"       "HUC-12 Boundary"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer 
+	
+# END HUC12 BOUNDARIES	
+
+# NHD
+		
+    LAYER
+        NAME NHD_Raster_overlay     
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NHD_Overlay_080217_reclass.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Water_East"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 220 243 251
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NHD_Overlay"
+            "wms_abstract"          "NHD_Overlay"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME NHD_Raster_overlay_CA     
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CA_NHDArea_forvisual.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Water_CA"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 220 243 251
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NHD_Overlay_CA"
+            "wms_abstract"          "NHD_Overlay_CA"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	    
+	
+# END NHD LAYERS	
+
+
+    LAYER
+        NAME Gulf_NLCD_hubs     
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/Gulf_NLCDhubs.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Gulf Coast Open Space Hubs"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 230 152 0
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Gulf Coast Ropen Space Hubs"
+            "wms_abstract"          "Gulf Coast Open Space Hubs"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER					
+
+    LAYER
+        NAME NA_NLCD_hubs_1     
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_NLCDhubs_option1.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "North Atlantic Open Space Hubs"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 230 152 0
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "North Atlantic Ropen Space Hubs"
+            "wms_abstract"          "North Atlantic Open Space Hubs"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME SA_NLCD_hubs_1     
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/SA_NLCDhubs.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "South Atlantic Open Space Hubs"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 230 152 0
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "South Atlantic Ropen Space Hubs"
+            "wms_abstract"          "South Atlantic Open Space Hubs"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+# NLCD HUBS	
+	
+# South Atlantic Indices	
+	
+    LAYER
+        NAME SA_AssetIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/SA_v2_AssetIndex_8byte_053018.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+
+
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 0)
+                                                      NAME "Low"
+                                                      STYLE
+                                                        COLOR 182 237 240
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 1)
+                                                      NAME "Low"
+                                                      STYLE
+                                                        COLOR 161 218 237
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 2)
+                                                      NAME "Medium"
+                                                      STYLE
+                                                        COLOR 142 202 237
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 3)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 122 186 235
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 4)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 100 170 232
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 5)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 76 153 230
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 6)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 50 138 227
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 7)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 33 123 219
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 8)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 33 102 207
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 9)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 33 84 194
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 10)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 29 64 181
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 11)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 25 47 168
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 12)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 19 31 158
+                                                      END
+                                                    END
+                                                    CLASS
+                                                      EXPRESSION ([pixel] = 13)
+                                                      NAME "High"
+                                                      STYLE
+                                                        COLOR 9 9 145
+                                                      END
+                                                    END
+
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "SA_AIndex"
+            "wms_abstract"          "SA_AIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+    LAYER
+        NAME SA_ThreatIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        STATUS   OFF
+        DUMP     TRUE
+        DATA     /fsdata1/nfwf/SA_v2_ThreatIndex_8byte_053018.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+
+
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 0)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 255 235 214
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 1)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 252 229 207
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 2)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 250 222 197
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 3)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 247 215 188
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 4)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 245 209 181
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 5)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 245 203 174
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 6)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 242 196 165
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 7)
+                                                          NAME "Low"
+                                                          STYLE
+                                                            COLOR 240 188 156
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 8)
+                                                          NAME "Medium"
+                                                          STYLE
+                                                            COLOR 237 182 149
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 9)
+                                                          NAME "Medium"
+                                                          STYLE
+                                                            COLOR 235 174 141
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 10)
+                                                          NAME "Medium"
+                                                          STYLE
+                                                            COLOR 235 167 134
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 11)
+                                                          NAME "Medium"
+                                                          STYLE
+                                                            COLOR 232 161 128
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 12)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 230 152 119
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 13)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 227 144 111
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 14)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 224 136 103
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 15)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 224 128 99
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 16)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 222 119 91
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 17)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 219 111 83
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 18)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 217 102 76
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 19)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 214 95 71
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 20)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 214 87 64 #text to white
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 21)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 212 78 57
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 22)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 209 71 52
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 23)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 207 62 45
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 24)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 204 53 39
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 25)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 204 44 33
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 26)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 201 37 28
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 27)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 199 28 22
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 28)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 196 19 16
+                                                          END
+                                                        END
+                                                        CLASS
+                                                          EXPRESSION ([pixel] = 29)
+                                                          NAME "High"
+                                                          STYLE
+                                                            COLOR 196 10 10
+                                                          END
+                                                        END
+
+
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "SA_TIndex"
+            "wms_abstract"          "SA_TIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME SA_TIndex_3class         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/SA_TIndex_3class_050817.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 235 214
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 225 132 101
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 196 10 10
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "SA_TIndex_3class"
+            "wms_abstract"          "SA_TIndex_3class"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    LAYER
+        NAME SA_ExposureIndex        
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/SA_v2_ExposureIndex_071018.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		NAME "South Atlantic Exposure Index"
+		EXPRESSION ""
+		COLOR 255 255 255
+		END #end class
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		 STYLE
+			COLOR 36 131 145
+		 END #end style
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		STYLE  
+		 COLOR 123 176 163
+		END #end style
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		 STYLE 
+			COLOR 212 230 184
+		END #end style	
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		 STYLE 
+			COLOR 237 216 152
+		END #end style	
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 6)
+		 STYLE 
+			COLOR 196 144 84
+		END #end style	
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 9)
+		 STYLE
+			COLOR 156 85 31
+		END #end style	
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "SA_ExposureIndex"
+            "wms_abstract"          "SA_ExposureIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME ExposureIndexTiles
+        PROJECTION
+                        "proj=aea"
+                        "lat_1=29.5"
+                        "lat_2=45.5"
+                        "lat_0=37.5"
+                        "lon_0=-96"
+                        "x_0=0"
+                        "y_0=0"
+                        "ellps=GRS80"
+                        "datum=NAD83"
+                        "units=m"
+                        "no_defs"
+                END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata3/nfwftemp/nfwf_exposure.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+                CLASS
+                NAME "Exposure Index for tileing"
+                EXPRESSION ""
+                COLOR 255 255 255
+                END #end class
+         CLASS
+                  NAME "Low"
+                  EXPRESSION ([pixel] = 1)
+                 STYLE
+                        COLOR 36 131 145
+                 END #end style
+                END #end class
+        CLASS
+                  NAME ""
+                  EXPRESSION ([pixel] = 2)
+                STYLE
+                 COLOR 123 176 163
+                END #end style
+                END #end class
+        CLASS
+                  NAME ""
+                  EXPRESSION ([pixel] = 3)
+                 STYLE
+                        COLOR 212 230 184
+                END #end style
+                END #end class
+        CLASS
+                  NAME ""
+                  EXPRESSION ([pixel] = 4)
+                 STYLE
+                        COLOR 237 216 152
+                END #end style
+                END #end class
+        CLASS
+                  NAME ""
+                  EXPRESSION ([pixel] = 6)
+                 STYLE
+                        COLOR 196 144 84
+                END #end style
+                END #end class
+        CLASS
+                  NAME "High"
+                  EXPRESSION ([pixel] = 9)
+                 STYLE
+                        COLOR 156 85 31
+                END #end style
+                END #end class
+            #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "ExposureIndexTiles"
+            "wms_abstract"          "ExposureIndexTiles"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME SA_HubsPreliminary
+        PROJECTION
+      "proj=aea"
+      "lat_1=29.5"
+      "lat_2=45.5"
+      "lat_0=37.5"
+      "lon_0=-96"
+      "x_0=0"
+      "y_0=0"
+      "ellps=GRS80"
+      "datum=NAD83"
+      "units=m"
+      "no_defs"
+    END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/sa_hubs_080918.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+    CLASS
+    NAME "South Atlantic Hubs (Preliminary)"
+    EXPRESSION ""
+    COLOR 255 255 255
+    END #end class
+         CLASS
+      NAME "Low"
+      EXPRESSION ([pixel] = 1)
+     STYLE
+      COLOR 237 248 233
+     END #end style
+    END #end class
+        CLASS
+      NAME ""
+      EXPRESSION ([pixel] = 2)
+    STYLE
+     COLOR 197 221 202
+    END #end style
+    END #end class
+        CLASS
+      NAME ""
+      EXPRESSION ([pixel] = 3)
+     STYLE
+      COLOR 158 195 172
+    END #end style
+    END #end class
+        CLASS
+      NAME ""
+      EXPRESSION ([pixel] = 4)
+     STYLE
+      COLOR 118 169 141
+    END #end style
+    END #end class
+        CLASS
+      NAME ""
+      EXPRESSION ([pixel] = 5)
+     STYLE
+      COLOR 79 142 111
+    END #end style
+    END #end class
+    CLASS
+      NAME ""
+      EXPRESSION ([pixel] = 6)
+     STYLE
+      COLOR 39 116 80
+    END #end style
+    END #end class
+    CLASS
+      NAME "High"
+      EXPRESSION ([pixel] = 7)
+     STYLE
+      COLOR 0 90 50
+    END #end style
+    END #end class
+      #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "South Atlantic Hubs (Preliminary)"
+            "wms_abstract"          "South Atlantic Hubs (Preliminary)"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+	
+	
+# END SOUTH ATLANTIC INDICES	
+	
+# Cape Fear Indices	
+
+    LAYER
+        NAME CF_AssetIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CF_AIndex_Add_060517.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 2)
+		   STYLE
+			  COLORRANGE 182 237 240 31 131 224
+			  DATARANGE 0 2
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 2 and [pixel] <= 10)
+		   STYLE
+			  COLORRANGE 31 131 224 9 9 145
+			  DATARANGE 2.01 10
+		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CF_AIndex"
+            "wms_abstract"          "CF_AIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME CF_AssetIndex_3class         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CF_AIndex_3class_060517.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 182 237 240
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 31 132 224
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 8 10 144
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CF_AIndex_3class"
+            "wms_abstract"          "CF_AIndex_3class"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME CF_ThreatIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CF_TIndex_050817.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 15)
+		   STYLE
+			  COLORRANGE 255 235 214 227 142 111
+			  DATARANGE 0 15
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 15 and [pixel] <= 34)
+		   STYLE
+			  COLORRANGE 227 142 111 196 10 10
+			  DATARANGE 15.01 34
+		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CF_TIndex"
+            "wms_abstract"          "CF_TIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME CF_TIndex_3class         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CF_TIndex_3class_050817.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 235 214
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 225 132 101
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 196 10 10
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CF_TIndex_3class"
+            "wms_abstract"          "CF_TIndex_3class"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME CF_ExposureIndex      
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CF_ExposureIndex_060517.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 36 131 145
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 123 176 163
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 212 230 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 237 216 152
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 6)
+		  STYLE
+			COLOR 196 144 84
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 9)
+		  STYLE
+			COLOR 156 85 31
+		  END #STYLE
+		END #end class   
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CF_ExposureIndex"
+            "wms_abstract"          "CF_ExposureIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME CF_AquaticIndex    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CF_AquaticNS_shift_062217.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 361 128 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class   
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CF_AquaticIndex"
+            "wms_abstract"          "CF_AquaticIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    LAYER
+        NAME CF_TerrestrialIndex    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CF_TerrIBA_Add_062317.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 229 228 240
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 180 181 214
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 133 130 189
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 98 65 156
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 62 0 125
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CF_TerrestrialIndex"
+            "wms_abstract"          "CF_TerrestrialIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+# END CAPE FEAR INDICES	
+
+# North Atlantic Indices
+	
+    LAYER
+        NAME NA_ThreatIndex_Ramp         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_ThreatIndex_021218.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 2)
+		   STYLE
+			  COLORRANGE 255 235 214 245 207 179
+			  DATARANGE 0 2
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 2 and [pixel] <= 6)
+		   STYLE
+			  COLORRANGE 237 180 147 230 149 117
+			  DATARANGE 2.01 6
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 6 and [pixel] <= 14)
+		   STYLE
+			  COLORRANGE 219 115 86 212 80 59
+			  DATARANGE 6.01 14
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 14 and [pixel] <= 38)
+		   STYLE
+			  COLORRANGE 204 46 35 196 10 10
+			  DATARANGE 14.01 38
+ 		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "North Atlantic Threat Index"
+            "wms_abstract"          "North Atlantic Threat Index"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+    LAYER
+        NAME NA_AssetIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_AssetIndex_100217.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] = 0)
+		   STYLE
+			  COLOR 182	237	240
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 2)
+		   STYLE
+			  COLORRANGE 116 180 232 31 131 224
+			  DATARANGE 0.0001 2
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 2 and [pixel] <= 14)
+		   STYLE
+			  COLORRANGE 29 68 184 9 9 145
+			  DATARANGE 2.0001 11
+		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "North Atlantic Asset Index"
+            "wms_abstract"          "North Atlantic Asset Index"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME NA_ExposureIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_ExposureIndex_021218.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS 
+		NAME "North Atlantic Exposure Index"
+		EXPRESSION ""
+		COLOR 255 255 255
+		END #end class
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 36 131 145
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 123 176 163
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 212 230 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 237 216 152
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 6)
+		  STYLE
+			COLOR 196 144 84
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 9)
+		  STYLE
+			COLOR 156 85 31
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "North Atlantic Exposure Index"
+            "wms_abstract"          "North Atlantic Exposure Index"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+		
+	
+# END NORTH ATLANTIC INDICES	
+
+# North Atlantic Asset Index Inputs 
+
+    LAYER
+        NAME NA_CriticalInfrastructure   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_CriticalInfrastructure_100217.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 217 240 211
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 173 222 166
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 116 196 119
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 55 161 85
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 17 120 53
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 6)
+		  STYLE
+			COLOR 0 69 28
+		  END #STYLE
+		END #end class   		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Critical Infrastructure"
+            "wms_abstract"          "Critical Infrastructure"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME NA_PopulationDensity   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_CPopDens.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 218 117
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 255 178 77
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 252 141 61
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 240 59 31
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 189 0 38
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Population Density"
+            "wms_abstract"          "Population Density"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_SocialVulnerability   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_SoVl_shift.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 170 102 205
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Social Vulnerability"
+            "wms_abstract"          "Social Vulnerability"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME NA_CriticalFacilities   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_CritFac_Recl5.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 0 168 132
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Critical Facilities"
+            "wms_abstract"          "Critical Facilities"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+#North Atlantic Threat Inputs
+
+    LAYER
+        NAME NA_Subsidence  
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_Subsidence_5_8_17.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 168 0 0
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NA_Subsidence"
+            "wms_abstract"          "NA_Subsidence"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_SeaLevelRise   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_SLR_5_8_17.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 219 216 235
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 154 184 217
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 64 148 194
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 5 120 116
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 1 69 53
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Sea Level Rise"
+            "wms_abstract"          "Sea Level Rise"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_StormSurge   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_StormSurge_shift_121117.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 198 232 179
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 65 183 196
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 34 94 168
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Storm Surge"
+            "wms_abstract"          "Storm Surge"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_Floodprone   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_Floodprone_5_8_17.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 206 202
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 250 150 178
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 227 64 153
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 153 0 122
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 73 0 107
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Floodprone Areas"
+            "wms_abstract"          "Floodprone Areas"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_Slope  
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_Slope_5_8_17.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 202 181
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 252 138 106
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 242 68 48
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 189 21 26
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 102 0 14
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Areas of Low Slope"
+            "wms_abstract"          "Areas of Low Slope"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_SoilErosion  
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_SErosion_5_8_17.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 218 181
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 252 166 96
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 245 112 29
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 196 64 2
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 128 39 4
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Soil Erodibility"
+            "wms_abstract"          "Soil Erodibility"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+	
+    LAYER
+        NAME NA_ImpermeableSoils 
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_DrainageDev_shift_0201218.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 90 173 97
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 217 240 211
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 231 211 232
+		  END #STYLE
+		END #end class 
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 153 111 171
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 63 0 74
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Impermeable Soils"
+            "wms_abstract"          "Impermeable Soils"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_CoastalLandforms
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_BeachesDunes_shift_090717.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 168 56 0
+		  END #STYLE
+		END #end class 		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Coastal Landforms"
+            "wms_abstract"          "Coastal Landforms"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+# END NORTH ATLANTIC INPUTS
+	
+# Gulf Coast Indices
+	
+    LAYER
+        NAME Gulf_ThreatIndex_Ramp         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/Gulf_ThreatIndex_062217.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 11)
+		   STYLE
+			  COLORRANGE 255 255 214 242 197 167
+			  DATARANGE 0 11
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 11 and [pixel] <= 20)
+		   STYLE
+			  COLORRANGE 230 154 122 219 109 81
+			  DATARANGE 11.01 20
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 20 and [pixel] <= 37)
+		   STYLE
+			  COLORRANGE 207 60 43 196 10 10
+			  DATARANGE 11.01 37
+ 		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Gulf_ThreatIndex_ramp"
+            "wms_abstract"          "Gulf_ThreatIndex_ramp"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME Gulf_AssetIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/Gulf_AssetIndex_Add.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 1)
+		   STYLE
+			  COLORRANGE 182 237 240 129 192 235
+			  DATARANGE 0 1
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 1 and [pixel] <= 3)
+		   STYLE
+			  COLORRANGE 70 149 227 33 107 209
+			  DATARANGE 1.01 3
+		   END
+		END	
+		CLASS
+		   EXPRESSION ([pixel] > 3 and [pixel] <= 11)
+		   STYLE
+			  COLORRANGE 28 58 176 10 10 145
+			  DATARANGE 3.01 11
+		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Gulf_AIndex_ramp"
+            "wms_abstract"          "Gulf_AIndex_ramp"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME Gulf_ExposureIndex         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/Gulf_ExposureIndex_062617.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+			NAME "Gulf of Mexico Exposure Index"
+			EXPRESSION ""
+			COLOR 255 255 255
+		END 
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 36 131 145
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 123 176 163
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 212 230 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 237 216 152
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 6)
+		  STYLE
+			COLOR 196 144 84
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 9)
+		  STYLE
+			COLOR 156 85 31
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Gulf_ExposureIndex"
+            "wms_abstract"          "Gulf_ExposureIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+# End Gulf Indices	
+	
+# Begin Mosaic Indices	
+	
+    LAYER
+        NAME NFWF_ExposureIndex_Mosaic         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NFWF_EastMosaic_ExposureIndex_010518.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+			NAME "Exposure Index"
+			EXPRESSION ""
+			STYLE
+			 COLOR 255 255 255
+			END #style 
+		END 
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 36 131 145
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 123 176 163
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 212 230 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 237 216 152
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 6)
+		  STYLE
+			COLOR 196 144 84
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 9)
+		  STYLE
+			COLOR 156 85 31
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NFWF_ExposureMosaic"
+            "wms_abstract"          "NFWF_ExposureMosaic"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NFWF_ThreatIndex_Mosaic         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NFWF_EastMosaic_ThreatIndex_010518.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+			NAME "Threat Index"
+			EXPRESSION ""
+			STYLE
+			 COLOR 255 255 255
+			END # style 
+		END		
+		CLASS
+		   NAME "Low"
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 6)
+		   STYLE
+			  COLOR 255 235 214
+		   END
+		END
+		CLASS
+		   NAME ""
+		   EXPRESSION ([pixel] > 4 and [pixel] <= 10)
+		   STYLE
+			  COLOR 247 215 188
+		   END
+		END
+		CLASS
+		   NAME ""
+		   EXPRESSION ([pixel] > 8 and [pixel] <= 12)
+		   STYLE
+			  COLOR 240 192 161
+ 		   END
+		END
+		CLASS
+		   NAME ""
+		   EXPRESSION ([pixel] > 10 and [pixel] <= 14)
+		   STYLE
+			  COLOR 227 144 111
+ 		   END
+		END	
+		CLASS
+		   NAME ""
+		   EXPRESSION ([pixel] > 12 and [pixel] <= 17)
+		   STYLE
+			  COLOR 222 119 91
+ 		   END
+		END	
+		CLASS
+		   NAME ""
+		   EXPRESSION ([pixel] > 15 and [pixel] <= 19)
+		   STYLE
+			  COLOR 214 93 69
+ 		   END
+		END
+		CLASS
+		   NAME ""
+		   EXPRESSION ([pixel] > 17 and [pixel] <= 22)
+		   STYLE
+			  COLOR 209 64 48
+ 		   END
+		END	
+		CLASS
+		   NAME ""
+		   EXPRESSION ([pixel] > 20 and [pixel] <= 26)
+		   STYLE
+			  COLOR 201 37 28
+ 		   END
+		END		
+		CLASS
+		   NAME "High"
+		   EXPRESSION ([pixel] > 24 and [pixel] <= 43)
+		   STYLE
+			  COLOR 196 10 10
+ 		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NFWF_ThreatIndex_Mosaic"
+            "wms_abstract"          "NFWF_ThreatIndex_Mosaic"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+	
+    LAYER
+        NAME NFWF_AssetIndex_Mosaic         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NFWF_EastMosaic_AssetIndex_100317.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		# Legend
+		CLASS
+			NAME "Asset Index"
+			EXPRESSION ""
+			STYLE
+			COLOR 255 255 255
+			END
+		END		
+		CLASS
+			NAME "Low"
+			EXPRESSION ""
+			STYLE
+			COLOR 182 237 240
+			END
+		END	
+		CLASS
+			NAME ""
+			EXPRESSION ""
+			STYLE
+			COLOR 129 192 235
+			END
+		END
+		CLASS
+			NAME ""
+			EXPRESSION ""
+			STYLE
+			COLOR 70 149 227
+			END
+		END	
+		CLASS
+			NAME ""
+			EXPRESSION ""
+			STYLE
+			COLOR 33 107 209
+			END
+		END
+		CLASS
+			NAME ""
+			EXPRESSION ""
+			STYLE
+			COLOR 28 58 176
+			END
+		END	
+		CLASS
+			NAME "High"
+			EXPRESSION ""
+			STYLE
+			COLOR 10 10 145
+			END
+		END	
+		# symbology
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 1)
+		   STYLE
+			  COLORRANGE 182 237 240 129 192 235
+			  DATARANGE 0 1
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 1 and [pixel] <= 3)
+		   STYLE
+			  COLORRANGE 70 149 227 33 107 209
+			  DATARANGE 1.01 3
+		   END
+		END	
+		CLASS
+		   EXPRESSION ([pixel] > 3 and [pixel] <= 14)
+		   STYLE
+			  COLORRANGE 28 58 176 10 10 145
+			  DATARANGE 3.01 11
+		   END
+		END			
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NFWF_AssetIndex_Mosaic"
+            "wms_abstract"          "NFWF_AssetIndex_Mosaic"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NFWF_AquaticIndex_Mosaic    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NFWF_EastMosaic_AquaticIndex_092017.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+         CLASS
+		  NAME "Aquatic Wildlife Index"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class			
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 152 214 184
+		  END #STYLE
+		END #end class		
+         CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 361 128 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class   
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NFWF_AquaticIndex_Mosaic"
+            "wms_abstract"          "NFWF_AquaticIndex_Mosaic"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NFWF_TerrestrialIndex_Mosaic    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NFWF_TerrestrialIndexMosaic_092017.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		 CLASS
+		  NAME "Terrestrial Wildlife Index"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class	
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 213 240 238
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 144 212 194
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 73 179 128
+		  END #STYLE
+		END #end class 
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 24 128 59
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 0 69 28
+		  END #STYLE
+		END #end class  		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NFWF_TerrestrialIndex_Mosaic"
+            "wms_abstract"          "NFWF_TerrestrialIndex_Mosaic"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NFWF_PADUShub_calc_Mosaic    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NFWF_PADUShubs_Rank_092017.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		 CLASS
+		  NAME "Resilience Hub Analysis"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class	
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 238 161
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "Medium"
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 255 178 77
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 240 59 31
+		  END #STYLE
+		END #end class   		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Resilience Hubs Ranked"
+            "wms_abstract"          "Resilience Hubs Ranked"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+# END MOSAIC INDICES	
+
+# PADUS stuff
+
+	
+     LAYER 
+        NAME NFWF_3Region_PADUS_hubs_fill
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+        END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_coastal_watersheds.shp"
+        DATA             "/fsdata1/nfwf/NFWF_east_RHubs_091917.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Resilience Hubs"
+            STYLE
+				COLOR 56 168 0
+                #OUTLINECOLOR 0 0 0
+            END
+        END
+        METADATA
+            "wms_title"          "Resilience Hubs"
+            "wms_abstract"       "Resilience Hubs"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer	
+
+    LAYER 
+        NAME NFWF_3Region_PADUS_hubs_outline
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+        END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_coastal_watersheds.shp"
+        DATA             "/fsdata1/nfwf/NFWF_east_RHubs_091917.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Resilience Hub Boundaries"
+            STYLE
+				#COLOR 56 168 0
+                OUTLINECOLOR 0 0 0
+            END
+        END
+        METADATA
+            "wms_title"          "Resilience Hubs lines"
+            "wms_abstract"       "Resilience Hubs lines"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer
+
+	LAYER 
+        NAME PADUS_Raw
+		#GROUP PADUS
+        
+      PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+      END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_target_watersheds.shp"
+        DATA             "/fsdata1/nfwf/NFWF_3Region_PADUSraw.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "PADUS vector"
+            STYLE
+			    COLOR 3 108 3
+                #OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "PADUS vector"
+            "wms_abstract"       "PADUS vector"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer
+	
+    LAYER
+        NAME NFWF_3Region_PADUS_Raster_Raw   
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NFWF_east_PADUS_raw.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html	
+         CLASS
+		  NAME "PADUS"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 3 108 3
+		  END #STYLE
+		END #end class   		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NFWF East PADUS"
+            "wms_abstract"          "NFWF East PADUS"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+# BEGIN OLD DATA
+
+    LAYER
+        NAME NA_AquaticIndex_OLD    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_AquaticNS_shift_062217.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 152 214 184
+		  END #STYLE
+		END #end class		
+         CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 361 128 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class  
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NA Aquatic Index (old)"
+            "wms_abstract"          "NA Aquatic Index (old)"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    LAYER
+        NAME NA_TerrestrialIndex_OLD    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/NA_TerrIBA_Add_06231.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		 CLASS
+		  NAME "Terrestrial Wildlife Index"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class	
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 213 240 238
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 144 212 194
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 73 179 128
+		  END #STYLE
+		END #end class 
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 24 128 59
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 0 69 28
+		  END #STYLE
+		END #end class 		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NA Terrestrial Index (old)"
+            "wms_abstract"          "NA Terrestrial Index (old)"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Gulf_AquaticIndex_OLD    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/Gulf_AquaticNS_shift_062217.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 152 214 184
+		  END #STYLE
+		END #end class		
+         CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 361 128 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class   
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Gulf Aquatic Index (old)"
+            "wms_abstract"          "Gulf Aquatic Index (old)"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    LAYER
+        NAME Gulf_TerrestrialIndex_OLD    
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/Gulf_TerrIBA_Add_062317.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		 CLASS
+		  NAME "Terrestrial Wildlife Index"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class	
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 213 240 238
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 144 212 194
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 73 179 128
+		  END #STYLE
+		END #end class 
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 24 128 59
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 0 69 28
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Gulf Terrestrial Index (old)"
+            "wms_abstract"          "Gulf Terrestrial Index (old)"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    LAYER
+        NAME SA_AquaticIndex
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/SA_v2_AquaticIndex_053118.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+    		  NAME "Low"
+    		  EXPRESSION ([pixel] = 1)
+    		  STYLE
+    			COLOR 204 226 232
+    		  END #STYLE
+    		END #end class
+        CLASS
+    		  NAME ""
+    		  EXPRESSION ([pixel] = 2)
+    		  STYLE
+    			COLOR 143 200 214
+    		  END #STYLE
+    		END #end class
+        CLASS
+    		  NAME ""
+    		  EXPRESSION ([pixel] = 3)
+    		  STYLE
+    			COLOR 94 164 186
+    		  END #STYLE
+    		END #end class
+        CLASS
+    		  NAME ""
+    		  EXPRESSION ([pixel] = 4)
+    		  STYLE
+    			COLOR 4 126 145
+    		  END #STYLE
+    		END #end class
+        CLASS
+    		  NAME "High"
+    		  EXPRESSION ([pixel] = 5)
+    		  STYLE
+    			COLOR 9 90 98
+    		  END #STYLE
+    		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "South Atlantic Aquatic Index"
+            "wms_abstract"          "South Atlantic Aquatic Index"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME SA_TerrestrialIndex
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/SA_v2_TerrestrialIndex_053118.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+
+    CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 233 196
+		  END #STYLE
+		END #end class
+    CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 224 200 121
+		  END #STYLE
+		END #end class
+    CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 118 151 78
+		  END #STYLE
+		END #end class
+    CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 56 91 36
+		  END #STYLE
+		END #end class
+    CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 0 73 8
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "South Atlantic Terrestrial Index (old)"
+            "wms_abstract"          "South Atlantic Terrestrial Index (old)"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Gulf_PADUShubs_OLD 
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/Gulf_PADUShubs_OLDfw_reclass.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		 CLASS
+		  NAME "Gulf PADUS Hubs (method 2 hubs/old wildlife indices)"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class	
+          CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 238 161
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "Medium"
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 255 178 77
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 240 59 31
+		  END #STYLE
+		END #end class   		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Gulf PADUS Hubs (method 2 hubs/old wildlife indices)"
+            "wms_abstract"          "Gulf PADUS Hubs (method 2 hubs/old wildlife indices)"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+    LAYER
+        NAME SA_PADUShubs_OLD 
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/SA_PADUShubs_OLDfw.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		 CLASS
+		  NAME "South Atlantic PADUS Hubs (method 2 hubs/old wildlife indices)"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class	
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 238 161
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "Medium"
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 255 178 77
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 240 59 31
+		  END #STYLE
+		END #end class   		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "South Atlantic PADUS Hubs (method 2 hubs/old wildlife indices)"
+            "wms_abstract"          "South Atlantic PADUS Hubs (method 2 hubs/old wildlife indices)"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME NA_PADUShubs_OLD 
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/na_exp_hubs_080217_B.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		 CLASS
+		  NAME "North Atlantic PADUS Hubs (method 2 hubs/old wildlife indices)"
+		  EXPRESSION ""
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class	
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 255 238 161
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "Medium"
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 255 178 77
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 240 59 31
+		  END #STYLE
+		END #end class   		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "North Atlantic PADUS Hubs (method 2 hubs/old wildlife indices)"
+            "wms_abstract"          "North Atlantic PADUS Hubs (method 2 hubs/old wildlife indices)"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+	LAYER 
+        NAME Gulf_PADUShub_Boundary_Method2
+		#GROUP PADUS
+        
+      PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+      END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_target_watersheds.shp"
+        DATA             "/fsdata1/nfwf/Gulf_PADUS_ms_5000ac_FINAL.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Gulf PADUS Hub Boundary (method 2)"
+            STYLE
+			    #COLOR 3 108 3
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "Gulf PADUS Hub Boundary (method 2)"
+            "wms_abstract"       "Gulf PADUS Hub Boundary (method 2)"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER 
+        NAME SA_PADUShub_Boundary_Method2
+		#GROUP PADUS
+        
+      PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+      END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_target_watersheds.shp"
+        DATA             "/fsdata1/nfwf/SA_PADUS_080217.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "South Atlantic PADUS Hub Boundary (method 2)"
+            STYLE
+			    #COLOR 3 108 3
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "South Atlantic PADUS Hub Boundary (method 2)"
+            "wms_abstract"       "South Atlantic PADUS Hub Boundary (method 2)"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER 
+        NAME NA_PADUShub_Boundary_Method2
+		#GROUP PADUS
+        
+      PROJECTION
+        "proj=aea"
+        "lat_1=29.5"
+        "lat_2=45.5"
+        "lat_0=37.5"
+        "lon_0=-96"
+        "x_0=0"
+        "y_0=0"
+        "ellps=GRS80"
+        "datum=NAD83"
+        "units=m"
+        "no_defs"
+      END
+
+        #CONNECTIONTYPE   postgis
+        #CONNECTION       "/fsdata1/nfwf/S_Atlantic_target_watersheds.shp"
+        DATA             "/fsdata1/nfwf/NA_PADUS_080217.shp"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "North Atlantic PADUS Hub Boundary (method 2)"
+            STYLE
+			    #COLOR 3 108 3
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "North Atlantic PADUS Hub Boundary (method 2)"
+            "wms_abstract"       "North Atlantic PADUS Hub Boundary (method 2)"
+            "gml_include_items"  ""
+        END  # end METADATA
+    END # end Layer		
+			
+			
+# END PADUS STUFF
+
+# California Indices	
+	
+    LAYER
+        NAME CA_AssetIndex_111317         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CA_AssetIndex_111317.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 2)
+		   STYLE
+			  COLORRANGE 182 237 240 31 131 224
+			  DATARANGE 0 2
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 2 and [pixel] <= 14)
+		   STYLE
+			  COLORRANGE 31 131 224 9 9 145
+			  DATARANGE 2.01 10
+		   END
+		END				
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CA_AIndex"
+            "wms_abstract"          "CA_AIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+    LAYER
+        NAME CA_ThreatIndex_120417         
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CA_ThreatIndex_120417.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 10)
+		   STYLE
+			  COLORRANGE 255 235 214 242 197 167
+			  DATARANGE 0 10
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 10 and [pixel] <= 15)
+		   STYLE
+			  COLORRANGE 230 154 122 219 109 81
+			  DATARANGE 10.01 15
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 15 and [pixel] <= 34)
+		   STYLE
+			  COLORRANGE 207 60 43 196 10 10
+			  DATARANGE 15.01 34
+		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CA_TIndex"
+            "wms_abstract"          "CA_TIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+    LAYER
+        NAME CA_ExposureIndex        
+        PROJECTION
+			"proj=aea"
+			"lat_1=29.5"
+			"lat_2=45.5"
+			"lat_0=37.5"
+			"lon_0=-96"
+			"x_0=0"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/nfwf/CA_ExposureIndex_120417.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		NAME "California Exposure Index"
+		EXPRESSION ""
+		COLOR 255 255 255
+		END #end class
+         CLASS
+		  NAME "Low"
+		  EXPRESSION ([pixel] = 1)
+		 STYLE
+			COLOR 36 131 145
+		 END #end style
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 2)
+		STYLE  
+		 COLOR 123 176 163
+		END #end style
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 3)
+		 STYLE 
+			COLOR 212 230 184
+		END #end style	
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 4)
+		 STYLE 
+			COLOR 237 216 152
+		END #end style	
+		END #end class
+        CLASS
+		  NAME ""
+		  EXPRESSION ([pixel] = 6)
+		 STYLE 
+			COLOR 196 144 84
+		END #end style	
+		END #end class
+        CLASS
+		  NAME "High"
+		  EXPRESSION ([pixel] = 9)
+		 STYLE
+			COLOR 156 85 31
+		END #end style	
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "CA_ExposureIndex"
+            "wms_abstract"          "CA_ExposureIndex"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+		
+	
+# END CALIFORNIA INDICES	
+	
+END # end MAP

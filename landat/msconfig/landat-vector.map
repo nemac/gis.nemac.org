@@ -1,0 +1,375 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+    #CONFIG "MS_ERRORFILE" "../var/log/vlayers.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_landat_vector
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC landat vector WMS"
+            "wms_abstract"           "NEMAC landat vector WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/landat-vector"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+        END
+    END
+
+    QUERYMAP
+        STATUS OFF
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+    END
+
+    LAYER # 
+        NAME cities
+        
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+        CONNECTIONTYPE   postgis
+        CONNECTION       "host=postgis2.cj0oborxdlge.us-east-1.rds.amazonaws.com port=5432 dbname=efetac user=readonly  password=d$Kp%23r4"
+        DATA             "geom from cities"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+        
+        STATUS           OFF
+        TYPE             POINT
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+        
+        CLASS
+            NAME "Cities"
+            STYLE
+                SYMBOL 'circle'
+                SIZE 5
+                COLOR 0 0 0 
+            END
+        END
+        METADATA
+            "wms_title"          "cities"
+            "wms_abstract"       "cities"
+            "gml_include_items"  "feature,name,county,state"
+        END  # end METADATA
+    END # 
+
+    LAYER # 
+        NAME states
+        
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+        CONNECTIONTYPE   postgis
+        CONNECTION       "host=postgis2.cj0oborxdlge.us-east-1.rds.amazonaws.com port=5432 dbname=efetac user=readonly  password=d$Kp%23r4"
+        DATA             "geom from dtl_states"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "States"
+            STYLE
+                #COLOR        232 232 232
+                OUTLINECOLOR 0 0 0 
+				WIDTH 2
+            END
+        END
+        METADATA
+            "wms_title"            "states"
+            "wms_abstract"         "states"
+            "gml_include_items"    "state_name"
+        END  # end METADATA
+    END # end Layer
+
+    LAYER # counties polygon layer begins here
+        NAME counties
+        
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+        CONNECTIONTYPE   postgis
+        CONNECTION       "host=postgis2.cj0oborxdlge.us-east-1.rds.amazonaws.com port=5432 dbname=efetac user=readonly  password=d$Kp%23r4"
+        DATA             "geom from dtl_counties"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Counties"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "counties"
+            "wms_abstract"       "counties"
+            "gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer
+	
+	    LAYER # counties polygon layer begins here
+        NAME CountiesBlack
+        
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+        CONNECTIONTYPE   postgis
+        CONNECTION       "host=postgis2.cj0oborxdlge.us-east-1.rds.amazonaws.com port=5432 dbname=efetac user=readonly  password=d$Kp%23r4"
+        DATA             "geom from dtl_counties"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Counties"
+            STYLE
+                OUTLINECOLOR 0 0 0
+				WIDTH 0.5
+            END
+        END
+        METADATA
+            "wms_title"          "countiesblack"
+            "wms_abstract"       "countiesblack"
+            "gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer
+	
+LAYER  
+        NAME GSMNP
+        PROJECTION
+            "proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+        END
+        DATA  /fsdata2/landat/GSMNP_simple.shp
+        EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+        STATUS   OFF
+        TYPE     POLYGON
+        DUMP     TRUE
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+            NAME "Great Smoky Mountains National Park"
+            STYLE
+                OUTLINECOLOR 0 0 0 
+				WIDTH 3
+            END
+        END
+        METADATA
+            "wms_title"            "Great Smoky Mountains National Park"
+            "wms_abstract"         "Great Smoky Mountains National Park"
+            #"gml_include_items"     
+        END  # end METADATA
+	END # end Layer
+
+LAYER  
+        NAME AppLCCRegion
+        PROJECTION
+            "proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+        END
+        DATA  /fsdata2/landat/AppLCCboundary.shp
+        EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+        STATUS   OFF
+        TYPE     POLYGON
+        DUMP     TRUE
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+            NAME "AppLCCRegion"
+            STYLE
+                OUTLINECOLOR 255 255 255
+				WIDTH 1
+            END
+        END
+        METADATA
+            "wms_title"            "AppLCCRegion"
+            "wms_abstract"         "AppLCCRegion"
+            #"gml_include_items"     
+        END  # end METADATA
+	END # end Layer	
+	
+LAYER  
+        NAME AppLCCRegionDark
+        PROJECTION
+            "proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+        END
+        DATA  /fsdata2/landat/AppLCCboundary.shp
+        EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+        STATUS   OFF
+        TYPE     POLYGON
+        DUMP     TRUE
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+            NAME "AppLCCRegionDark"
+            STYLE
+                OUTLINECOLOR 105 105 105
+            END
+        END
+        METADATA
+            "wms_title"            "AppLCCRegionDark"
+            "wms_abstract"         "AppLCCRegionDark"
+            #"gml_include_items"     
+        END  # end METADATA
+	END # end Layer	
+	
+LAYER  
+        NAME AppLCCRegionBlk
+        PROJECTION
+            "proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+        END
+        DATA  /fsdata2/landat/AppLCCboundary.shp
+        EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+        STATUS   OFF
+        TYPE     POLYGON
+        DUMP     TRUE
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+            NAME "AppLCCRegionBlk"
+            STYLE
+                OUTLINECOLOR 0 0 0 
+            END
+        END
+        METADATA
+            "wms_title"            "AppLCCRegionBlk"
+            "wms_abstract"         "AppLCCRegionBlk"
+            #"gml_include_items"     
+        END  # end METADATA
+	END # end Layer	
+	
+LAYER  
+        NAME USCounties
+        PROJECTION
+            "proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+        END
+        DATA  /fsdata2/landat/Counties.shp
+        EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+        STATUS   OFF
+        TYPE     POLYGON
+        DUMP     TRUE
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+            NAME "Counties"
+            STYLE
+                OUTLINECOLOR 217 217 217 
+            END
+        END
+        METADATA
+            "wms_title"            "Counties"
+            "wms_abstract"         "Counties"
+            #"gml_include_items"     
+        END  # end METADATA
+	END # end Layer
+
+LAYER  
+        NAME UrbanAreas
+        PROJECTION
+            "proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+        END
+        DATA  /fsdata2/landat/UrbanAreas.shp
+        EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+        STATUS   OFF
+        TYPE     POLYGON
+        DUMP     TRUE
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+            NAME "UrbanAreas"
+            STYLE
+				OUTLINECOLOR 238 154 0
+				COLOR 238 154 0
+            END
+        END
+        METADATA
+            "wms_title"            "UrbanAreas"
+            "wms_abstract"         "UrbanAreas"
+            #"gml_include_items"     
+        END  # end METADATA
+	END # end Layer	
+	
+END # end of Map file

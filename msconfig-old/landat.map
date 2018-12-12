@@ -1,0 +1,2687 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+     #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_landat
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC landat WMS"
+            "wms_abstract"           "NEMAC landat WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/landat"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+    END
+   
+    LAYER
+        NAME Ascendency         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/ascend.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Ascendency"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0 - 20"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 21.50534847)
+		  STYLE
+			COLOR 212 185 218
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "21 - 42"
+		  EXPRESSION ([pixel] >= 21.50534847 AND [pixel] <= 42.07568181)
+		  STYLE
+			COLOR 201 148 199
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "43 - 64"
+		  EXPRESSION ([pixel] >= 42.07568181 AND [pixel] <= 64.51604543)
+		  STYLE
+			COLOR 223 101 176
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "65 - 95"
+		  EXPRESSION ([pixel] >= 64.51604543 AND [pixel] <= 95.37154542)
+		  STYLE
+			COLOR 221 28 119
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "96 - 240"
+		  EXPRESSION ([pixel] >= 95.37154542 AND [pixel] <= 238.4288635)
+		  STYLE
+			COLOR 152 0 67
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Ascendency"
+            "wms_abstract"          "Ascendency"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER  
+	
+    LAYER
+        NAME ChangeSeasonality         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/ChngSeason.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		  NAME "-4.566 - -1.378" 
+		  EXPRESSION ([pixel] >= -4566 AND [pixel] <= -1378)
+		  STYLE
+			COLOR 39 99 25
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-1.377 - -0.507"
+		  EXPRESSION ([pixel] >= -1377.999999 AND [pixel] <= -507)
+		  STYLE
+			COLOR 111 173 55
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-0.506 - -0.158"
+		  EXPRESSION ([pixel] >= -506.9999999 AND [pixel] <= -158)
+		  STYLE
+			COLOR 200 232 158
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-0.157 - -0.027"
+		  EXPRESSION ([pixel] >= -157.9999999 AND [pixel] <= -27)
+		  STYLE
+			COLOR 247 247 247
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-0.026 - 0.031"
+		  EXPRESSION ([pixel] >= -26.99999999 AND [pixel] <= 31)
+		  STYLE
+			COLOR 245 196 225
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.031 - 0.106"
+		  EXPRESSION ([pixel] >= 31.00000001 AND [pixel] <= 106)
+		  STYLE
+			COLOR 214 92 157
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.106 - 2.002"
+		  EXPRESSION ([pixel] >= 106.0000001 AND [pixel] <= 2002)
+		  STYLE
+			COLOR 143 1 82
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "SeasonalityChange"
+            "wms_abstract"          "SeasonalityChange"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+    LAYER
+        NAME ChangeAscendency         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/ChgAscend.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		  NAME "-164 - -20" 
+		  EXPRESSION ([pixel] >= -164 AND [pixel] <= -20)
+		  STYLE
+			COLOR 84 49 5
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-20 - -7"
+		  EXPRESSION ([pixel] >= -19.9999 AND [pixel] <= -7)
+		  STYLE
+			COLOR 173 113 33
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-6.9999 - -2"
+		  EXPRESSION ([pixel] >= -6.9999 AND [pixel] <= -2)
+		  STYLE
+			COLOR 230 205 147
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-2 - 2"
+		  EXPRESSION ([pixel] >= -1.9999 AND [pixel] <= 2)
+		  STYLE
+			COLOR 245 245 245 
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2 - 13"
+		  EXPRESSION ([pixel] >= 2.0001 AND [pixel] <= 13)
+		  STYLE
+			COLOR 150 214 205
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "13 - 33"
+		  EXPRESSION ([pixel] >= 13.0001 AND [pixel] <= 33)
+		  STYLE
+			COLOR 39 135 127
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "33 - 113"
+		  EXPRESSION ([pixel] >= 33.0001 AND [pixel] <= 113)
+		  STYLE
+			COLOR 0 61 49
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "AscendencyChange"
+            "wms_abstract"          "AscendencyChange"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME EndGrowingSeason         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/EndSsn2.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "End of Growing Season"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1 - 38"
+		  EXPRESSION ([pixel] >= 1 AND [pixel] <= 38)
+		  STYLE
+			COLOR 255 255 217
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "39 - 91"
+		  EXPRESSION ([pixel] >= 39 AND [pixel] <= 91)
+		  STYLE
+			COLOR 225 242 177
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "92 - 156"
+		  EXPRESSION ([pixel] >= 92 AND [pixel] <= 156)
+		  STYLE
+			COLOR 152 214 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "157 - 224"
+		  EXPRESSION ([pixel] >= 157 AND [pixel] <= 224)
+		  STYLE
+			COLOR 65 183 196
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "225 - 287"
+		  EXPRESSION ([pixel] >= 225 AND [pixel] <= 287)
+		  STYLE
+			COLOR 31 128 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "288 - 328"
+		  EXPRESSION ([pixel] >= 288 AND [pixel] <= 328)
+		  STYLE
+			COLOR 37 67 156
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "329 - 365"
+		  EXPRESSION ([pixel] >= 329 AND [pixel] <= 365)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "End of Growing Season"
+            "wms_abstract"          "End of Growing Season"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME FIACarbonStorage         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/FIAcar_clip.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		  NAME "0.01 - 28.9"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 28.91626766)
+		  STYLE
+			COLOR 140 82 10
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "28.9 - 75.5"
+		  EXPRESSION ([pixel] >= 28.91626767 AND [pixel] <= 75.50358779)
+		  STYLE
+			COLOR 217 180 102
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "75.5 - 118.8"
+		  EXPRESSION ([pixel] >= 75.5035878 AND [pixel] <= 118.8779893)
+		  STYLE
+			COLOR 245 231 293
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "118.8 - 165.4"
+		  EXPRESSION ([pixel] >= 118.8779894 AND [pixel] <= 165.4653094)
+		  STYLE
+			COLOR 91 181 174 
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "165.4 - 409.6"
+		  EXPRESSION ([pixel] >= 165.4653095 AND [pixel] <= 409.6471252)
+		  STYLE
+			COLOR 1 102 94
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "FIA Carbon Storage"
+            "wms_abstract"          "FIA Carbon Storage"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Development         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/Development.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Development"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0 - 0.15"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 0.152941177)
+		  STYLE
+			COLOR 255 248 237
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.15 - 0.23"
+		  EXPRESSION ([pixel] >= 0.152941177 AND [pixel] <= 0.231372549)
+		  STYLE
+			COLOR 255 226 186
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.23 - 0.30"
+		  EXPRESSION ([pixel] >= 0.231372549 AND [pixel] <= 0.301960784)
+		  STYLE
+			COLOR 252 194 139
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.30 - 0.37"
+		  EXPRESSION ([pixel] >= 0.301960784 AND [pixel] <= 0.376470588)
+		  STYLE
+			COLOR 252 140 88
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.37 - 0.46"
+		  EXPRESSION ([pixel] >= 0.376470588 AND [pixel] <= 0.466666667)
+		  STYLE
+			COLOR 232 84 58
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.46 - 0.59"
+		  EXPRESSION ([pixel] >= 0.466666667 AND [pixel] <= 0.592156863)
+		  STYLE
+			COLOR 191 25 13
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.59 - 1"
+		  EXPRESSION ([pixel] >= 0.592156863 AND [pixel] <= 1)
+		  STYLE
+			COLOR 128 0 0
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Development"
+            "wms_abstract"          "Development"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+LAYER
+        NAME SeasonLength         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/SsnLength.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Season Length"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "121 - 183"
+		  EXPRESSION ([pixel] >= 121 AND [pixel] <= 183)
+		  STYLE
+			COLOR 241 250 232
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "184 - 195"
+		  EXPRESSION ([pixel] >= 184 AND [pixel] <= 195)
+		  STYLE
+			COLOR 204 235 197
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "196 - 206"
+		  EXPRESSION ([pixel] >= 196 AND [pixel] <= 206)
+		  STYLE
+			COLOR 169 222 182
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "207 - 217"
+		  EXPRESSION ([pixel] >= 207 AND [pixel] <= 217)
+		  STYLE
+			COLOR 122 204 196
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "218 - 228"
+		  EXPRESSION ([pixel] >= 218 AND [pixel] <= 228)
+		  STYLE
+			COLOR 78 181 212
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "229 - 239"
+		  EXPRESSION ([pixel] >= 229 AND [pixel] <= 239)
+		  STYLE
+			COLOR 44 142 191
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "240 - 269"
+		  EXPRESSION ([pixel] >= 240 AND [pixel] <= 269)
+		  STYLE
+			COLOR 8 88 158
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Season Length"
+            "wms_abstract"          "Season Length"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+	
+LAYER
+        NAME NDVIStdDv         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/NDVIstdv.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "NDVI Standard Deviation"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "27 - 454"
+		  EXPRESSION ([pixel] >= 27 AND [pixel] <= 454)
+		  STYLE
+			COLOR 235 247 250
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "455 - 769"
+		  EXPRESSION ([pixel] >= 455 AND [pixel] <= 769)
+		  STYLE
+			COLOR 190 211 230
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "770 - 1,074"
+		  EXPRESSION ([pixel] >= 770 AND [pixel] <= 1074)
+		  STYLE
+			COLOR 156 186 217
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1,075 - 1,379"
+		  EXPRESSION ([pixel] >= 1075 AND [pixel] <= 1379)
+		  STYLE
+			COLOR 141 151 199
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1,380 - 1,697"
+		  EXPRESSION ([pixel] >= 1380 AND [pixel] <= 1697)
+		  STYLE
+			COLOR 137 106 176
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1,698 - 2,036"
+		  EXPRESSION ([pixel] >= 1698 AND [pixel] <= 2036)
+		  STYLE
+			COLOR 136 65 158
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2,037 - 3,908"
+		  EXPRESSION ([pixel] >= 2037 AND [pixel] <= 3908)
+		  STYLE
+			COLOR 110 1 106
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "NDVI Standard Deviation"
+            "wms_abstract"          "NDVI Standard Deviation"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME LanDATCStorage         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/FIAmodelpred_proj.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Carbon Storage"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.01 - 31.2"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 31.28393842)
+		  STYLE
+			COLOR 140 82 10
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "31.2 - 68.4"
+		  EXPRESSION ([pixel] >= 31.28393843 AND [pixel] <= 68.43361529)
+		  STYLE
+			COLOR 217 180 102
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "68.4 - 99.7"
+		  EXPRESSION ([pixel] >= 68.4336153 AND [pixel] <= 99.71755371)
+		  STYLE
+			COLOR 245 231 293
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "99.7 - 132.9"
+		  EXPRESSION ([pixel] >= 99.71755372 AND [pixel] <= 132.9567383)
+		  STYLE
+			COLOR 91 181 174 
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "132.9 - 498.5"
+		  EXPRESSION ([pixel] >= 132.9567384 AND [pixel] <= 498.5877686)
+		  STYLE
+			COLOR 1 102 94
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "LanDAT Carbon Storage Model"
+            "wms_abstract"          "LanDAT Carbon Storage Model"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME ShiftCarbonStorage         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/FIAequilibdiff_proj.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		  NAME "-479.34 - -85.68"
+		  EXPRESSION ([pixel] >= -479.3432007 AND [pixel] <= -85.68547327)
+		  STYLE
+			COLOR 102 0 31
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-85.68 - -29.44"
+		  EXPRESSION ([pixel] >= -85.68547326 AND [pixel] <= -29.44865507)
+		  STYLE
+			COLOR 201 74 64
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-29.44 - -6.95"
+		  EXPRESSION ([pixel] >= -29.44865506 AND [pixel] <= -6.953927792)
+		  STYLE
+			COLOR 247 181 151
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-6.95 - 0.54"
+		  EXPRESSION ([pixel] >= -6.953927791 AND [pixel] <= 0.544314635)
+		  STYLE
+			COLOR 247 247 247
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.54 - 26.78"
+		  EXPRESSION ([pixel] >= 0.544314635 AND [pixel] <= 26.78816313)
+		  STYLE
+			COLOR 166 207 227
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "26.78 - 139.26"
+		  EXPRESSION ([pixel] >= 26.78816314 AND [pixel] <= 139.2617995)
+		  STYLE
+			COLOR 56 130 186
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "139.26 - 476.68"
+		  EXPRESSION ([pixel] >= 139.2617996 AND [pixel] <= 476.6827087)
+		  STYLE
+			COLOR 5 48 97
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Landscape Shift in Carbon Storage"
+            "wms_abstract"          "Landscape Shift in Carbon Storage"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+	LAYER
+        NAME Capacity  
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/capacity.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Capacity"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "0 - 70"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 69.96945777)
+		  STYLE
+			COLOR 254 237 222
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "71 - 119"
+		  EXPRESSION ([pixel] >= 69.96945777 AND [pixel] <= 118.5196939)
+		  STYLE
+			COLOR 253 190 133
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "120 - 160"
+		  EXPRESSION ([pixel] >= 118.5196939 AND [pixel] <= 161.3581374)
+		  STYLE
+			COLOR 253 141 60
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "160 - 200"
+		  EXPRESSION ([pixel] >= 161.3581374 AND [pixel] <= 202.7686328)
+		  STYLE
+			COLOR 230 85 13
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "201 - 364"
+		  EXPRESSION ([pixel] >= 202.7686328 AND [pixel] <= 364.12677)
+		  STYLE
+			COLOR 166 54 3
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Capacity"
+            "wms_abstract"          "Capacity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+	LAYER
+        NAME ForestDensity  
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/fden27app.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Forest Density"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "1 - 5"
+		  EXPRESSION ([pixel] >= 1 AND [pixel] <= 5)
+		  STYLE
+			COLOR 255 255 230
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "5 - 9"
+		  EXPRESSION ([pixel] >= 5.00001 AND [pixel] <= 9)
+		  STYLE
+			COLOR 217 240 163
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "9 - 14"
+		  EXPRESSION ([pixel] >= 9.00001 AND [pixel] <= 14)
+		  STYLE
+			COLOR 121 199 124
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "14 - 18"
+		  EXPRESSION ([pixel] >= 14.00001 AND [pixel] <= 18)
+		  STYLE
+			COLOR 36 133 68
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "18 - 22"
+		  EXPRESSION ([pixel] >= 18.00001 AND [pixel] <= 22)
+		  STYLE
+			COLOR 0 69 41
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "ForestDensity"
+            "wms_abstract"          "ForestDensity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+	LAYER
+        NAME ConditionalEntropy         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/condent.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Conditional Entropy"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "0 - 1.3"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 1.280575494)
+		  STYLE
+			COLOR 208 209 230
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1.3 - 1.8"
+		  EXPRESSION ([pixel] >= 1.280575494 AND [pixel] <= 1.801739941)
+		  STYLE
+			COLOR 166 189 219
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1.8 - 2.26"
+		  EXPRESSION ([pixel] >= 1.801739941 AND [pixel] <= 2.263342735)
+		  STYLE
+			COLOR 116 169 207
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2.26 - 2.7"
+		  EXPRESSION ([pixel] >= 2.263342735 AND [pixel] <= 2.739835942)
+		  STYLE
+			COLOR 43 140 190
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2.7 - 3.8"
+		  EXPRESSION ([pixel] >= 2.739835942 AND [pixel] <= 3.797055244)
+		  STYLE
+			COLOR 4 90 141
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Conditional Entropy"
+            "wms_abstract"          "Conditional Entropy"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Seasonality         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/Seasonality.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA= 255"		
+        CLASS
+		  NAME "0 - 2"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 2)
+		  STYLE
+			COLOR 33 130 145
+		  END #STYLE 
+		END #end class
+		CLASS
+		  NAME "2.01 - 5"
+		  EXPRESSION ([pixel] >= 2.01 AND [pixel] <= 5)
+		  STYLE
+			COLOR 81 153 156
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "5.01 - 8"
+		  EXPRESSION ([pixel] >= 5.01 AND [pixel] <= 8)
+		  STYLE
+			COLOR 118 173 162
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "8.01 - 11"
+		  EXPRESSION ([pixel] >= 8.01 AND [pixel] <= 11)
+		  STYLE
+			COLOR 157 196 171
+     	  END #STYLE
+		END #end class
+		CLASS
+		  NAME "11.01 - 14"
+		  EXPRESSION ([pixel] >= 11.01 AND [pixel] <= 14)
+		  STYLE
+			COLOR 196 219 180
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "14.01 - 17"
+		  EXPRESSION ([pixel] >= 14.01 AND [pixel] <= 17)
+		  STYLE
+			COLOR 237 245 188
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "17.01 - 20"
+		  EXPRESSION ([pixel] >= 17.01 AND [pixel] <= 20)
+		  STYLE
+			COLOR 212 170 108
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "20.01 - 23"
+		  EXPRESSION ([pixel] >= 20.01 AND [pixel] <= 23)
+		  STYLE
+			COLOR 194 140 79
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "23.01 - 26"
+		  EXPRESSION ([pixel] >= 23.01 AND [pixel] <= 26)
+		  STYLE
+			COLOR 176 111 55
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "26.01 - 29"
+		  EXPRESSION ([pixel] >= 26.01 AND [pixel] <= 29)
+		  STYLE
+			COLOR 156 85 31
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "29.01 - 32"
+		  EXPRESSION ([pixel] >= 29.01 AND [pixel] <= 32)
+		  STYLE
+			COLOR 156 85 31
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "32.01 - 35"
+		  EXPRESSION ([pixel] >= 32.01 AND [pixel] <= 35)
+		  STYLE
+			COLOR 135 71 5
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Seasonality"
+            "wms_abstract"          "Seasonality"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+	LAYER
+        NAME MutualInformation         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/MI.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Mutual Information"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "0 - 0.54"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 0.536208635)
+		  STYLE
+			COLOR 218 218 235
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.55 - 0.96"
+		  EXPRESSION ([pixel] >= 0.536208635 AND [pixel] <= 0.969300225)
+		  STYLE
+			COLOR 188 189 220
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.97 - 1.48"
+		  EXPRESSION ([pixel] >= 0.969300225 AND [pixel] <= 1.484885452)
+		  STYLE
+			COLOR 158 154 200
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.49 - 2.18"
+		  EXPRESSION ([pixel] >= 1.484885452 AND [pixel] <= 2.186081359)
+		  STYLE
+			COLOR 117 107 177
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "2.19 - 5.26"
+		  EXPRESSION ([pixel] >= 2.186081359 AND [pixel] <= 5.258969307)
+		  STYLE
+			COLOR 84 39 143
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Mutual Information"
+            "wms_abstract"          "Mutual Information"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+	LAYER
+        NAME PercentBasal         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PctBasal2.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA= 255"
+        CLASS
+		  NAME "Percent Basal Area"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "0 - 10"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 10)
+		  STYLE
+			COLOR 198 217 120
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "11 -15"
+		  EXPRESSION ([pixel] >= 11 AND [pixel] <= 15)
+		  STYLE
+			COLOR 245 235 16
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "18 - 20"
+		  EXPRESSION ([pixel] >= 18 AND [pixel] <= 20)
+		  STYLE
+			COLOR 236 139 27 
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "21 - 25"
+		  EXPRESSION ([pixel] >= 21 AND [pixel] <= 25)
+		  STYLE
+			COLOR 144 27 29  
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "26 - 100"
+		  EXPRESSION ([pixel] >= 26 AND [pixel] <= 100)
+		  STYLE
+			COLOR 113 15 13
+		  END #STYLE
+		END #end classs
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Percent Basal Area"
+            "wms_abstract"          "Percent Basal Area"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+	LAYER
+        NAME FinalDistance         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/finaldist.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Final Distance"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "0 - 0.6"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 0.652057446)
+		  STYLE
+			COLOR 252 187 161
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.6 - 1.25"
+		  EXPRESSION ([pixel] >= 0.652057446 AND [pixel] <= 1.253956627)
+		  STYLE
+			COLOR 252 146 114
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1.25 - 2.2"
+		  EXPRESSION ([pixel] >= 1.253956627 AND [pixel] <= 2.206963664)
+		  STYLE
+			COLOR 251 106 74
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2.2 - 4.3"
+		  EXPRESSION ([pixel] >= 2.206963664 AND [pixel] <= 4.313610796)
+		  STYLE
+			COLOR 222 45 38
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "4.3 - 13"
+		  EXPRESSION ([pixel] >= 4.313610796 AND [pixel] <= 12.79035759)
+		  STYLE
+			COLOR 165 15 21
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Final Distance"
+            "wms_abstract"          "FinalDistance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+	LAYER
+        NAME Overhead         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/ovhead.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Overhead"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "0 - 50"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 50.21288105)
+		  STYLE
+			COLOR 217 240 163
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "50 - 84"
+		  EXPRESSION ([pixel] >= 50.21288105 AND [pixel] <= 83.99245559)
+		  STYLE
+			COLOR 173 221 142
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "84 - 112"
+		  EXPRESSION ([pixel] >= 83.99245559 AND [pixel] <= 112.2942614)
+		  STYLE
+			COLOR 120 198 121
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "112 - 140"
+		  EXPRESSION ([pixel] >= 112.2942614 AND [pixel] <= 139.6831056)
+		  STYLE
+			COLOR 49 163 84
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "140 - 233"
+		  EXPRESSION ([pixel] >= 139.6831056 AND [pixel] <= 232.8051758)
+		  STYLE
+			COLOR 0 104 55
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Overhead"
+            "wms_abstract"          "Overhead"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+	LAYER
+        NAME Midpoint         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/Midpoint.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Midpoint"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "1 - 93"
+		  EXPRESSION ([pixel] >= 1 AND [pixel] <= 93)
+		  STYLE
+			COLOR 229 201 0
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "94 - 160"
+		  EXPRESSION ([pixel] >= 94 AND [pixel] <= 160)
+		  STYLE
+			COLOR 183 185 38
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "161 - 206"
+		  EXPRESSION ([pixel] >= 161 AND [pixel] <= 206)
+		  STYLE
+			COLOR 137 169 76
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "207 - 240"
+		  EXPRESSION ([pixel] >= 207 AND [pixel] <= 240)
+		  STYLE
+			COLOR 91 153 114
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "241 - 291"
+		  EXPRESSION ([pixel] >= 241 AND [pixel] <= 291)
+		  STYLE
+			COLOR 45 137 152
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "292 - 365"
+		  EXPRESSION ([pixel] >= 292 AND [pixel] <= 365)
+		  STYLE
+			COLOR 0 122 191
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Middle Growing Season"
+            "wms_abstract"          "Middle Growing Season"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+	LAYER
+        NAME MeanShannon         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/meanshannon.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Mean Shannon Entropy"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "0 - 2"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 2.023156379)
+		  STYLE
+			COLOR 208 209 230
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2 - 3"
+		  EXPRESSION ([pixel] >= 2.023156379 AND [pixel] <= 2.849516028)
+		  STYLE
+			COLOR 166 189 219
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "3 - 3.5"
+		  EXPRESSION ([pixel] >= 2.849516028 AND [pixel] <= 3.618885355)
+		  STYLE
+			COLOR 103 169 207
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "3.5 - 4.5"
+		  EXPRESSION ([pixel] >= 3.618885355 AND [pixel] <= 4.502235324)
+		  STYLE
+			COLOR 28 144 153
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "4.5 - 7.5"
+		  EXPRESSION ([pixel] >= 4.502235324 AND [pixel] <= 7.237770709)
+		  STYLE
+			COLOR 1 108 89
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Shannon Diversity"
+            "wms_abstract"          "Shannon Diversity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+	LAYER
+        NAME DynamicActivity         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/DynActiv.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Dynamic Activity"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0 - 0.349"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 0.341176471)
+		  STYLE
+			COLOR 255 255 128
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.35 - 0.50"
+		  EXPRESSION ([pixel] >= 0.341176471 AND [pixel] <= 0.505882353)
+		  STYLE
+			COLOR 250 209 85
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.51 - 0.65"
+		  EXPRESSION ([pixel] >= 0.505882353 AND [pixel] <= 0.650980392)
+		  STYLE
+			COLOR 242 167 46
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.66 - 0.79"
+		  EXPRESSION ([pixel] >= 0.650980392 AND [pixel] <= 0.788235294)
+		  STYLE
+			COLOR 173 83 19
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.80 - 1"
+		  EXPRESSION ([pixel] >= 0.788235294 AND [pixel] <= 1)
+		  STYLE
+			COLOR 107 0 0
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Dynamic Activity"
+            "wms_abstract"          "Dynamic Activity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+	LAYER
+        NAME BeginningGrowingSeason         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/BgnSsn.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Beginning Growing Season"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1 - 104"
+		  EXPRESSION ([pixel] >= 1 AND [pixel] <= 104)
+		  STYLE
+			COLOR 175 233 118
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "105 - 119"
+		  EXPRESSION ([pixel] >= 104.0000001 AND [pixel] <= 119)
+		  STYLE
+			COLOR 55 201 176
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "120 - 134"
+		  EXPRESSION ([pixel] >= 119.0000001 AND [pixel] <= 134)
+		  STYLE
+			COLOR 97 152 187
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "135 - 365"
+		  EXPRESSION ([pixel] >= 134.0000001 AND [pixel] <= 365)
+		  STYLE
+			COLOR 146 98 133
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Beginning Growing Season"
+            "wms_abstract"          "Beginning Growing Season"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+	LAYER
+        NAME HighNDVI         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/highndvi.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "High NDVI"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "-2.40 - -1.66"
+		  EXPRESSION ([pixel] >= -2.403785944 AND [pixel] <= -1.660786676)
+		  STYLE			
+		    COLOR 97 21 13
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-1.66 - -1.28"
+		  EXPRESSION ([pixel] >= -1.660786676 AND [pixel] <= -1.280647516)
+		  STYLE
+			COLOR 122 57 27
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-1.28 - -0.91"
+		  EXPRESSION ([pixel] >= -1.280647516 AND [pixel] <= -0.917787409)
+		  STYLE
+			COLOR 145 93 44
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.91 - -0.53"
+		  EXPRESSION ([pixel] >= -0.917787409 AND [pixel] <= -0.537648249)
+		  STYLE
+			COLOR 168 134 64
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.53 - -0.12"
+		  EXPRESSION ([pixel] >= -0.537648249 AND [pixel] <= -0.122950983)
+		  STYLE
+			COLOR 194 182 89
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.12 - 0.27"
+		  EXPRESSION ([pixel] >= -0.122950983 AND [pixel] <= 0.27446723)
+		  STYLE
+			COLOR 181 189 91
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.27 - 0.63"
+		  EXPRESSION ([pixel] >= 0.27446723 AND [pixel] <= 0.637327337)
+		  STYLE
+			COLOR 132 156 68
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.63 - 0.96"
+		  EXPRESSION ([pixel] >= 0.637327337 AND [pixel] <= 0.965629339)
+		  STYLE
+			COLOR 91 125 49
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.96 - 1.27"
+		  EXPRESSION ([pixel] >= 0.965629339 AND [pixel] <= 1.276652288)
+		  STYLE
+			COLOR 53 97 32
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.27 - 2"
+		  EXPRESSION ([pixel] >= 1.276652288 AND [pixel] <= 2)
+		  STYLE
+			COLOR 16 69 16
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "High NDVI"
+            "wms_abstract"          "High NDVI"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+	LAYER
+        NAME TotalDistance         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/totaldist.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Total Distance"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "0 -6.71"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 6.719914335)
+		  STYLE			
+		    COLOR 40 146 199
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "6.71 - 10.25"
+		  EXPRESSION ([pixel] >= 6.719914335 AND [pixel] <= 10.25671135)
+		  STYLE
+			COLOR 116 171 173
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "10.25 - 14.14"
+		  EXPRESSION ([pixel] >= 10.25671135 AND [pixel] <= 14.14718807)
+		  STYLE
+			COLOR 172 201 147
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "14.14 - 19.45"
+		  EXPRESSION ([pixel] >= 14.14718807 AND [pixel] <= 19.4523836)
+		  STYLE
+			COLOR 227 235 117
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "19.45 - 27.23"
+		  EXPRESSION ([pixel] >= 19.4523836 AND [pixel] <= 27.23333704)
+		  STYLE
+			COLOR 252 222 86
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "27.23 - 37.49"
+		  EXPRESSION ([pixel] >= 27.23333704 AND [pixel] <= 37.4900484)
+		  STYLE
+			COLOR 252 160 61
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "37.49 - 50.22"
+		  EXPRESSION ([pixel] >= 37.4900484 AND [pixel] <= 50.22251766)
+		  STYLE
+			COLOR 245 99 37
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "50.22 - 90.18"
+		  EXPRESSION ([pixel] >= 50.22251766 AND [pixel] <= 90.18832397)
+		  STYLE
+			COLOR 232 16 20
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Total Distance"
+            "wms_abstract"          "Total Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+	LAYER
+        NAME LowNDVI         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/lowndvi.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Low NDVI"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "-2.40 - -1.72"
+		  EXPRESSION ([pixel] >= -2.403866768 AND [pixel] <= -1.724567663)
+		  STYLE			
+		    COLOR 98 216 160
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-1.72 - -1.34"
+		  EXPRESSION ([pixel] >= -1.724567663 AND [pixel] <= -1.343497433)
+		  STYLE
+			COLOR 79 199 168
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-1.34 - -0.94"
+		  EXPRESSION ([pixel] >= -1.343497433 AND [pixel] <= -0.945858933)
+		  STYLE
+			COLOR 55 181 171
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.94 - -0.51"
+		  EXPRESSION ([pixel] >= -0.945858933 AND [pixel] <= -0.515083891)
+		  STYLE
+			COLOR 56 162 169
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.51 - -0.11"
+		  EXPRESSION ([pixel] >= -0.515083891 AND [pixel] <= -0.11744539)
+		  STYLE
+			COLOR 79 123 150
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.11 - 0.26"
+		  EXPRESSION ([pixel] >= -0.11744539 AND [pixel] <= 0.263624839)
+		  STYLE
+			COLOR 87 104 134
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.26 - 0.66"
+		  EXPRESSION ([pixel] >= 0.263624839 AND [pixel] <= 0.66126334)
+		  STYLE
+			COLOR 90 86 115
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.66 - 1"
+		  EXPRESSION ([pixel] >= 0.66126334 AND [pixel] <= 1.009197028)
+		  STYLE
+			COLOR 89 69 94
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1 - 2"
+		  EXPRESSION ([pixel] >= 1.009197028 AND [pixel] <= 2)
+		  STYLE
+			COLOR 82 53 73
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Low NDVI"
+            "wms_abstract"          "Low NDVI"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME CompositionalShift         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/comp_shift.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html		
+		CLASS
+		  NAME "0 - 4"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 4)
+		  COLOR 255 204 204
+		END #end class
+		CLASS
+		  NAME "5 - 8"
+		  EXPRESSION ([pixel] >= 5 AND [pixel] <= 8)
+		  COLOR 255 158 143
+		END #end class
+		CLASS
+		  NAME "9 - 23"
+		  EXPRESSION ([pixel] >= 9 AND [pixel] <= 23)
+		  COLOR 250 114 90
+		END #end class
+		CLASS
+		  NAME "24 - 74"
+		  EXPRESSION ([pixel] >= 24 AND [pixel] <= 74)
+		  COLOR 237 67 45
+		END #end class
+		CLASS
+		  NAME "75 - 100"
+		  EXPRESSION ([pixel] >= 75 AND [pixel] <= 100)
+		  COLOR 219 0 0
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Compositional Shift"
+            "wms_abstract"          "Compositional Shift"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+LAYER
+        NAME MaximumDistance         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/maxdistance.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Maximum Distance"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "0 - 1.41"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 1.411216736)
+		  STYLE			
+		    COLOR 125 232 149
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.41 - 2.17"
+		  EXPRESSION ([pixel] >= 1.411216736 AND [pixel] <= 2.175636261)
+		  STYLE
+			COLOR 59 213 186
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "2.17 - 3.05"
+		  EXPRESSION ([pixel] >= 2.175636261 AND [pixel] <= 3.057636262)
+		  STYLE
+			COLOR 67 187 206
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "3.05 - 4.41"
+		  EXPRESSION ([pixel] >= 3.057636262 AND [pixel] <= 4.410052299)
+		  STYLE
+			COLOR 120 157 200
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "4.41 - 5.93"
+		  EXPRESSION ([pixel] >= 4.410052299 AND [pixel] <= 5.93887043)
+		  STYLE
+			COLOR 157 125 170
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "5.93 - 7.58"
+		  EXPRESSION ([pixel] >= 5.93887043 AND [pixel] <= 7.585289955)
+		  STYLE
+			COLOR 168 97 126 
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "7.58 - 14.93"
+		  EXPRESSION ([pixel] >= 7.585289955 AND [pixel] <= 14.93537712)
+		  STYLE
+			COLOR 156 79 81
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Max Distance"
+            "wms_abstract"          "Max Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+LAYER
+        NAME MaximumStep         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/maxstep.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Maximum Step"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "0 - 1.12"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 1.124434123)
+		  STYLE			
+		    COLOR 16 85 80
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.12 - 1.82"
+		  EXPRESSION ([pixel] >= 1.124434123 AND [pixel] <= 1.82051239)
+		  STYLE
+			COLOR 29 98 79
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.82 - 2.67"
+		  EXPRESSION ([pixel] >= 1.82051239 AND [pixel] <= 2.677224103)
+		  STYLE
+			COLOR 52 111 73
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "2.67 - 4.28"
+		  EXPRESSION ([pixel] >= 2.677224103 AND [pixel] <= 4.283558565)
+		  STYLE
+			COLOR 79 123 66
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "4.28 - 5.88"
+		  EXPRESSION ([pixel] >= 4.283558565 AND [pixel] <= 5.889893027)
+		  STYLE
+			COLOR 111 132 58
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "5.88 - 6.90"
+		  EXPRESSION ([pixel] >= 5.889893027 AND [pixel] <= 6.907238186)
+		  STYLE
+			COLOR 145 140 55
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "6.90 - 8.19"
+		  EXPRESSION ([pixel] >= 6.907238186 AND [pixel] <= 8.192305756)
+		  STYLE
+			COLOR 182 145 59
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "8.19 - 13.65"
+		  EXPRESSION ([pixel] >= 8.192305756 AND [pixel] <= 13.65384293)
+		  STYLE
+			COLOR 219 148 74
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Max Step"
+            "wms_abstract"          "Max Step"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+	
+LAYER
+        NAME Phenoclasses_2001         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr1_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2001"
+            "wms_abstract"          "500 Phenoclasses 2001"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2002 
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr2_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2002"
+            "wms_abstract"          "500 Phenoclasses 2002"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2003     
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr3_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2003"
+            "wms_abstract"          "500 Phenoclasses 2003"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2004       
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr4_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2004"
+            "wms_abstract"          "500 Phenoclasses 2004"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2005         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr5_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2005"
+            "wms_abstract"          "500 Phenoclasses 2005"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2006     
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr6_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2006"
+            "wms_abstract"          "500 Phenoclasses 2006"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2007
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr7_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2007"
+            "wms_abstract"          "500 Phenoclasses 2007"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2008         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr8_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2008"
+            "wms_abstract"          "500 Phenoclasses 2008"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2009   
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr9_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2009"
+            "wms_abstract"          "500 Phenoclasses 2009"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2010       
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr10_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2010"
+            "wms_abstract"          "500 Phenoclasses 2010"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2011       
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr11_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2011"
+            "wms_abstract"          "500 Phenoclasses 2011"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2012       
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr12_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2012"
+            "wms_abstract"          "500 Phenoclasses 2012"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2013        
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr13_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2013"
+            "wms_abstract"          "500 Phenoclasses 2013"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+	
+LAYER
+        NAME Phenoclasses_2014     
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+	    INCLUDE "cmaps/phenoclass500.cmap"		
+        STATUS   OFF
+		OFFSITE 0 0 0
+        DATA     /fsdata1/landat/phenoyr14_copy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		PROCESSING "NODATA=0"				
+        METADATA
+            "wms_title"             "500 Phenoclasses 2014"
+            "wms_abstract"          "500 Phenoclasses 2014"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+	LAYER
+        NAME MeanNDVI         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/mean_ndvi3.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html	
+		CLASS
+		  NAME "2 - 17.99"
+		  EXPRESSION ([pixel] >= 2 AND [pixel] <= 16.89294139)
+		  STYLE
+			COLOR 242 252 252 
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "19 - 24.99"
+		  EXPRESSION ([pixel] >= 16.8929414 AND [pixel] <= 23.84196112)
+		  STYLE
+			COLOR 232 246 250 
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "25 - 31.99"
+		  EXPRESSION ([pixel] >= 23.84196113 AND [pixel] <=  31.13843184)
+		  STYLE
+			COLOR 211 240 236
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "32 - 38.99"
+		  EXPRESSION ([pixel] >= 31.13843185 AND [pixel] <= 38.43490255)
+		  STYLE
+			COLOR 171 224 212
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "39 - 45.99"
+		  EXPRESSION ([pixel] >= 38.43490256 AND [pixel] <= 46.07882426)
+		  STYLE
+			COLOR 124 204 180
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "46 - 53.99"
+		  EXPRESSION ([pixel] >= 46.07882427 AND [pixel] <= 54.07019695)
+		  STYLE
+			COLOR 87 186 143
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "54 - 60.99"
+		  EXPRESSION ([pixel] >= 54.07019696 AND [pixel] <= 61.36666767)
+		  STYLE
+			COLOR 55 163 102
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "61 - 67.99"
+		  EXPRESSION ([pixel] >= 61.36666768 AND [pixel] <= 68.3156874)
+		  STYLE
+			COLOR 29 133 64
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "68 - 75.99"
+		  EXPRESSION ([pixel] >= 68.31568741 AND [pixel] <= 75.9596091)
+		  STYLE
+			COLOR 0 105 42
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "76 - 95"
+		  EXPRESSION ([pixel] >= 75.95960911 AND [pixel] <= 91)
+		  STYLE
+			COLOR 0 69 28
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Mean NDVI"
+            "wms_abstract"          "Mean NDVI"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+	
+    LAYER
+        NAME EvergreenDecline         
+        PROJECTION
+          "+proj=laea"
+          "+lat_0=45"
+          "+lon_0=-100"
+          "+x_0=0"
+          "+y_0=0"
+          "+a=6370997"
+          "+b=6370997"
+          "+units=m"
+          "+no_defs"
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /var/vsites/fswms.nemac.org/data/fsdata-internal/efetac_nasa/AncillaryData/EvergreenDecline.img
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	    #INCLUDE "cmaps/decadalChange.cmap"		
+		CLASS
+		  NAME "11 - 15"
+		  EXPRESSION ([pixel] >= 11 AND [pixel] <= 15)
+		  STYLE
+			COLOR 224 236 244
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "16 - 20"
+		  EXPRESSION ([pixel] >= 16 AND [pixel] <= 20)
+		  STYLE
+		    COLOR 191 211 230
+		  END
+		END
+		CLASS
+		  NAME "21 - 26"
+		  EXPRESSION ([pixel] >= 21 AND [pixel] <= 26)
+		  STYLE
+			COLOR 158 188 218
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "27 - 40"
+		  EXPRESSION ([pixel] >= 27 AND [pixel] <= 40)
+		  STYLE
+			COLOR 140 150 198
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "41 - 55"
+		  EXPRESSION ([pixel] >= 41 AND [pixel] <= 55)
+		  STYLE
+			COLOR 140 107 177
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "56 - 70"
+		  EXPRESSION ([pixel] >= 56 AND [pixel] <= 70)
+		  STYLE
+			COLOR 136 65 157
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "71 - 90"
+		  EXPRESSION ([pixel] >= 71 AND [pixel] <= 90)
+		  STYLE
+			COLOR 129 15 124
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "91 - 106"
+		  EXPRESSION ([pixel] >= 91 AND [pixel] <= 106)
+		  STYLE
+			COLOR 77 0 75
+		  END #STYLE
+		END #end class
+        METADATA
+            "wms_title"             "Evergreen Decline"
+            "wms_abstract"          "Evergreen Decline"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+LAYER
+        NAME EvergreenThrive         
+        PROJECTION
+          "+proj=laea"
+          "+lat_0=45"
+          "+lon_0=-100"
+          "+x_0=0"
+          "+y_0=0"
+          "+a=6370997"
+          "+b=6370997"
+          "+units=m"
+          "+no_defs"
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /var/vsites/fswms.nemac.org/data/fsdata-internal/efetac_nasa/AncillaryData/EvergreenThrive.img
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	    #INCLUDE "cmaps/decadalChange.cmap"
+        CLASS
+		  NAME "Evergreen Thrive"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "11 - 16"
+		  EXPRESSION ([pixel] >= 11 AND [pixel] <= 16)
+		  STYLE
+			COLOR 229 245 224
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "17 - 22"
+		  EXPRESSION ([pixel] >= 17 AND [pixel] <= 22)
+		  STYLE
+			COLOR 199 233 192
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "23 - 28"
+		  EXPRESSION ([pixel] >= 23 AND [pixel] <= 28)
+		  STYLE
+			COLOR 161 217 155
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "29 - 34"
+		  EXPRESSION ([pixel] >= 29 AND [pixel] <= 34)
+		  STYLE
+			COLOR 116 196 118
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "35 - 39"
+		  EXPRESSION ([pixel] >= 35 AND [pixel] <= 39)
+		  STYLE
+			COLOR 65 171 93
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "40 - 46"
+		  EXPRESSION ([pixel] >= 40 AND [pixel] <= 46)
+		  STYLE
+			COLOR 35 139 69
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "47 - 51"
+		  EXPRESSION ([pixel] >= 47 AND [pixel] <= 51)
+		  STYLE
+			COLOR 0 109 44
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "52 - 60"
+		  EXPRESSION ([pixel] >= 52 AND [pixel] <= 60)
+		  STYLE
+			COLOR 0 68 27
+		  END #STYLE
+		END #end class
+        METADATA
+            "wms_title"             "Evergreen Thrive"
+            "wms_abstract"          "Evergreen Thrive"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+	
+END # end MAP

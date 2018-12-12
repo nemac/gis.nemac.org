@@ -1,0 +1,292 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+     #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_landat
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC SAMAB WMS"
+            "wms_abstract"           "NEMAC SAMAB WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/samab"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+    END
+   
+    LAYER # counties polygon layer begins here
+        NAME counties
+        
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+        CONNECTIONTYPE   postgis
+        CONNECTION       "host=postgis2.cj0oborxdlge.us-east-1.rds.amazonaws.com port=5432 dbname=efetac user=readonly  password=d$Kp%23r4"
+        DATA             "geom from dtl_counties"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "Counties"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "counties"
+            "wms_abstract"       "counties"
+            "gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer	
+
+    LAYER # gdb layer begins here
+        NAME WBDHU12
+
+        PROJECTION
+            "init=epsg:4326"
+        END
+
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/cloud4-var/var/vsites/climate-widget-data.nemac.org/wdb/WBD_National/WBD.gdb"
+        DATA             "WBDHU12"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "WBDHU12"
+            STYLE
+                OUTLINECOLOR 32 32 32
+            END
+        END
+        METADATA
+            "wms_title"          "WBDHU12"
+            "wms_abstract"       "WBDHU12"
+            #"gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer
+	LAYER # gdb layer begins here
+        NAME pov_rate
+        PROJECTION
+			"proj=lcc"
+			"lat_1=34.33333333333334"
+			"lat_2=36.16666666666666"
+			"lat_0=33.75"
+			"lon_0=-79"
+			"x_0=609601.2199999999"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"to_meter=0.3048006096012192"
+			"no_defs"
+		END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/wnc/wnc.gdb"
+        DATA             "Economic_2_19"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        Pov_Rate
+		CLASS
+            NAME "12.18% - 14%"
+			EXPRESSION ([Pov_Rate] >= 12.18 AND [Pov_Rate] <= 14)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "14.01% - 16%"
+			EXPRESSION ([Pov_Rate] >= 14.01 AND [Pov_Rate] <= 16)
+            STYLE
+                COLOR        255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "16.01% - 18%"
+			EXPRESSION ([Pov_Rate] >= 16.01 AND [Pov_Rate] <= 18)
+            STYLE
+                COLOR        255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "18.01% - 20%"
+			EXPRESSION ([Pov_Rate] >= 18.01 AND [Pov_Rate] <= 20)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "20.01% - 22%"
+			EXPRESSION ([Pov_Rate] >= 20.01 AND [Pov_Rate] <= 22)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "pov_rate"
+            "wms_abstract"       "pov_rate"
+            #"gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer
+
+	LAYER # gdb layer begins here
+        NAME MED_HHI1
+		PROJECTION
+			"proj=lcc"
+			"lat_1=36.16666666666666"
+			"lat_2=34.33333333333334"
+			"lat_0=33.75"
+			"lon_0=-79"
+			"x_0=609601.22"
+			"y_0=0"
+			"ellps=GRS80"
+			"datum=NAD83"
+			"units=m"
+			"no_defs"
+		END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/wnc/wnc.gdb"
+        DATA             "Med_HHI"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        MED_HHI1
+		CLASS
+            NAME "28000 - 30000"
+			EXPRESSION ([MED_HHI1] >= 28000 AND [MED_HHI1] <= 30000)
+            STYLE
+                COLOR        236 247 233
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "30001 - 32000"
+			EXPRESSION ([MED_HHI1] >= 30001 AND [MED_HHI1] <= 32000)
+            STYLE
+                COLOR        197 232 190
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "32001 - 35000"
+			EXPRESSION ([MED_HHI1] >= 32001 AND [MED_HHI1] <= 35000)
+            STYLE
+                COLOR        160 217 154
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "35001 - 38000"
+			EXPRESSION ([MED_HHI1] >= 35001 AND [MED_HHI1] <= 38000)
+            STYLE
+                COLOR        116 196 119
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "38001 - 42000"
+			EXPRESSION ([MED_HHI1] >= 38001 AND [MED_HHI1] <= 42000)
+            STYLE
+                COLOR        49 163 83
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME "42001 - 46500"
+			EXPRESSION ([MED_HHI1] >= 42001 AND [MED_HHI1] <= 46500)
+            STYLE
+                COLOR        0 110 44
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "MED_HHI1"
+            "wms_abstract"       "MED_HHI1"
+            #"gml_include_items"  "name,state_name"
+        END  # end METADATA
+    END # end Layer	
+END # end MAP

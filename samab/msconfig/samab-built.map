@@ -1,0 +1,1485 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+     #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 5
+
+    # all temp files get prefixed with this string
+    NAME ms_landat
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC SAMAB WMS"
+            "wms_abstract"           "NEMAC SAMAB WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/samab-built"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+    END
+	
+	SYMBOL
+		  NAME "f"
+		  TYPE truetype
+		  FONT "arial"
+		  CHARACTER "f"
+	END # SYMBOL
+   
+     SYMBOL 
+    NAME 'railcircle' 
+    TYPE ELLIPSE 
+    POINTS 1 1 END 
+    FILLED TRUE 
+  END 
+
+  SYMBOL 
+    NAME "dashed2" 
+    TYPE ellipse 
+    POINTS 1 1 END 
+    #STYLE  1 7 END 
+  END 
+   
+    LAYER # gdb layer begins here
+        NAME MeanUrban
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Counties_DataJoin"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MeanUrban"
+		CLASS
+            NAME ""
+			EXPRESSION ([MeanUrban] >= 1 AND [MeanUrban] <= 1.1)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MeanUrban] > 1.1 AND [MeanUrban] <= 1.3)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MeanUrban] > 1.3 AND [MeanUrban] <= 1.5)
+            STYLE
+                COLOR        116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MeanUrban] > 1.5 AND [MeanUrban] <= 2.0)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MeanUrban] > 2.0 AND [MeanUrban] <= 6.438)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "MeanUrban"
+            "wms_abstract"       "MeanUrban"
+            "gml_include_items"  "MeanUrban"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME urbanInf
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_counties_urbanInf"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "UIC_2013"
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 1)
+            STYLE
+                COLOR        196 10 10
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 2)
+            STYLE
+                COLOR       201 32 26
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 3)
+            STYLE
+                COLOR        207 55 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 4)
+            STYLE
+                COLOR        212 78 57
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 5)
+            STYLE
+                COLOR        217 100 74
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 6)
+            STYLE
+                COLOR        222 121 91
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 7)
+            STYLE
+                COLOR        227 142 111
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 8)
+            STYLE
+                COLOR        232 162 130
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 9)
+            STYLE
+                COLOR        237 182 149
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 10)
+            STYLE
+                COLOR        242 200 170
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 11)
+            STYLE
+                COLOR        247 217 190
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([UIC_2013] = 12)
+            STYLE
+                COLOR        255 235 214
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "urbanInf"
+            "wms_abstract"       "urbanInf"
+            "gml_include_items"  "UIC_2013"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_per_home_vac
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PER_HO_VAC"
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_HO_VAC] >= 5.6 AND [PER_HO_VAC] <= 10)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_HO_VAC] > 10 AND [PER_HO_VAC] <= 15)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_HO_VAC] > 15 AND [PER_HO_VAC] <= 20)
+            STYLE
+                COLOR        103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_HO_VAC] > 20 AND [PER_HO_VAC] <= 32)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PER_HO_VAC] > 32 AND [PER_HO_VAC] <= 50)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Housing_per_home_vac"
+            "wms_abstract"       "Housing_per_home_vac"
+            "gml_include_items"  "PER_HO_VAC"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_perchng_home_vac
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "CHG_VACHOM"
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_VACHOM] > -22 AND [CHG_VACHOM] <= 0)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_VACHOM] > 0 AND [CHG_VACHOM] <= 15)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_VACHOM] > 15 AND [CHG_VACHOM] <= 50)
+            STYLE
+                COLOR        103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_VACHOM] > 50 AND [CHG_VACHOM] <= 100)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_VACHOM] > 100 AND [CHG_VACHOM] <= 200)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Housing_perchng_home_vac"
+            "wms_abstract"       "Housing_perchng_home_vac"
+            "gml_include_items"  "CHG_VACHOM"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_per_seasonal_home
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "P_VACSEAS"
+		CLASS
+            NAME ""
+			EXPRESSION ([P_VACSEAS] >= 0 AND [P_VACSEAS] <= 12)
+            STYLE
+                COLOR        246 240 247
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([P_VACSEAS] > 12 AND [P_VACSEAS] <= 25)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([P_VACSEAS] > 25 AND [P_VACSEAS] <= 40)
+            STYLE
+                COLOR        103 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([P_VACSEAS] > 40 AND [P_VACSEAS] <= 60)
+            STYLE
+                COLOR        28 145 153
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([P_VACSEAS] > 60 AND [P_VACSEAS] <= 95)
+            STYLE
+                COLOR        1 107 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Housing_per_seasonal_home"
+            "wms_abstract"       "Housing_per_seasonal_home"
+            "gml_include_items"  "P_VACSEAS"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_UnitDensity
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM        "TOT_HOUS,SQMI"
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] / [SQMI]>= 4 AND [TOT_HOUS] / [SQMI]<= 20)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] / [SQMI]> 20 AND [TOT_HOUS] / [SQMI]<= 50)
+            STYLE
+                COLOR        211 184 217
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] / [SQMI]> 50 AND [TOT_HOUS] / [SQMI]<= 70)
+            STYLE
+                COLOR        201 149 201
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] / [SQMI]> 70 AND [TOT_HOUS] / [SQMI]<= 150)
+            STYLE
+                COLOR        222 100 175
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] / [SQMI]> 150 AND [TOT_HOUS] / [SQMI]<= 500)
+            STYLE
+                COLOR        222 29 119
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] / [SQMI]> 500 AND [TOT_HOUS] / [SQMI]<= 1900)
+            STYLE
+                COLOR        153 0 66
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		
+        METADATA
+            "wms_title"          "Housing_UnitDensity"
+            "wms_abstract"       "Housing_UnitDensity"
+            "gml_include_items"  "TOT_HOUS"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_TotUnits
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "TOT_HOUS"
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] >= 1840 AND [TOT_HOUS] <= 7000)
+            STYLE
+                COLOR        255 237 222
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] > 7000 AND [TOT_HOUS] <= 12300)
+            STYLE
+                COLOR       252 207 162
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] > 12300 AND [TOT_HOUS] <= 25000)
+            STYLE
+                COLOR        252 174 106
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] > 25000 AND [TOT_HOUS] <= 47000)
+            STYLE
+                COLOR        252 141 61
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] > 47000 AND [TOT_HOUS] <= 113000)
+            STYLE
+                COLOR        230 86 14
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TOT_HOUS] > 113000 AND [TOT_HOUS] <= 196400)
+            STYLE
+                COLOR        166 55 3
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Housing_TotUnits"
+            "wms_abstract"       "Housing_TotUnits"
+            "gml_include_items"  "TOT_HOUS"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_Chng_totUnits
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "CHG_TOTHOM"
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_TOTHOM] > -13 AND [CHG_TOTHOM] <= 0)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_TOTHOM] > 0 AND [CHG_TOTHOM] <= 20)
+            STYLE
+                COLOR       211 184 217
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_TOTHOM] > 20 AND [CHG_TOTHOM] <= 35)
+            STYLE
+                COLOR        201 149 201
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_TOTHOM] > 35 AND [CHG_TOTHOM] <= 50)
+            STYLE
+                COLOR        232 42 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_TOTHOM] > 50 AND [CHG_TOTHOM] <= 75)
+            STYLE
+                COLOR        207 19 88
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([CHG_TOTHOM] > 75 AND [CHG_TOTHOM] <= 115)
+            STYLE
+                COLOR        145 0 63
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Housing_Chng_totUnits"
+            "wms_abstract"       "Housing_Chng_totUnits"
+            "gml_include_items"  "CHG_TOTHOM"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_MedHomeVal
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MED_HOMVAL"
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HOMVAL] > 60000 AND [MED_HOMVAL] <= 100000)
+            STYLE
+                COLOR        235 247 250
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HOMVAL] > 100000 AND [MED_HOMVAL] <= 140000)
+            STYLE
+                COLOR       179 227 227
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HOMVAL] > 140000 AND [MED_HOMVAL] <= 180000)
+            STYLE
+                COLOR        103 194 163
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HOMVAL] > 180000 AND [MED_HOMVAL] <= 250000)
+            STYLE
+                COLOR        44 163 96
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MED_HOMVAL] > 250000 AND [MED_HOMVAL] <= 395000)
+            STYLE
+                COLOR        0 110 44
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Housing_MedHomeVal"
+            "wms_abstract"       "Housing_MedHomeVal"
+            "gml_include_items"  "MED_HOMVAL"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Housing_PerMobileHom
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Housing"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MOBILE_HOM"
+		CLASS
+            NAME ""
+			EXPRESSION ([MOBILE_HOM] > 0 AND [MOBILE_HOM] <= 5)
+            STYLE
+                COLOR        255 255 179
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MOBILE_HOM] > 5 AND [MOBILE_HOM] <= 15)
+            STYLE
+                COLOR       255 203 92
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MOBILE_HOM] > 15 AND [MOBILE_HOM] <= 20)
+            STYLE
+                COLOR       252 141 61
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MOBILE_HOM] > 20 AND [MOBILE_HOM] <= 27)
+            STYLE
+                COLOR        240 59 31
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MOBILE_HOM] > 27 AND [MOBILE_HOM] <= 36)
+            STYLE
+                COLOR        189 0 38
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Housing_PerMobileHom"
+            "wms_abstract"       "Housing_PerMobileHom"
+            "gml_include_items"  "MOBILE_HOM"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME USGS_Water_TO_WFrTO
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "USGS_Water_Use"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "TO_WFrTo"
+		CLASS
+            NAME ""
+			EXPRESSION ([TO_WFrTo] >= 0 AND [TO_WFrTo] <= 20)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TO_WFrTo] > 20 AND [TO_WFrTo] <= 30)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TO_WFrTo] > 30 AND [TO_WFrTo] <= 150)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TO_WFrTo] > 150 AND [TO_WFrTo] <= 800)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([TO_WFrTo] > 800 AND [TO_WFrTo] <= 3000)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "USGS_Water_TO_WFrTO"
+            "wms_abstract"       "USGS_Water_TO_WFrTO"
+            "gml_include_items"  "TO_WFrTo"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME USGS_Water_IR_IrTot
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "USGS_Water_Use"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "IR_IrTot"
+		CLASS
+            NAME ""
+			EXPRESSION ([IR_IrTot] = 0)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([IR_IrTot] >= 0 AND [IR_IrTot] <= 0.25)
+            STYLE
+                COLOR        207 208 230
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([IR_IrTot] > 0.25 AND [IR_IrTot] <= 0.50)
+            STYLE
+                COLOR       167 189 219
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([IR_IrTot] > 0.50 AND [IR_IrTot] <= 1)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([IR_IrTot] > 1 AND [IR_IrTot] <= 3)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([IR_IrTot] > 3 AND [IR_IrTot] <= 5.5)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "USGS_Water_IR_IrTot"
+            "wms_abstract"       "USGS_Water_IR_IrTot"
+            "gml_include_items"  "IR_IrTot"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME USGS_Water_MI_Wtot
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "USGS_Water_Use"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "MI_Wtotl"
+		CLASS
+            NAME ""
+			EXPRESSION ([MI_Wtotl] >= 0.00 AND [MI_Wtotl] <= 0.10)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MI_Wtotl] > 0.10 AND [MI_Wtotl] <= 0.20)
+            STYLE
+                COLOR       188 200 224
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MI_Wtotl] > 0.20 AND [MI_Wtotl] <= 0.40)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MI_Wtotl] > 0.40 AND [MI_Wtotl] <= 0.80)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([MI_Wtotl] > 0.80 AND [MI_Wtotl] <= 2.16)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "USGS_Water_MI_Wtot"
+            "wms_abstract"       "USGS_Water_MI_Wtot"
+            "gml_include_items"  "MI_Wtotl"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME USGS_Water_PT_Power
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "USGS_Water_Use"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "PT_Power"
+		CLASS
+            NAME ""
+			EXPRESSION ([PT_Power] = 0)
+            STYLE
+                COLOR        240 237 245
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PT_Power] >= 0 AND [PT_Power] <= 215)
+            STYLE
+                COLOR        207 208 230
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PT_Power] > 215 AND [PT_Power] <= 750)
+            STYLE
+                COLOR       167 189 219
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PT_Power] > 750 AND [PT_Power] <= 4000)
+            STYLE
+                COLOR       116 169 207
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PT_Power] > 4000 AND [PT_Power] <= 9800)
+            STYLE
+                COLOR        44 142 191
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([PT_Power] > 9800 AND [PT_Power] <= 24000)
+            STYLE
+                COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "USGS_Water_PT_Power"
+            "wms_abstract"       "USGS_Water_PT_Power"
+            "gml_include_items"  "PT_Power"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Coal_Fields
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "Coal_Fields"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+            NAME ""
+			STYLE
+			 SYMBOL "hatchsymbol"
+			 COLOR 104 104 104
+			 SIZE 5				
+			 ANGLE 45		     
+			END # STYLE
+			STYLE
+                #COLOR        4 90 140
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Coal_Fields"
+            "wms_abstract"       "Coal_Fields"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Shale_Play
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "Shale_Play"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+            NAME ""
+			STYLE
+                COLOR        218 206 175
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "Shale_Play"
+            "wms_abstract"       "Shale_Play"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Petroleum_Terminals
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "Petroleum_Terminals"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POINT
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		
+		# CLASS
+            # NAME ""
+            # STYLE
+                # SYMBOL 'f'
+                # SIZE 12
+                # COLOR 163 125 48
+            # END
+        # END
+		CLASS
+            NAME ""
+            STYLE
+                SYMBOL 'triangle'
+                SIZE 12
+                COLOR 163 125 48
+            END
+        END
+        METADATA
+            "wms_title"          "Petroleum_Terminals"
+            "wms_abstract"       "Petroleum_Terminals"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Petroleum_Pipeline
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "Petroleum_Pipeline"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             LINE
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+			STYLE
+			  COLOR 163 125 48
+			  WIDTH 3
+			  #LINECAP butt
+			  #PATTERN 10 5 5 10 END
+			END
+			STYLE
+			  COLOR 0 0 0
+			  WIDTH 3
+			  LINECAP butt
+			  PATTERN 10 15 END
+			END
+		 END
+		
+        METADATA
+            "wms_title"          "Petroleum_Pipeline"
+            "wms_abstract"       "Petroleum_Pipeline"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Natural_Gas_Pipelines
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "Natural_Gas_Pipelines"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             LINE
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+			STYLE
+			  COLOR 0 8 161
+			  WIDTH 2
+			END
+		 END
+		
+        METADATA
+            "wms_title"          "Natural_Gas_Pipelines"
+            "wms_abstract"       "Natural_Gas_Pipelines"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME US_PowerPlants
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "Renewable_PowerPlants"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POINT
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM 	"Energy_type_A"
+		CLASS
+            NAME "Power Plant"
+			#EXPRESSION "Biomass"
+            STYLE
+                SYMBOL 'circle'
+                SIZE 5
+                COLOR 100 100 48 
+            END
+        END
+		
+        METADATA
+            "wms_title"          "US_PowerPlants"
+            "wms_abstract"       "US_PowerPlants"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME roadway540m
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/new_datasets.gdb"
+        DATA             "SAMAB_Counties_DataJoin"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM        "rdbuff_pct"
+		CLASS
+            NAME ""
+			EXPRESSION ([rdbuff_pct] >= 37 AND [rdbuff_pct] <= 71.24)
+            STYLE
+                COLOR        255 255 212
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([rdbuff_pct] > 71.24 AND [rdbuff_pct] <= 81.52)
+            STYLE
+                COLOR       255 218 143
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([rdbuff_pct] > 81.52 AND [rdbuff_pct] <= 87.19)
+            STYLE
+                COLOR       255 155 41
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([rdbuff_pct] > 87.19 AND [rdbuff_pct] <= 93.38)
+            STYLE
+                COLOR        217 95 13
+                OUTLINECOLOR 110 110 110
+            END
+        END
+		CLASS
+            NAME ""
+			EXPRESSION ([rdbuff_pct] > 93.3 AND [rdbuff_pct] <= 100.95)
+            STYLE
+                COLOR        153 52 5
+                OUTLINECOLOR 110 110 110
+            END
+        END
+        METADATA
+            "wms_title"          "540mroadway"
+            "wms_abstract"       "540mroadway"
+            "gml_include_items"  "rdbuff_pct"
+        END  # end METADATA
+    END # end Layer	
+	
+	LAYER # gdb layer begins here
+        NAME Coal_Mines
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/default.gdb"
+        DATA             "CoalMines_US_2012"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POINT
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		#CLASSITEM 	"Energy_type_A"
+		CLASS
+            NAME ""
+			#EXPRESSION "Biomass"
+            STYLE
+                SYMBOL 'triangle'
+                SIZE 5
+                COLOR 0 0 0
+            END
+        END
+		
+        METADATA
+            "wms_title"          "Coal_Mines"
+            "wms_abstract"       "Coal_Mines"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME US_Highways
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/default.gdb"
+        DATA             "US_Highways"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             LINE
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM "FCLASS"
+		CLASS
+			NAME ""
+			EXPRESSION "1"
+			STYLE
+			  COLOR 250 52 17
+			  WIDTH 2
+			END
+		END
+		
+		CLASS
+			NAME ""
+			EXPRESSION "11"
+			STYLE
+			  COLOR 250 52 17
+			  WIDTH 2
+			END
+		END
+		
+        METADATA
+            "wms_title"          "US_Highways"
+            "wms_abstract"       "US_Highways"
+            "gml_include_items"  "FCLASS"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME Railways_SAMAB
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/default.gdb"
+        DATA             "Railways_SAMAB"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             LINE
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASS
+			STYLE
+			  COLOR 0 112 255
+			  WIDTH 1
+			  #LINECAP butt
+			  #PATTERN 10 5 5 10 END
+			END
+			STYLE
+			  COLOR 0 112 255
+			  WIDTH 4
+			  LINECAP butt
+			  PATTERN 1 10 END
+			END
+		 END
+		
+        METADATA
+            "wms_title"          "Railways_SAMAB"
+            "wms_abstract"       "Railways_SAMAB"
+            "gml_include_items"  "all"
+        END  # end METADATA
+    END # end Layer
+	
+	LAYER # gdb layer begins here
+        NAME AvgAnnDailyTraffic
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CONNECTIONTYPE   ogr
+        CONNECTION       "/fsdata1/samab/Built/default.gdb"
+        DATA             "AvgAnnDailyTraffic"
+        EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             LINE
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+		CLASSITEM "AADT"
+		CLASS
+			NAME ""
+			EXPRESSION "([AADT]>5000)"
+			STYLE
+			  COLOR 250 52 17
+			  WIDTH 2
+			END
+		END
+		METADATA
+            "wms_title"          "AvgAnnDailyTraffic"
+            "wms_abstract"       "AvgAnnDailyTraffic"
+            "gml_include_items"  "AADT"
+        END  # end METADATA
+    END # end Layer
+	
+END # end MAP
