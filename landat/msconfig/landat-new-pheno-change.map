@@ -1,0 +1,181 @@
+    ## Phenological Change Metrics
+
+    # Total Year-to-Year Path Length
+    LAYER
+        NAME TotalPath
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/phenodistance_totpath.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 1.3 and [pixel] <= 52.75)
+		   STYLE
+			  COLORRANGE 245 245 122 13 122 117
+			  DATARANGE 1.3 52.75
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 52.75 and [pixel] <= 192)
+		   STYLE
+			  COLORRANGE 13 122 117 2 57 89
+			  DATARANGE 52.76 192
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Total Path"
+            "wms_abstract"          "Total Path"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Maximum Year-to-Year Step
+    LAYER
+        NAME MaximumStep         
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/phenodistance_maxstep.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/max_step.cmap"
+        METADATA
+            "wms_title"             "Max Step"
+            "wms_abstract"          "Max Step"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Mean Year-to-Year Step
+    LAYER
+        NAME MeanStep         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/phenodistance_meanstep.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/mean_step.cmap"
+        METADATA
+            "wms_title"             "Mean Step"
+            "wms_abstract"          "Mean Step"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+    # Minimum Year-to-Year Step
+    LAYER
+        NAME MinimumStep         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+	END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/phenodistance_minstep.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/min_step.cmap"
+        METADATA
+            "wms_title"             "Min Step"
+            "wms_abstract"          "Min Step"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Maximum Between-years Distance
+    LAYER
+        NAME MaximumDistance         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/phenodistance_maxdist.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/maximum_distance.cmap"
+        METADATA
+            "wms_title"             "Max Distance"
+            "wms_abstract"          "Max Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Mean Between-years Distance
+    LAYER
+        NAME MeanDistance         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/phenodistance_meandist.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/mean_distance.cmap"
+        METADATA
+            "wms_title"             "Mean Distance"
+            "wms_abstract"          "Mean Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Minimum Between-years Distance
+    LAYER
+        NAME MinimumDistance         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/phenodistance_mindist.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 0.29)
+		   STYLE
+			  COLORRANGE 122 245 202 107 99 125
+			  DATARANGE 0 0.29
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.29 and [pixel] <= 3.902114153)
+		   STYLE
+			  COLORRANGE 107 99 125 66 1 41
+			  DATARANGE 0.30 3.902114153
+			END
+		END	
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Minimum Distance"
+            "wms_abstract"          "Minimum Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+
+
+
+
+
+

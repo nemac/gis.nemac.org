@@ -1,0 +1,57 @@
+        CLASS
+		  NAME "Final Distance"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "0 - 1"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 1.002713073)
+		  STYLE
+			COLOR 255 255 217
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1 - 1.9"
+		  EXPRESSION ([pixel] >= 1.002713074 AND [pixel] <= 1.905154838)
+		  STYLE
+			COLOR 225 242 177
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1.9 - 2.9"
+		  EXPRESSION ([pixel] >= 1.905154839 AND [pixel] <= 2.90786791)
+		  STYLE
+			COLOR 152 214 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2.9 - 4.1"
+		  EXPRESSION ([pixel] >= 2.907867911 AND [pixel] <= 4.111123597)
+		  STYLE
+			COLOR 65 183 196
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "4.1 - 5.7"
+		  EXPRESSION ([pixel] >= 4.111123598 AND [pixel] <= 5.715464513)
+		  STYLE
+			COLOR 31 128 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "5.7 - 8.1"
+		  EXPRESSION ([pixel] >= 5.715464514 AND [pixel] <= 8.121975888)
+		  STYLE
+			COLOR 37 67 156
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "8.1 - 25.5"
+		  EXPRESSION ([pixel] >= 8.121975889 AND [pixel] <= 25.56918335)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class
+

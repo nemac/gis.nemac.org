@@ -1,0 +1,141 @@
+		CLASS
+		  NAME "Open Water"
+		  EXPRESSION ([pixel] = 11)
+		  STYLE
+			COLOR 71 107 160
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Perennial Ice/Snow"
+		  EXPRESSION ([pixel] = 12)
+		  STYLE
+			COLOR 209 221 249
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Developed, Open Space"
+		  EXPRESSION ([pixel] = 21)
+		  STYLE
+			COLOR 221 201 201
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Developed, Low Intensity"
+		  EXPRESSION ([pixel] = 22)
+		  STYLE
+			COLOR 216 147 130
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Developed, Medium Intensity"
+		  EXPRESSION ([pixel] = 23)
+		  STYLE
+			COLOR 237 0 0 
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Developed, High Intensity"
+		  EXPRESSION ([pixel] = 24)
+		  STYLE
+			COLOR 170 0 0
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Barren Land"
+		  EXPRESSION ([pixel] = 31)
+		  STYLE
+			COLOR 178 173 163
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Deciduous Forest"
+		  EXPRESSION ([pixel] = 41)
+		  STYLE
+			COLOR 104 170 99
+		  END #STYLE
+		END #end class  
+		CLASS
+		  NAME "Evergreen Forest"
+		  EXPRESSION ([pixel] = 42)
+		  STYLE
+			COLOR 28 99 48
+		  END #STYLE
+		END #end class    
+		CLASS
+		  NAME "Mixed Forest"
+		  EXPRESSION ([pixel] = 43)
+		  STYLE
+			COLOR 181 201 142
+		  END #STYLE  
+		END #end class
+		CLASS
+		  NAME "Dwarf Scrub"
+		  EXPRESSION ([pixel] = 51)
+		  STYLE
+			COLOR 165 140 48
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Scrub/Shrub"
+		  EXPRESSION ([pixel] = 52)
+		  STYLE
+			COLOR 204 186 124
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Grassland/Herbaceous"
+		  EXPRESSION ([pixel] = 71)
+		  STYLE
+			COLOR 226 226 193
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Sedge/Herbaceous"
+		  EXPRESSION ([pixel] = 72)
+		  STYLE
+			COLOR 201 201 119
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Lichens"
+		  EXPRESSION ([pixel] = 73)
+		  STYLE
+			COLOR 153 193 71 
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Moss"
+		  EXPRESSION ([pixel] = 74)
+		  STYLE
+			COLOR 119 173 147
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Pasture/Hay"
+		  EXPRESSION ([pixel] = 81)
+		  STYLE
+			COLOR 219 216 61
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "Cultivated Crops"
+		  EXPRESSION ([pixel] = 82)
+		  STYLE
+			COLOR 170 112 40
+		  END #STYLE
+		END #end class  
+		CLASS
+		  NAME "Woody Wetlands"
+		  EXPRESSION ([pixel] = 90)
+		  STYLE
+			COLOR 186 216 234
+		  END #STYLE
+		END #end class    
+		CLASS
+		  NAME "Emergent Herbaceous Wetlands"
+		  EXPRESSION ([pixel] = 95)
+		  STYLE
+			COLOR 112 163 186
+		  END #STYLE  
+		END #end class
+

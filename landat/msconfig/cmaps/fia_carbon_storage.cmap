@@ -1,0 +1,36 @@
+		CLASS
+		  NAME "0 - 34"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 34.13)
+		  STYLE
+			COLOR 255 255 191
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "34 - 102"
+		  EXPRESSION ([pixel] > 34.13 AND [pixel] <= 102.39)
+		  STYLE
+			COLOR 180 201 141
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "102 - 204"
+		  EXPRESSION ([pixel] > 102.39 AND [pixel] <= 204.79)
+		  STYLE
+			COLOR 114 153 96
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "204 - 830"
+		  EXPRESSION ([pixel] > 204.79 AND [pixel] <= 830.54)
+		  STYLE
+			COLOR 57 107 57
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "830 - 1,450"
+		  EXPRESSION ([pixel] > 830.54)
+		  STYLE
+			COLOR 0 69 28
+		  END #STYLE
+		END #end class				
+

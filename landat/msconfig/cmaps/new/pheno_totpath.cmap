@@ -1,0 +1,160 @@
+
+  CLASS
+    NAME "2 - 15"
+    EXPRESSION ([PIXEL] >= 2 AND [PIXEL] < 15)
+    STYLE
+      COLOR 80 80 228
+    END
+  END
+  
+  CLASS
+    NAME "15 - 18"
+    EXPRESSION ([PIXEL] >= 15 AND [PIXEL] < 18)
+    STYLE
+      COLOR 72 102 192
+    END
+  END
+  
+  CLASS
+    NAME "18 - 20"
+    EXPRESSION ([PIXEL] >= 18 AND [PIXEL] < 20)
+    STYLE
+      COLOR 64 123 156
+    END
+  END
+  
+  CLASS
+    NAME "20 - 22"
+    EXPRESSION ([PIXEL] >= 20 AND [PIXEL] < 22)
+    STYLE
+      COLOR 56 145 120
+    END
+  END
+  
+  CLASS
+    NAME "22 - 24"
+    EXPRESSION ([PIXEL] >= 22 AND [PIXEL] < 24)
+    STYLE
+      COLOR 49 167 84
+    END
+  END
+  
+  CLASS
+    NAME "24 - 25"
+    EXPRESSION ([PIXEL] >= 24 AND [PIXEL] < 25)
+    STYLE
+      COLOR 41 189 48
+    END
+  END
+  
+  CLASS
+    NAME "25 - 27"
+    EXPRESSION ([PIXEL] >= 25 AND [PIXEL] < 27)
+    STYLE
+      COLOR 41 208 18
+    END
+  END
+  
+  CLASS
+    NAME "27 - 28"
+    EXPRESSION ([PIXEL] >= 27 AND [PIXEL] < 28)
+    STYLE
+      COLOR 75 215 18
+    END
+  END
+  
+  CLASS
+    NAME "28 - 30"
+    EXPRESSION ([PIXEL] >= 28 AND [PIXEL] < 30)
+    STYLE
+      COLOR 109 221 17
+    END
+  END
+  
+  CLASS
+    NAME "30 - 32"
+    EXPRESSION ([PIXEL] >= 30 AND [PIXEL] < 32)
+    STYLE
+      COLOR 143 228 17
+    END
+  END
+  
+  CLASS
+    NAME "32 - 34"
+    EXPRESSION ([PIXEL] >= 32 AND [PIXEL] < 34)
+    STYLE
+      COLOR 176 235 16
+    END
+  END
+  
+  CLASS
+    NAME "34 - 36"
+    EXPRESSION ([PIXEL] >= 34 AND [PIXEL] < 36)
+    STYLE
+      COLOR 210 242 15
+    END
+  END
+  
+  CLASS
+    NAME "36 - 39"
+    EXPRESSION ([PIXEL] >= 36 AND [PIXEL] < 39)
+    STYLE
+      COLOR 244 249 15
+    END
+  END
+  
+  CLASS
+    NAME "39 - 42"
+    EXPRESSION ([PIXEL] >= 39 AND [PIXEL] < 42)
+    STYLE
+      COLOR 242 221 17
+    END
+  END
+  
+  CLASS
+    NAME "42 - 45"
+    EXPRESSION ([PIXEL] >= 42 AND [PIXEL] < 45)
+    STYLE
+      COLOR 237 190 20
+    END
+  END
+  
+  CLASS
+    NAME "45 - 49"
+    EXPRESSION ([PIXEL] >= 45 AND [PIXEL] < 49)
+    STYLE
+      COLOR 232 159 23
+    END
+  END
+  
+  CLASS
+    NAME "49 - 54"
+    EXPRESSION ([PIXEL] >= 49 AND [PIXEL] < 54)
+    STYLE
+      COLOR 227 128 27
+    END
+  END
+  
+  CLASS
+    NAME "54 - 63"
+    EXPRESSION ([PIXEL] >= 54 AND [PIXEL] < 63)
+    STYLE
+      COLOR 222 97 30
+    END
+  END
+  
+  CLASS
+    NAME "63 - 176"
+    EXPRESSION ([PIXEL] >= 63 AND [PIXEL] < 176)
+    STYLE
+      COLOR 217 66 33
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 176)
+    STYLE
+      COLOR 212 36 36
+    END
+  END
+  

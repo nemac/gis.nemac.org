@@ -1,0 +1,115 @@
+		CLASS
+		  EXPRESSION ([pixel] = 1)
+		  STYLE
+			COLOR 0 112 255
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 2)
+		  STYLE
+			COLOR 255 0 0
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 3)
+		  STYLE
+			COLOR 152 230 0
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 4)
+		  STYLE
+			COLOR 132 0 164
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 5)
+		  STYLE
+			COLOR 115 178 255
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 6)
+		  STYLE
+			COLOR 255 170 0
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 7)
+		  STYLE
+			COLOR 230 0 169
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 8)
+		  STYLE
+			COLOR 0 230 169
+		  END #STYLE
+		END #end class	
+        CLASS
+		  EXPRESSION ([pixel] = 9)
+		  STYLE
+			COLOR 152 230 0
+		  END #STYLE
+		END #end class
+        CLASS
+		  EXPRESSION ([pixel] = 10)
+		  STYLE
+			COLOR 190 210 255
+		  END #STYLE
+		END #end class	
+        CLASS
+		  EXPRESSION ([pixel] = 11)
+		  STYLE
+			COLOR 255 190 232
+		  END #STYLE
+		END #end class		
+        CLASS
+		  EXPRESSION ([pixel] = 12)
+		  STYLE
+			COLOR 209 255 115
+		  END #STYLE
+		END #end class	
+        CLASS
+		  EXPRESSION ([pixel] = 13)
+		  STYLE
+			COLOR 168 0 132
+		  END #STYLE
+		END #end class		
+        CLASS
+		  EXPRESSION ([pixel] = 14)
+		  STYLE
+			COLOR 0 168 132
+		  END #STYLE
+		END #end class		
+        CLASS
+		  EXPRESSION ([pixel] = 15)
+		  STYLE
+			COLOR 168 168 0
+		  END #STYLE
+		END #end class		
+        CLASS
+		  EXPRESSION ([pixel] = 16)
+		  STYLE
+			COLOR 156 156 156
+		  END #STYLE
+		END #end class		
+        CLASS
+		  EXPRESSION ([pixel] = 17)
+		  STYLE
+			COLOR 56 168 0
+		  END #STYLE
+		END #end class		
+        CLASS
+		  EXPRESSION ([pixel] = 18)
+		  STYLE
+			COLOR 0 38 115
+		  END #STYLE
+		END #end class		
+        CLASS
+		  EXPRESSION ([pixel] = 19)
+		  STYLE
+			COLOR 168 0 0 
+		  END #STYLE
+		END #end class		
+

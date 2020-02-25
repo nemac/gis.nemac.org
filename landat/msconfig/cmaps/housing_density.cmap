@@ -1,0 +1,49 @@
+		CLASS
+		  NAME "0"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 0.0001)
+		  STYLE 
+			COLOR 78 78 78
+		END
+		CLASS
+		  NAME "0 - 2"
+		  EXPRESSION ([pixel] >= 0.000101 AND [pixel] <= 2)
+		  STYLE
+			COLOR 156 156 156
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2 - 4"
+		  EXPRESSION ([pixel] >= 2.000001 AND [pixel] <= 4)
+		  STYLE
+			COLOR 225 225 225
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "4 - 8"
+		  EXPRESSION ([pixel] >= 4.000001 AND [pixel] <= 8)
+		  STYLE
+			COLOR 255 235 190 
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "8 - 16"
+		  EXPRESSION ([pixel] >= 8.000001 AND [pixel] <= 16)
+		  STYLE
+			COLOR 255 170 0
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "16 - 128"
+		  EXPRESSION ([pixel] >= 16.000001 AND [pixel] <= 128)
+		  STYLE
+			COLOR 230 0 0
+		  END #STYLE
+		END #end class
+	    CLASS
+		  NAME "> 128"
+		  EXPRESSION ([pixel] > 128)
+		  STYLE
+			COLOR 115 0 0
+		  END #STYLE
+		END #end class
+

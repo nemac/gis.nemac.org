@@ -1,0 +1,80 @@
+
+  CLASS
+    NAME "-182 - -1.092"
+    EXPRESSION ([PIXEL] >= -182 AND [PIXEL] < -1.092)
+    STYLE
+      COLOR 0 0 4
+    END
+  END
+  
+  CLASS
+    NAME "-1.092 - -1.092"
+    EXPRESSION ([PIXEL] >= -1.092 AND [PIXEL] < -1.092)
+    STYLE
+      COLOR 27 11 65
+    END
+  END
+  
+  CLASS
+    NAME "-1.092 - 0"
+    EXPRESSION ([PIXEL] >= -1.092 AND [PIXEL] < 0)
+    STYLE
+      COLOR 75 12 107
+    END
+  END
+  
+  CLASS
+    NAME "0 - 0"
+    EXPRESSION ([PIXEL] >= 0 AND [PIXEL] < 0)
+    STYLE
+      COLOR 120 28 109
+    END
+  END
+  
+  CLASS
+    NAME "0 - 0"
+    EXPRESSION ([PIXEL] >= 0 AND [PIXEL] < 0)
+    STYLE
+      COLOR 165 44 96
+    END
+  END
+  
+  CLASS
+    NAME "0 - 0"
+    EXPRESSION ([PIXEL] >= 0 AND [PIXEL] < 0)
+    STYLE
+      COLOR 207 67 70
+    END
+  END
+  
+  CLASS
+    NAME "0 - 0.728"
+    EXPRESSION ([PIXEL] >= 0 AND [PIXEL] < 0.728)
+    STYLE
+      COLOR 237 105 37
+    END
+  END
+  
+  CLASS
+    NAME "0.728 - 0.728"
+    EXPRESSION ([PIXEL] >= 0.728 AND [PIXEL] < 0.728)
+    STYLE
+      COLOR 251 154 7
+    END
+  END
+  
+  CLASS
+    NAME "0.728 - 175.812"
+    EXPRESSION ([PIXEL] >= 0.728 AND [PIXEL] < 175.812)
+    STYLE
+      COLOR 248 209 60
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 175.812)
+    STYLE
+      COLOR 252 255 164
+    END
+  END
+  

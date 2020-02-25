@@ -1,0 +1,15 @@
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 0.58)
+		   STYLE
+			  COLORRANGE 242 228 133 122 70 133
+			  DATARANGE 0 0.58
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.58 and [pixel] <= 13.5)
+		   STYLE
+			  COLORRANGE 122 70 133 62 2 107
+			  DATARANGE 0.59 13.5
+			END
+		END		
+

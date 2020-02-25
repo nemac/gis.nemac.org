@@ -1,0 +1,29 @@
+
+  CLASS
+    NAME "0"
+    EXPRESSION ([PIXEL] = 0)
+    STYLE
+      COLOR 181 181 181
+    END
+  END
+  
+  CLASS
+    NAME "59 - 87"
+    EXPRESSION ([PIXEL] >= 1 AND [PIXEL] < 15)
+    STYLE
+      COLORRANGE 143 143 167 0 0 117
+      DATARANGE 3 14
+      RANGEITEM "pixel"
+    END
+  END
+  
+  CLASS
+    NAME "88 - 116"
+    EXPRESSION ([PIXEL] >= 15 AND [PIXEL] <= 254)
+    STYLE
+      COLORRANGE 0 0 117 255 0 255
+      DATARANGE 15 90
+      RANGEITEM "pixel"
+    END
+  END
+

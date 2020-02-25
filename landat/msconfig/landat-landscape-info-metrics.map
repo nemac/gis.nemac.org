@@ -1,0 +1,184 @@
+
+    ## Landscape Information-Theoretic Metrics
+
+    # Rate of Inter-annual Change
+    LAYER
+        NAME DynamicActivity         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		    END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/lda_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/dynamic_activity.cmap"
+        METADATA
+            "wms_title"             "Inter-annual Change Rate"
+            "wms_abstract"          "Inter-annual Change Rate"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Shannon Entropy
+    LAYER
+        NAME MeanShannon         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/hx_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/mean_shannon.cmap"
+        METADATA
+            "wms_title"             "Shannon Entropy"
+            "wms_abstract"          "Shannon Entropy"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Mutual Information
+    LAYER
+        NAME MutualInformation         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/mi_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0.0001 and [pixel] <= 1.25)
+		   STYLE
+			  COLORRANGE 229 228 240 133 130 189
+			  DATARANGE 0.0001 1.25
+			END
+		END	
+		CLASS
+		   EXPRESSION ([pixel] > 1.25 and [pixel] <= 4.63)
+		   STYLE
+			  COLORRANGE 133 130 189 62 0 125
+			  DATARANGE 1.26 4.63
+			END
+		END
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Mutual Information"
+            "wms_abstract"          "Mutual Information"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Conditional Entropy
+    LAYER
+        NAME ConditionalEntropy         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/condent_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/conditional_entropy.cmap"
+        METADATA
+            "wms_title"             "Conditional Entropy"
+            "wms_abstract"          "Conditional Entropy"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Development
+    LAYER
+        NAME Development
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/develop_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/development.cmap"
+        METADATA
+            "wms_title"             "Development"
+            "wms_abstract"          "Development"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Capacity
+    LAYER
+        NAME Capacity
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+	END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/capacity_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/capacity.cmap"
+        METADATA
+            "wms_title"             "Capacity"
+            "wms_abstract"          "Capacity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Ascendency
+    LAYER
+        NAME Ascendency         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ascend_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/ascendency.cmap"
+        METADATA
+            "wms_title"             "Ascendency"
+            "wms_abstract"          "Ascendency"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER 
+
+    LAYER
+        NAME Overhead         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ovhead_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/overhead.cmap"
+        METADATA
+            "wms_title"             "Overhead"
+            "wms_abstract"          "Overhead"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+
+
+

@@ -105,7 +105,41 @@ MAP
         END  # end METADATA
     END # 
 
-    LAYER # 
+    LAYER  
+        NAME na_boundaries
+        
+        PROJECTION
+            "init=epsg:3857"
+        END
+
+        CONNECTIONTYPE   postgis
+        CONNECTION       "host=postgis2.cj0oborxdlge.us-east-1.rds.amazonaws.com port=5432 dbname=efetac user=readonly  password=d$Kp%23r4"
+        DATA             "geom from na_boundaries"
+        #EXTENT           -124.733174 24.543940 -66.950005 49.384359 # US
+
+        STATUS           OFF
+        TYPE             POLYGON
+        DUMP             TRUE
+        HEADER           ./templates/layer_query_header.html
+        TEMPLATE         ./templates/layer_query_body.html
+
+        CLASS
+            NAME "States"
+            STYLE
+                #COLOR        232 232 232
+                OUTLINECOLOR 0 0 0 
+				WIDTH 2
+            END
+        END
+        METADATA
+            "wms_title"            "states"
+            "wms_abstract"         "states"
+            "gml_include_items"    "state_name"
+        END  # end METADATA
+    END # end Layer
+
+
+    LAYER  
         NAME states
         
         PROJECTION

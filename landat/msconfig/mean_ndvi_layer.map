@@ -1,0 +1,19 @@
+    LAYER
+        NAME MeanNDVI         
+        PROJECTION
+		'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_avg_y1-17mean_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html	
+	INCLUDE "cmaps/green.cmap"
+        METADATA
+            "wms_title"             "Mean NDVI"
+            "wms_abstract"          "Mean NDVI"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+

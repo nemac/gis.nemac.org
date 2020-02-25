@@ -1,0 +1,22 @@
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 5.90)
+		   STYLE
+			  COLORRANGE 204 255 245 203 177 242
+			  DATARANGE 0 5.90
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5.90 and [pixel] <= 9.74)
+		   STYLE
+			  COLORRANGE 203 177 242 191 96 188
+			  DATARANGE 5.91 9.74
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 9.74 and [pixel] <= 30)
+		   STYLE
+			  COLORRANGE 191 96 188 143 17 57
+			  DATARANGE 9.75 30
+			END
+		END		
+

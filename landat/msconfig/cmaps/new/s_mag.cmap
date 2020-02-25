@@ -1,0 +1,568 @@
+
+  CLASS
+    NAME "16 - 27"
+    EXPRESSION ([PIXEL] >= 16 AND [PIXEL] < 27)
+    STYLE
+      COLOR 1 133 113
+    END
+  END
+  
+  CLASS
+    NAME "27 - 28"
+    EXPRESSION ([PIXEL] >= 27 AND [PIXEL] < 28)
+    STYLE
+      COLOR 7 136 116
+    END
+  END
+  
+  CLASS
+    NAME "28 - 29"
+    EXPRESSION ([PIXEL] >= 28 AND [PIXEL] < 29)
+    STYLE
+      COLOR 23 143 124
+    END
+  END
+  
+  CLASS
+    NAME "29 - 30"
+    EXPRESSION ([PIXEL] >= 29 AND [PIXEL] < 30)
+    STYLE
+      COLOR 46 153 136
+    END
+  END
+  
+  CLASS
+    NAME "30 - 31"
+    EXPRESSION ([PIXEL] >= 30 AND [PIXEL] < 31)
+    STYLE
+      COLOR 69 163 147
+    END
+  END
+  
+  CLASS
+    NAME "31 - 32"
+    EXPRESSION ([PIXEL] >= 31 AND [PIXEL] < 32)
+    STYLE
+      COLOR 89 172 157
+    END
+  END
+  
+  CLASS
+    NAME "32 - 33"
+    EXPRESSION ([PIXEL] >= 32 AND [PIXEL] < 33)
+    STYLE
+      COLOR 108 181 166
+    END
+  END
+  
+  CLASS
+    NAME "33 - 34"
+    EXPRESSION ([PIXEL] >= 33 AND [PIXEL] < 34)
+    STYLE
+      COLOR 124 188 174
+    END
+  END
+  
+  CLASS
+    NAME "34 - 35"
+    EXPRESSION ([PIXEL] >= 34 AND [PIXEL] < 35)
+    STYLE
+      COLOR 137 194 181
+    END
+  END
+  
+  CLASS
+    NAME "35 - 36"
+    EXPRESSION ([PIXEL] >= 35 AND [PIXEL] < 36)
+    STYLE
+      COLOR 154 201 189
+    END
+  END
+  
+  CLASS
+    NAME "36 - 37"
+    EXPRESSION ([PIXEL] >= 36 AND [PIXEL] < 37)
+    STYLE
+      COLOR 167 207 195
+    END
+  END
+  
+  CLASS
+    NAME "37 - 38"
+    EXPRESSION ([PIXEL] >= 37 AND [PIXEL] < 38)
+    STYLE
+      COLOR 180 212 202
+    END
+  END
+  
+  CLASS
+    NAME "38 - 39"
+    EXPRESSION ([PIXEL] >= 38 AND [PIXEL] < 39)
+    STYLE
+      COLOR 193 218 208
+    END
+  END
+  
+  CLASS
+    NAME "39 - 40"
+    EXPRESSION ([PIXEL] >= 39 AND [PIXEL] < 40)
+    STYLE
+      COLOR 206 224 215
+    END
+  END
+  
+  CLASS
+    NAME "40 - 41"
+    EXPRESSION ([PIXEL] >= 40 AND [PIXEL] < 41)
+    STYLE
+      COLOR 216 228 220
+    END
+  END
+  
+  CLASS
+    NAME "41 - 42"
+    EXPRESSION ([PIXEL] >= 41 AND [PIXEL] < 42)
+    STYLE
+      COLOR 226 233 225
+    END
+  END
+  
+  CLASS
+    NAME "42 - 43"
+    EXPRESSION ([PIXEL] >= 42 AND [PIXEL] < 43)
+    STYLE
+      COLOR 235 237 229
+    END
+  END
+  
+  CLASS
+    NAME "43 - 44"
+    EXPRESSION ([PIXEL] >= 43 AND [PIXEL] < 44)
+    STYLE
+      COLOR 243 239 232
+    END
+  END
+  
+  CLASS
+    NAME "44 - 45"
+    EXPRESSION ([PIXEL] >= 44 AND [PIXEL] < 45)
+    STYLE
+      COLOR 240 234 224
+    END
+  END
+  
+  CLASS
+    NAME "45 - 46"
+    EXPRESSION ([PIXEL] >= 45 AND [PIXEL] < 46)
+    STYLE
+      COLOR 238 230 218
+    END
+  END
+  
+  CLASS
+    NAME "46 - 47"
+    EXPRESSION ([PIXEL] >= 46 AND [PIXEL] < 47)
+    STYLE
+      COLOR 236 226 212
+    END
+  END
+  
+  CLASS
+    NAME "47 - 48"
+    EXPRESSION ([PIXEL] >= 47 AND [PIXEL] < 48)
+    STYLE
+      COLOR 233 220 204
+    END
+  END
+  
+  CLASS
+    NAME "48 - 49"
+    EXPRESSION ([PIXEL] >= 48 AND [PIXEL] < 49)
+    STYLE
+      COLOR 230 216 199
+    END
+  END
+  
+  CLASS
+    NAME "49 - 50"
+    EXPRESSION ([PIXEL] >= 49 AND [PIXEL] < 50)
+    STYLE
+      COLOR 228 212 193
+    END
+  END
+  
+  CLASS
+    NAME "50 - 51"
+    EXPRESSION ([PIXEL] >= 50 AND [PIXEL] < 51)
+    STYLE
+      COLOR 227 211 190
+    END
+  END
+  
+  CLASS
+    NAME "51 - 52"
+    EXPRESSION ([PIXEL] >= 51 AND [PIXEL] < 52)
+    STYLE
+      COLOR 225 207 185
+    END
+  END
+  
+  CLASS
+    NAME "52 - 53"
+    EXPRESSION ([PIXEL] >= 52 AND [PIXEL] < 53)
+    STYLE
+      COLOR 223 203 179
+    END
+  END
+  
+  CLASS
+    NAME "53 - 54"
+    EXPRESSION ([PIXEL] >= 53 AND [PIXEL] < 54)
+    STYLE
+      COLOR 221 199 173
+    END
+  END
+  
+  CLASS
+    NAME "54 - 55"
+    EXPRESSION ([PIXEL] >= 54 AND [PIXEL] < 55)
+    STYLE
+      COLOR 220 197 171
+    END
+  END
+  
+  CLASS
+    NAME "55 - 56"
+    EXPRESSION ([PIXEL] >= 55 AND [PIXEL] < 56)
+    STYLE
+      COLOR 218 193 165
+    END
+  END
+  
+  CLASS
+    NAME "56 - 57"
+    EXPRESSION ([PIXEL] >= 56 AND [PIXEL] < 57)
+    STYLE
+      COLOR 217 191 162
+    END
+  END
+  
+  CLASS
+    NAME "57 - 58"
+    EXPRESSION ([PIXEL] >= 57 AND [PIXEL] < 58)
+    STYLE
+      COLOR 215 187 157
+    END
+  END
+  
+  CLASS
+    NAME "58 - 59"
+    EXPRESSION ([PIXEL] >= 58 AND [PIXEL] < 59)
+    STYLE
+      COLOR 213 184 151
+    END
+  END
+  
+  CLASS
+    NAME "59 - 60"
+    EXPRESSION ([PIXEL] >= 59 AND [PIXEL] < 60)
+    STYLE
+      COLOR 212 182 148
+    END
+  END
+  
+  CLASS
+    NAME "60 - 61"
+    EXPRESSION ([PIXEL] >= 60 AND [PIXEL] < 61)
+    STYLE
+      COLOR 210 178 143
+    END
+  END
+  
+  CLASS
+    NAME "61 - 62"
+    EXPRESSION ([PIXEL] >= 61 AND [PIXEL] < 62)
+    STYLE
+      COLOR 209 176 140
+    END
+  END
+  
+  CLASS
+    NAME "62 - 63"
+    EXPRESSION ([PIXEL] >= 62 AND [PIXEL] < 63)
+    STYLE
+      COLOR 207 172 134
+    END
+  END
+  
+  CLASS
+    NAME "63 - 64"
+    EXPRESSION ([PIXEL] >= 63 AND [PIXEL] < 64)
+    STYLE
+      COLOR 205 168 129
+    END
+  END
+  
+  CLASS
+    NAME "64 - 65"
+    EXPRESSION ([PIXEL] >= 64 AND [PIXEL] < 65)
+    STYLE
+      COLOR 204 166 126
+    END
+  END
+  
+  CLASS
+    NAME "65 - 66"
+    EXPRESSION ([PIXEL] >= 65 AND [PIXEL] < 66)
+    STYLE
+      COLOR 201 162 120
+    END
+  END
+  
+  CLASS
+    NAME "66 - 67"
+    EXPRESSION ([PIXEL] >= 66 AND [PIXEL] < 67)
+    STYLE
+      COLOR 200 160 118
+    END
+  END
+  
+  CLASS
+    NAME "67 - 68"
+    EXPRESSION ([PIXEL] >= 67 AND [PIXEL] < 68)
+    STYLE
+      COLOR 198 157 112
+    END
+  END
+  
+  CLASS
+    NAME "68 - 69"
+    EXPRESSION ([PIXEL] >= 68 AND [PIXEL] < 69)
+    STYLE
+      COLOR 197 155 109
+    END
+  END
+  
+  CLASS
+    NAME "69 - 69"
+    EXPRESSION ([PIXEL] >= 69 AND [PIXEL] < 69)
+    STYLE
+      COLOR 196 153 106
+    END
+  END
+  
+  CLASS
+    NAME "69 - 70"
+    EXPRESSION ([PIXEL] >= 69 AND [PIXEL] < 70)
+    STYLE
+      COLOR 195 151 104
+    END
+  END
+  
+  CLASS
+    NAME "70 - 71"
+    EXPRESSION ([PIXEL] >= 70 AND [PIXEL] < 71)
+    STYLE
+      COLOR 194 149 101
+    END
+  END
+  
+  CLASS
+    NAME "71 - 72"
+    EXPRESSION ([PIXEL] >= 71 AND [PIXEL] < 72)
+    STYLE
+      COLOR 192 145 95
+    END
+  END
+  
+  CLASS
+    NAME "72 - 73"
+    EXPRESSION ([PIXEL] >= 72 AND [PIXEL] < 73)
+    STYLE
+      COLOR 191 143 93
+    END
+  END
+  
+  CLASS
+    NAME "73 - 74"
+    EXPRESSION ([PIXEL] >= 73 AND [PIXEL] < 74)
+    STYLE
+      COLOR 190 141 90
+    END
+  END
+  
+  CLASS
+    NAME "74 - 75"
+    EXPRESSION ([PIXEL] >= 74 AND [PIXEL] < 75)
+    STYLE
+      COLOR 189 139 87
+    END
+  END
+  
+  CLASS
+    NAME "75 - 76"
+    EXPRESSION ([PIXEL] >= 75 AND [PIXEL] < 76)
+    STYLE
+      COLOR 187 135 81
+    END
+  END
+  
+  CLASS
+    NAME "76 - 77"
+    EXPRESSION ([PIXEL] >= 76 AND [PIXEL] < 77)
+    STYLE
+      COLOR 186 133 79
+    END
+  END
+  
+  CLASS
+    NAME "77 - 78"
+    EXPRESSION ([PIXEL] >= 77 AND [PIXEL] < 78)
+    STYLE
+      COLOR 185 132 76
+    END
+  END
+  
+  CLASS
+    NAME "78 - 79"
+    EXPRESSION ([PIXEL] >= 78 AND [PIXEL] < 79)
+    STYLE
+      COLOR 184 130 73
+    END
+  END
+  
+  CLASS
+    NAME "79 - 80"
+    EXPRESSION ([PIXEL] >= 79 AND [PIXEL] < 80)
+    STYLE
+      COLOR 183 128 70
+    END
+  END
+  
+  CLASS
+    NAME "80 - 82"
+    EXPRESSION ([PIXEL] >= 80 AND [PIXEL] < 82)
+    STYLE
+      COLOR 182 126 67
+    END
+  END
+  
+  CLASS
+    NAME "82 - 83"
+    EXPRESSION ([PIXEL] >= 82 AND [PIXEL] < 83)
+    STYLE
+      COLOR 181 124 65
+    END
+  END
+  
+  CLASS
+    NAME "83 - 85"
+    EXPRESSION ([PIXEL] >= 83 AND [PIXEL] < 85)
+    STYLE
+      COLOR 180 122 62
+    END
+  END
+  
+  CLASS
+    NAME "85 - 87"
+    EXPRESSION ([PIXEL] >= 85 AND [PIXEL] < 87)
+    STYLE
+      COLOR 179 120 59
+    END
+  END
+  
+  CLASS
+    NAME "87 - 88"
+    EXPRESSION ([PIXEL] >= 87 AND [PIXEL] < 88)
+    STYLE
+      COLOR 178 118 56
+    END
+  END
+  
+  CLASS
+    NAME "88 - 90"
+    EXPRESSION ([PIXEL] >= 88 AND [PIXEL] < 90)
+    STYLE
+      COLOR 177 116 53
+    END
+  END
+  
+  CLASS
+    NAME "90 - 92"
+    EXPRESSION ([PIXEL] >= 90 AND [PIXEL] < 92)
+    STYLE
+      COLOR 175 114 51
+    END
+  END
+  
+  CLASS
+    NAME "92 - 93"
+    EXPRESSION ([PIXEL] >= 92 AND [PIXEL] < 93)
+    STYLE
+      COLOR 174 112 48
+    END
+  END
+  
+  CLASS
+    NAME "93 - 95"
+    EXPRESSION ([PIXEL] >= 93 AND [PIXEL] < 95)
+    STYLE
+      COLOR 173 110 45
+    END
+  END
+  
+  CLASS
+    NAME "95 - 96"
+    EXPRESSION ([PIXEL] >= 95 AND [PIXEL] < 96)
+    STYLE
+      COLOR 172 108 42
+    END
+  END
+  
+  CLASS
+    NAME "96 - 97"
+    EXPRESSION ([PIXEL] >= 96 AND [PIXEL] < 97)
+    STYLE
+      COLOR 171 107 40
+    END
+  END
+  
+  CLASS
+    NAME "97 - 98"
+    EXPRESSION ([PIXEL] >= 97 AND [PIXEL] < 98)
+    STYLE
+      COLOR 170 105 37
+    END
+  END
+  
+  CLASS
+    NAME "98 - 100"
+    EXPRESSION ([PIXEL] >= 98 AND [PIXEL] < 100)
+    STYLE
+      COLOR 169 103 34
+    END
+  END
+  
+  CLASS
+    NAME "100 - 102"
+    EXPRESSION ([PIXEL] >= 100 AND [PIXEL] < 102)
+    STYLE
+      COLOR 168 101 31
+    END
+  END
+  
+  CLASS
+    NAME "102 - 153"
+    EXPRESSION ([PIXEL] >= 102 AND [PIXEL] < 153)
+    STYLE
+      COLOR 167 99 28
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 153)
+    STYLE
+      COLOR 166 97 26
+    END
+  END
+  

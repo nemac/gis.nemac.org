@@ -1,0 +1,160 @@
+
+  CLASS
+    NAME "0 - 61"
+    EXPRESSION ([PIXEL] >= 0 AND [PIXEL] < 61)
+    STYLE
+      COLOR 247 252 245
+    END
+  END
+  
+  CLASS
+    NAME "61 - 72"
+    EXPRESSION ([PIXEL] >= 61 AND [PIXEL] < 72)
+    STYLE
+      COLOR 240 250 237
+    END
+  END
+  
+  CLASS
+    NAME "72 - 81"
+    EXPRESSION ([PIXEL] >= 72 AND [PIXEL] < 81)
+    STYLE
+      COLOR 233 247 228
+    END
+  END
+  
+  CLASS
+    NAME "81 - 90"
+    EXPRESSION ([PIXEL] >= 81 AND [PIXEL] < 90)
+    STYLE
+      COLOR 223 243 217
+    END
+  END
+  
+  CLASS
+    NAME "90 - 100"
+    EXPRESSION ([PIXEL] >= 90 AND [PIXEL] < 100)
+    STYLE
+      COLOR 211 238 204
+    END
+  END
+  
+  CLASS
+    NAME "100 - 110"
+    EXPRESSION ([PIXEL] >= 100 AND [PIXEL] < 110)
+    STYLE
+      COLOR 198 233 191
+    END
+  END
+  
+  CLASS
+    NAME "110 - 119"
+    EXPRESSION ([PIXEL] >= 110 AND [PIXEL] < 119)
+    STYLE
+      COLOR 183 227 176
+    END
+  END
+  
+  CLASS
+    NAME "119 - 128"
+    EXPRESSION ([PIXEL] >= 119 AND [PIXEL] < 128)
+    STYLE
+      COLOR 167 220 161
+    END
+  END
+  
+  CLASS
+    NAME "128 - 135"
+    EXPRESSION ([PIXEL] >= 128 AND [PIXEL] < 135)
+    STYLE
+      COLOR 150 212 146
+    END
+  END
+  
+  CLASS
+    NAME "135 - 144"
+    EXPRESSION ([PIXEL] >= 135 AND [PIXEL] < 144)
+    STYLE
+      COLOR 132 204 131
+    END
+  END
+  
+  CLASS
+    NAME "144 - 152"
+    EXPRESSION ([PIXEL] >= 144 AND [PIXEL] < 152)
+    STYLE
+      COLOR 113 195 117
+    END
+  END
+  
+  CLASS
+    NAME "152 - 161"
+    EXPRESSION ([PIXEL] >= 152 AND [PIXEL] < 161)
+    STYLE
+      COLOR 93 185 107
+    END
+  END
+  
+  CLASS
+    NAME "161 - 168"
+    EXPRESSION ([PIXEL] >= 161 AND [PIXEL] < 168)
+    STYLE
+      COLOR 72 175 96
+    END
+  END
+  
+  CLASS
+    NAME "168 - 174"
+    EXPRESSION ([PIXEL] >= 168 AND [PIXEL] < 174)
+    STYLE
+      COLOR 57 163 87
+    END
+  END
+  
+  CLASS
+    NAME "174 - 179"
+    EXPRESSION ([PIXEL] >= 174 AND [PIXEL] < 179)
+    STYLE
+      COLOR 45 150 77
+    END
+  END
+  
+  CLASS
+    NAME "179 - 184"
+    EXPRESSION ([PIXEL] >= 179 AND [PIXEL] < 184)
+    STYLE
+      COLOR 32 137 67
+    END
+  END
+  
+  CLASS
+    NAME "184 - 190"
+    EXPRESSION ([PIXEL] >= 184 AND [PIXEL] < 190)
+    STYLE
+      COLOR 16 123 56
+    END
+  END
+  
+  CLASS
+    NAME "190 - 197"
+    EXPRESSION ([PIXEL] >= 190 AND [PIXEL] < 197)
+    STYLE
+      COLOR 1 110 45
+    END
+  END
+  
+  CLASS
+    NAME "197 - 247"
+    EXPRESSION ([PIXEL] >= 197 AND [PIXEL] < 247)
+    STYLE
+      COLOR 0 89 36
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 247)
+    STYLE
+      COLOR 0 68 27
+    END
+  END
+  

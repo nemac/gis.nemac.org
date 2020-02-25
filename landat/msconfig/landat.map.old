@@ -1,0 +1,2364 @@
+MAP
+    # the following two lines tell MapServer to write debugging output to a log file.  Remove the '#' from the beginning
+    # of the two lines below to enable this logging:
+    #CONFIG "MS_ERRORFILE" "../var/log/landat.log"
+    #DEBUG 4
+
+    # all temp files get prefixed with this string
+    NAME ms_landat
+
+    #jdm:added to accomodate map layers
+    #see http://trac.osgeo.org/mapserver/ticket/3055
+    MAXSIZE 3072 
+    
+    # background color of image if transparency
+    # is not requested
+    IMAGECOLOR 255 255 255
+
+    # default output image dimensions
+    SIZE 600 400
+
+    # always returns a map
+    STATUS ON
+
+    # set top level projection
+    PROJECTION
+        "init=epsg:3785"
+    END
+
+    # image format options
+    OUTPUTFORMAT
+        NAME "PNG"
+        DRIVER "GDAL/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE "RGB"
+        EXTENSION "png"
+    END
+
+    # minx miny maxx maxy
+    EXTENT    -124.733174 24.543940 -66.950005 49.384359 # US
+
+    # add def pointers for symbols
+    SYMBOLSET "./symbols/symbols35.sym"
+    FONTSET   "./fonts/fonts.list"
+
+    # Start of web interface definition
+    WEB
+
+        # this is the real filepath to the temp dir for intermediate file creation
+        IMAGEPATH "./tmp"
+
+        # this is the web-accessible path to IMAGEPATH
+        IMAGEURL "/tmp/"
+
+        HEADER "./templates/query_header.html"
+        FOOTER "./templates/query_footer.html"
+
+        METADATA
+            "ows_enable_request"     "*"
+            "wms_title"              "NEMAC landat WMS"
+            "wms_abstract"           "NEMAC landat WMS"
+            "wms_onlineresource"     "http://gis.nemac.org/landat"
+            "wms_srs"                "EPSG:3785 EPSG:4326 EPSG:900913"
+			"wms_feature_info_mime_type" "text/plain"
+			"wms_feature_info_mime_type" "text/html"
+        END
+    END
+
+    QUERYMAP
+        STATUS ON
+    END
+
+    # set defaults for GetLegendGraphic requests 
+    LEGEND
+        KEYSIZE 30 20
+		TEMPLATE "./templates/legend.html"
+    END
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    ## Annual Phenology Variables
+ 
+    # Mean Annual Greenness
+    LAYER
+        NAME MeanNDVI         
+        PROJECTION
+		    '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		    END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/a_avg_y1-17mean_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/a_avg.cmap"
+        METADATA
+            "wms_title"             "Mean Annual NDVI"
+            "wms_abstract"          "Mean Annual NDVI"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+
+    # Mean Growing Season Greenness
+    LAYER
+        NAME MeanAnnualNDVI
+        PROJECTION
+	'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_avg_y1-17mean_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/s_avg.cmap"
+        METADATA
+            "wms_title"             "Mean Growing Season NDVI"
+            "wms_abstract"          "Mean Growing Season NDVI"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Degree of Seasonality
+    LAYER
+        NAME Seasonality         
+        PROJECTION
+		'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_mag_standardized_y1-17mean.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/s_mag_standardized_flip.cmap"
+        METADATA
+            "wms_title"             "Degree of Seasonality"
+            "wms_abstract"          "Degree of Seasonality"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Growing Season Greenness Variability
+    LAYER
+        NAME NDVIStdDv         
+        PROJECTION
+		    '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_sd_y1-17mean.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/s_sd.cmap"
+        METADATA
+            "wms_title"             "Growing Season Greenness Variability"
+            "wms_abstract"          "Growing Season Greenness Variability"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER	
+
+    # Growing Season Length
+    LAYER
+        NAME SeasonLength         
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_intv_y1-17mean_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/s_intv.cmap"
+        METADATA
+            "wms_title"             "Growing Season Length"
+            "wms_abstract"          "Growing Season Length"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+    # Beginning of Growing Season   	
+    LAYER
+        NAME BeginningGrowingSeason       
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/es_doy_y1-17mean.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/es_doy.cmap"
+        METADATA
+            "wms_title"             "Beginning of Growing Season"
+            "wms_abstract"          "Beginning of Growing Season"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Early Growing Season Center	
+    LAYER
+        NAME EarlyGrowingSeasonCenter
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ems_doy_y1-17mean.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/ems_doy.cmap"
+        METADATA
+            "wms_title"             "Early Growing Season Center"
+            "wms_abstract"          "Early Growing Season Center"
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Early Growing Season Magnitude
+    LAYER
+        NAME EarlyGrowingSeasonMagnitude
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ems_mag_y1-17mean_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/ems_mag.cmap"
+        METADATA
+            "wms_title"             "Early Growing Season Magnitude"
+            "wms_abstract"          "Early Growing Season Magnitude"
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Middle of Growing Season
+    LAYER
+        NAME Midpoint         
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ms_doy_y1-17mean.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/ms_doy.cmap"
+        METADATA
+            "wms_title"             "Middle Growing Season"
+            "wms_abstract"          "Middle Growing Season"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Late Growing Season Center
+    LAYER
+        NAME LateGrowingSeasonCenter
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/lms_doy_y1-17mean.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/lms_doy.cmap"
+        METADATA
+            "wms_title"             "Late Growing Season Center"
+            "wms_abstract"          "Late Growing Season Center"
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    # Late Growing Season Magnitude
+    LAYER
+        NAME LateGrowingSeasonMagnitude
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/lms_mag_y1-17mean_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/lms_mag.cmap"
+        METADATA
+            "wms_title"             "Late Growing Season Magnitude"
+            "wms_abstract"          "Late Growing Season Magnitude"
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # End Growing Season
+    LAYER
+        NAME EndGrowingSeason
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ls_doy_y1-17mean.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/ls_doy.cmap"
+        METADATA
+            "wms_title"             "End of Growing Season"
+            "wms_abstract"          "End of Growing Season"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ## Summary Phenology Variables
+
+    # Factor 1 - Timing
+    LAYER
+        NAME Factor1Timing
+        PROJECTION
+        '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        #OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/fscore1_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/fscore1.cmap"
+        METADATA
+            "wms_title"             "Factor1Timing"
+            "wms_abstract"          "Factor1Timing"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Factor 2 - Timing   
+    LAYER
+        NAME Factor2Timing
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        #OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/fscore2_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/fscore2.cmap"
+        METADATA
+            "wms_title"             "Factor2Timing"
+            "wms_abstract"          "Factor2Timing"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Factor 3 - Productivity
+    LAYER
+        NAME Factor3Productivity
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		    END
+        TYPE     RASTER
+        #OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/fscore3_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/fscore3.cmap"
+        METADATA
+            "wms_title"             "Factor3Productivity"
+            "wms_abstract"          "Factor3Productivity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Factor 4 - Seasonality
+    LAYER
+        NAME Factor4Seasonality
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+
+		END
+        TYPE     RASTER
+        OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/fscore4_int.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/fscore4.cmap"
+        METADATA
+            "wms_title"             "Factor4Seasonality"
+            "wms_abstract"          "Factor4Seasonality"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ## Phenological Classes
+
+    LAYER
+        NAME Phenoclass500_MultiAnnual
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		END
+        TYPE     RASTER
+		#PROCESSING "SCALE_1=-6.962,13.082"
+		#PROCESSING "SCALE_2=-6.962,13.082"
+		#PROCESSING "SCALE_3=-4.219,17.197"
+    #PROCESSING "SCALE=AUTO"
+		PROCESSING "BANDS=3,2,1"
+		OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/fscore234_byte.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Multi-Annual Phenoclasses"
+            "wms_abstract"          "Multi-Annual Phenoclasses"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+
+    LAYER
+        NAME Phenoclass500_2001      
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y01.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2001"
+            "wms_abstract"          "Phenoclasses 2001"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Phenoclass500_2002
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y02.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2002"
+            "wms_abstract"          "Phenoclasses 2002"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    LAYER
+        NAME Phenoclass500_2003
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y03.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2003"
+            "wms_abstract"          "Phenoclasses 2003"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Phenoclass500_2004
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y04.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2004"
+            "wms_abstract"          "Phenoclasses 2004"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Phenoclass500_2005
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y05.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2005"
+            "wms_abstract"          "Phenoclasses 2005"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Phenoclass500_2006
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y06.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2006"
+            "wms_abstract"          "Phenoclasses 2006"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Phenoclass500_2007
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y07.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2007"
+            "wms_abstract"          "Phenoclasses 2007"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Phenoclass500_2008
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y08.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2008"
+            "wms_abstract"          "Phenoclasses 2008"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    LAYER
+        NAME Phenoclass500_2009
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y09.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2009"
+            "wms_abstract"          "Phenoclasses 2009"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    LAYER
+        NAME Phenoclass500_2010
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y10.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2010"
+            "wms_abstract"          "Phenoclasses 2010"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    LAYER
+        NAME Phenoclass500_2011
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y11.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2011"
+            "wms_abstract"          "Phenoclasses 2011"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    LAYER
+        NAME Phenoclass500_2012
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y12.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2012"
+            "wms_abstract"          "Phenoclasses 2012"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+    LAYER
+        NAME Phenoclass500_2013
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y13.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2013"
+            "wms_abstract"          "Phenoclasses 2013"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    LAYER
+        NAME Phenoclass500_2014
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y14.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2014"
+            "wms_abstract"          "Phenoclasses 2014"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    LAYER
+        NAME Phenoclass500_2015
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y15.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2015"
+            "wms_abstract"          "Phenoclasses 2015"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+    LAYER
+        NAME Phenoclass500_2016
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y16.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2016"
+            "wms_abstract"          "Phenoclasses 2016"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+    LAYER
+        NAME Phenoclass500_2017
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+	      PROCESSING "BANDS=3,2,1"
+		    OFFSITE 0 0 0
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f234centroids_y17.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        METADATA
+            "wms_title"             "Phenoclasses 2017"
+            "wms_abstract"          "Phenoclasses 2017"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ## Phenological Change Metrics
+
+	LAYER
+        NAME TotalPath         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_TotalPathComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 1.3 and [pixel] <= 52.75)
+		   STYLE
+			  COLORRANGE 245 245 122 13 122 117
+			  DATARANGE 1.3 52.75
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 52.75 and [pixel] <= 192)
+		   STYLE
+			  COLORRANGE 13 122 117 2 57 89
+			  DATARANGE 52.76 192
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Total Path"
+            "wms_abstract"          "Total Path"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+LAYER
+        NAME MaximumStep         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_MaxStepComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 5.59)
+		   STYLE
+			  COLORRANGE 255 235 176 247 161 153
+			  DATARANGE 0 5.59
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5.59 and [pixel] <= 8.24)
+		   STYLE
+			  COLORRANGE 247 161 153 240 113 140
+			  DATARANGE 5.6 8.24
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 8.24 and [pixel] <= 27)
+		   STYLE
+			  COLORRANGE 240 113 140 222 29 119
+			  DATARANGE 8.25 27
+   		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Max Step"
+            "wms_abstract"          "Max Step"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+LAYER
+        NAME MeanStep         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_MeanStepComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 3.65)
+		   STYLE
+			  COLORRANGE 232 224 221 116 118 161 
+			  DATARANGE 0 3.65
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 3.65 and [pixel] <= 15)
+		   STYLE
+			  COLORRANGE 116 118 161 7 8 107
+			  DATARANGE 3.66 15
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Mean Step"
+            "wms_abstract"          "Mean Step"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+LAYER
+        NAME MinimumStep         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_MinStepComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 0.58)
+		   STYLE
+			  COLORRANGE 242 228 133 122 70 133
+			  DATARANGE 0 0.58
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.58 and [pixel] <= 13.5)
+		   STYLE
+			  COLORRANGE 122 70 133 62 2 107
+			  DATARANGE 0.59 13.5
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Min Step"
+            "wms_abstract"          "Min Step"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+
+LAYER
+        NAME MaximumDistance         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_MaxDist.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 5.90)
+		   STYLE
+			  COLORRANGE 204 255 245 203 177 242
+			  DATARANGE 0 5.90
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 5.90 and [pixel] <= 9.74)
+		   STYLE
+			  COLORRANGE 203 177 242 191 96 188
+			  DATARANGE 5.91 9.74
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 9.74 and [pixel] <= 30)
+		   STYLE
+			  COLORRANGE 191 96 188 143 17 57
+			  DATARANGE 9.75 30
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Max Distance"
+            "wms_abstract"          "Max Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+LAYER
+        NAME MeanDistance         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_MeanDistComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Mean Distance"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+		CLASS
+		  NAME "0 - 1.1"
+		  EXPRESSION ([pixel] >= 0.123696543 AND [pixel] <= 1.130730116)
+		  STYLE			
+		    COLOR 255 210 128
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.1 - 1.7"
+		  EXPRESSION ([pixel] >= 1.130730117 AND [pixel] <= 1.725795409)
+		  STYLE
+			COLOR 222 173 133
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.7 - 2.2"
+		  EXPRESSION ([pixel] >= 1.72579541 AND [pixel] <= 2.275086448)
+		  STYLE
+			COLOR 191 140 140
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "2.2 - 2.8"
+		  EXPRESSION ([pixel] >= 2.275086449 AND [pixel] <= 2.824377488)
+		  STYLE
+			COLOR 161 109 144
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "2.8 - 3.4"
+		  EXPRESSION ([pixel] >= 2.824377489 AND [pixel] <= 3.465217034)
+		  STYLE
+			COLOR 129 80 145
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "3.4 - 4.4"
+		  EXPRESSION ([pixel] >=  3.465217035 AND [pixel] <= 4.459265887)
+		  STYLE
+			COLOR 97 54 145
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "4.4 - 5.4"
+		  EXPRESSION ([pixel] >= 4.459265887 AND [pixel] <= 5.479284179)
+		  STYLE
+			COLOR 61 31 145
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "5.5 - 11.7"
+		  EXPRESSION ([pixel] >= 5.47928418 AND [pixel] <= 11.79613113)
+		  STYLE
+			COLOR 9 9 145
+		  END #STYLE
+		END #end class	
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Mean Distance"
+            "wms_abstract"          "Mean Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+LAYER
+        NAME MinimumDistance         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_MinDistComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 0.29)
+		   STYLE
+			  COLORRANGE 122 245 202 107 99 125
+			  DATARANGE 0 0.29
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.29 and [pixel] <= 3.902114153)
+		   STYLE
+			  COLORRANGE 107 99 125 66 1 41
+			  DATARANGE 0.30 3.902114153
+			END
+		END	
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Minimum Distance"
+            "wms_abstract"          "Minimum Distance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ## Landscape information-theoretic metrics
+
+	LAYER
+        NAME DynamicActivity         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_offdiag.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 0.59)
+		   STYLE
+			  COLORRANGE 245 221 174 214 180 167
+			  DATARANGE 0 0.59
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.59 and [pixel] <= 0.71)
+		   STYLE
+			  COLORRANGE 214 180 167 176 130 159
+			  DATARANGE 0.6 0.71
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.71 and [pixel] <= 0.79)
+		   STYLE
+			  COLORRANGE 176 130 159 137 86 148
+			  DATARANGE 0.72 0.79
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.79 and [pixel] <= 0.85)
+		   STYLE
+			  COLORRANGE 137 86 148 100 47 138
+			  DATARANGE 0.8 0.85
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 0.85 and [pixel] <= 1)
+		   STYLE
+			  COLORRANGE 100 47 138 62 0 125
+			  DATARANGE 0.86 1
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Inter-annual Change Rate"
+            "wms_abstract"          "Inter-annual Change Rate"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+	LAYER
+        NAME FinalDistance         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PD_FinalDistComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Final Distance"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class		
+        CLASS
+		  NAME "0 - 1"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 1.002713073)
+		  STYLE
+			COLOR 255 255 217
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1 - 1.9"
+		  EXPRESSION ([pixel] >= 1.002713074 AND [pixel] <= 1.905154838)
+		  STYLE
+			COLOR 225 242 177
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "1.9 - 2.9"
+		  EXPRESSION ([pixel] >= 1.905154839 AND [pixel] <= 2.90786791)
+		  STYLE
+			COLOR 152 214 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "2.9 - 4.1"
+		  EXPRESSION ([pixel] >= 2.907867911 AND [pixel] <= 4.111123597)
+		  STYLE
+			COLOR 65 183 196
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "4.1 - 5.7"
+		  EXPRESSION ([pixel] >= 4.111123598 AND [pixel] <= 5.715464513)
+		  STYLE
+			COLOR 31 128 184
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "5.7 - 8.1"
+		  EXPRESSION ([pixel] >= 5.715464514 AND [pixel] <= 8.121975888)
+		  STYLE
+			COLOR 37 67 156
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "8.1 - 25.5"
+		  EXPRESSION ([pixel] >= 8.121975889 AND [pixel] <= 25.56918335)
+		  STYLE
+			COLOR 8 30 89
+		  END #STYLE
+		END #end class
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Final Distance"
+            "wms_abstract"          "FinalDistance"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+	LAYER
+        NAME MeanShannon         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_ShannonDiversity.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 3.27)
+		   STYLE
+			  COLORRANGE 245 235 245 207 208 230
+			  DATARANGE 0 3.27
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 3.27 and [pixel] <= 3.88)
+		   STYLE
+			  COLORRANGE 207 208 230 103 169 207  
+			  DATARANGE 3.28 3.88
+			END
+		END	
+		CLASS
+		   EXPRESSION ([pixel] > 3.88 and [pixel] <= 4.49)
+		   STYLE
+			  COLORRANGE 103 169 207 1 129 138
+			  DATARANGE 3.89 4.49
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 4.49 and [pixel] <= 7.75)
+		   STYLE
+			  COLORRANGE 1 129 138 1 69 53
+			  DATARANGE 4.5 7.75
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Shannon Diversity"
+            "wms_abstract"          "Shannon Diversity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+	LAYER
+        NAME MutualInformation         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_MutInfo.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0.0001 and [pixel] <= 1.25)
+		   STYLE
+			  COLORRANGE 229 228 240 133 130 189
+			  DATARANGE 0.0001 1.25
+			END
+		END	
+		CLASS
+		   EXPRESSION ([pixel] > 1.25 and [pixel] <= 4.63)
+		   STYLE
+			  COLORRANGE 133 130 189 62 0 125
+			  DATARANGE 1.26 4.63
+			END
+		END
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Mutual Information"
+            "wms_abstract"          "Mutual Information"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+	LAYER
+        NAME ConditionalEntropy         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_CondEntropy.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] >= 0 and [pixel] <= 2.07)
+		   STYLE
+			  COLORRANGE 241 235 245 169 189 219
+			  DATARANGE 0 2.07
+			END
+		END	
+		CLASS
+		   EXPRESSION ([pixel] > 2.07 and [pixel] <= 2.81)
+		   STYLE
+			  COLORRANGE 169 189 219 52 142 191
+			  DATARANGE 2.08 2.81
+			END
+		END	
+		CLASS
+		   EXPRESSION ([pixel] > 2.81 and [pixel] <= 4.3)
+		   STYLE
+			  COLORRANGE 52 142 191 2 57 89
+			  DATARANGE 2.82 4.3
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Conditional Entropy"
+            "wms_abstract"          "Conditional Entropy"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+
+LAYER
+        NAME Development         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_Development.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        CLASS
+		  NAME "Development"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0 - 0.25"
+		  EXPRESSION ([pixel] >= 0.000153007 AND [pixel] <= 0.255015966)
+		  STYLE
+			COLOR 255 226 186
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.25 - 0.31"
+		  EXPRESSION ([pixel] >= 0.255015966 AND [pixel] <= 0.317751464)
+		  STYLE
+			COLOR 252 194 139
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.31 - 0.38"
+		  EXPRESSION ([pixel] >= 0.317751464 AND [pixel] <= 0.388328899)
+		  STYLE
+			COLOR 252 140 88
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.38 - 0.47"
+		  EXPRESSION ([pixel] >= 0.388328899 AND [pixel] <= 0.470669239)
+		  STYLE
+			COLOR 232 84 58
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.47 - 0.58"
+		  EXPRESSION ([pixel] >= 0.470669239 AND [pixel] <= 0.584377329)
+		  STYLE
+			COLOR 191 25 13
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.58 - 1"
+		  EXPRESSION ([pixel] >= 0.584377329 AND [pixel] <= 1)
+		  STYLE
+			COLOR 128 0 0
+		  END #STYLE
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Development"
+            "wms_abstract"          "Development"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+	LAYER
+        NAME Capacity  
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_Capacity.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 137.39)
+		   STYLE
+			  COLORRANGE 255 237 219 252 207 162
+			  DATARANGE 0 137.39
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 137.39 and [pixel] <= 183.76)
+		   STYLE
+			  COLORRANGE 252 207 162 252 141 61
+			  DATARANGE 137.4 183.76
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 183.76 and [pixel] <= 221.54)
+		   STYLE
+			  COLORRANGE 252 141 61 217 72 0
+			  DATARANGE 183.77 221.54
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 221.54 and [pixel] <= 438)
+		   STYLE
+			  COLORRANGE 217 72 0 128 39 4
+			  DATARANGE 221.55 438
+		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Capacity"
+            "wms_abstract"          "Capacity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+
+    LAYER
+        NAME Ascendency         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_Ascendency.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 32.86)
+		   STYLE
+			  COLORRANGE 231 245 225 204 235 197
+			  DATARANGE 0 32.86
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 32.86 and [pixel] <= 49.85)
+		   STYLE
+			  COLORRANGE 204 235 197 122 204 196
+			  DATARANGE 32.87 49.85
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 49.85 and [pixel] <= 70.25)
+		   STYLE
+			  COLORRANGE 122 204 196 44 142 191
+			  DATARANGE 49.86 70.25
+		   END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 70.25 and [pixel] <= 289)
+		   STYLE
+			  COLORRANGE 44 142 191 8 65 130
+			  DATARANGE 70.26 289
+		   END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Ascendency"
+            "wms_abstract"          "Ascendency"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER 
+
+	
+
+
+	LAYER
+        NAME Overhead         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/IT_Overhead.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+		CLASS
+		   EXPRESSION ([pixel] > 0 and [pixel] <= 97.42)
+		   STYLE
+			  COLORRANGE 253 255 209 217 240 163
+			  DATARANGE 0 97.42
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 97.42 and [pixel] <= 127.87)
+		   STYLE
+			  COLORRANGE 217 240 163 121 199 124
+			  DATARANGE 97.43 127.87
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 127.87 and [pixel] <= 152.22)
+		   STYLE
+			  COLORRANGE 121 199 124 36 133 68
+			  DATARANGE 127.88 152.22
+			END
+		END
+		CLASS
+		   EXPRESSION ([pixel] > 152.22 and [pixel] <= 259)
+		   STYLE
+			  COLORRANGE 36 133 68 0 69 41
+			  DATARANGE 152.23 259
+			END
+		END		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Overhead"
+            "wms_abstract"          "Overhead"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+
+
+
+    ## Long-term Landscape Shift
+
+LAYER
+        NAME CompositionalShift		
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/comp_shift.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html		
+		CLASS
+		  NAME "0 - 4"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 4)
+		  COLOR 255 204 204
+		END #end class
+		CLASS
+		  NAME "5 - 8"
+		  EXPRESSION ([pixel] >= 5 AND [pixel] <= 8)
+		  COLOR 255 158 143
+		END #end class
+		CLASS
+		  NAME "9 - 23"
+		  EXPRESSION ([pixel] >= 9 AND [pixel] <= 23)
+		  COLOR 250 114 90
+		END #end class
+		CLASS
+		  NAME "24 - 74"
+		  EXPRESSION ([pixel] >= 24 AND [pixel] <= 74)
+		  COLOR 237 67 45
+		END #end class
+		CLASS
+		  NAME "75 - 100"
+		  EXPRESSION ([pixel] >= 75 AND [pixel] <= 100)
+		  COLOR 219 0 0
+		END #end class		
+	    #INCLUDE "cmaps/gapnat.cmap"
+        METADATA
+            "wms_title"             "Compositional Shift"
+            "wms_abstract"          "Compositional Shift"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+
+
+    # Growing Season Greenness Trajectory
+    LAYER
+        NAME ChangeGrowingSeasonGreenness
+        PROJECTION
+		'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_avg.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html	
+        INCLUDE "cmaps/s_avg_eqdif.cmap"
+        METADATA
+            "wms_title"             "Growing Season Greenness Trajectory"
+            "wms_abstract"          "Growing Season Greenness Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Seasonality Trajectory
+    LAYER
+        NAME SeasonalityTrajectory
+        PROJECTION
+	  '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+	END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_mag.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html	
+        INCLUDE "cmaps/s_mag_eqdif.cmap"
+        METADATA
+            "wms_title"             "Seasonality Trajectory"
+            "wms_abstract"          "Seasonality Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Growing Season Length Trajectory
+    LAYER
+        NAME GrowingSeasonLengthTrajectory
+        PROJECTION
+	  '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/s_intv.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/s_intv_eqdif.cmap"
+        METADATA
+            "wms_title"             "Seasonality Trajectory"
+            "wms_abstract"          "Seasonality Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Middle of Growing Season Trajectory
+    LAYER
+        NAME MidGrowingSeasonTrajectory
+        PROJECTION
+	  '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+	      END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ms_doy_eqdif_byte.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/ms_doy_eqdif.cmap"
+        METADATA
+            "wms_title"             "Middle of Growing Season Trajectory"
+            "wms_abstract"          "Middle of Growing Season Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Factor 1 Trajectory
+    LAYER
+        NAME ChangeFactor1
+        PROJECTION
+	  '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f1.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/f1_eqdif.cmap"
+        METADATA
+            "wms_title"             "Factor 1 Trajectory"
+            "wms_abstract"          "Factor 1 Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Factor 2 Trajectory
+    LAYER
+        NAME ChangeFactor2
+        PROJECTION
+	  '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+	END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f2.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/f2_eqdif.cmap"
+        METADATA
+            "wms_title"             "Factor 2 Trajectory"
+            "wms_abstract"          "Factor 2 Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Factor 3 Trajectory
+    LAYER
+        NAME ChangeFactor3
+        PROJECTION
+	  '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+	END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f3.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/f3_eqdif.cmap"
+        METADATA
+            "wms_title"             "Factor 3 Trajectory"
+            "wms_abstract"          "Factor 3 Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Factor 4 Trajectory
+    LAYER
+        NAME ChangeFactor4
+        PROJECTION
+	  '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/f4.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/f4_eqdif.cmap"
+        METADATA
+            "wms_title"             "Factor 3 Trajectory"
+            "wms_abstract"          "Factor 3 Trajectory"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Shannon Entropy Trajectory
+    LAYER
+        NAME ChangeShannon
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/hx.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/hx_eqdif.cmap"
+        METADATA
+            "wms_title"             "Shannon Entropy Trajectory"
+            "wms_abstract"          "Shannon Entropy Trajectory"
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Mutual Information Trajectory
+    LAYER
+        NAME ChangeMutualInfo         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		    END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/mi.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/mi_eqdif.cmap"
+        METADATA
+            "wms_title"             "Mutual Information Trajectory"
+            "wms_abstract"          "Mutual Information Trajectory"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Conditional Entropy Trajectory
+    LAYER
+        NAME ChangeCondEntropy
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		    END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/condent.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/condent_eqdif.cmap"
+        METADATA
+            "wms_title"             "Conditional Entropy Trajectory"
+            "wms_abstract"          "Conditional Entropy Trajectory"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Development Trajectory
+    LAYER
+        NAME ChangeDevelopment
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		    END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/develop.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/develop_eqdif.cmap"
+        METADATA
+            "wms_title"             "Development Trajectory"
+            "wms_abstract"          "Development Trajectory"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Capacity Trajectory
+    LAYER
+        NAME ChangeCapacity
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/capacity.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/capacity_eqdif.cmap"
+        METADATA
+            "wms_title"             "Capacity Trajectory"
+            "wms_abstract"          "Capacity Trajectory"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER		
+
+    # Ascendency Trajectory
+    LAYER
+        NAME ChangeAscendency         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ascend.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/ascend_eqdif.cmap"
+        METADATA
+            "wms_title"             "Ascendency Trajectory"
+            "wms_abstract"          "Ascendency Trajectory"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER 
+
+    # Overhead Trajectory
+    LAYER
+        NAME ChangeOverhead         
+        PROJECTION
+'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
+		    END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata4/landat/ovhead.eqdif_5win.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	      INCLUDE "cmaps/ovhead_eqdif.cmap"
+        METADATA
+            "wms_title"             "Overhead Trajectory"
+            "wms_abstract"          "Overhead Trajectory"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ## Carbon Models
+
+    # Estimated carbon storage, 2000-2009
+    LAYER
+        NAME FIACarbonStorage         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/FIA_CarbonStorageComp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/fia_carbon_storage.cmap"
+        METADATA
+            "wms_title"             "FIA Carbon Storage"
+            "wms_abstract"          "FIA Carbon Storage"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # LanDAT Carbon Storage Model
+    LAYER
+        NAME LanDATCStorage         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/FIAmodelpred_proj.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/landat_carbon_storage.cmap"
+        METADATA
+            "wms_title"             "LanDAT Carbon Storage Model"
+            "wms_abstract"          "LanDAT Carbon Storage Model"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Landscape Shift in Carbon Storage
+    LAYER
+        NAME ShiftCarbonStorage         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/FIAequilibdiff_proj.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/shift_carbon_storage.cmap"
+        METADATA
+            "wms_title"             "Landscape Shift in Carbon Storage"
+            "wms_abstract"          "Landscape Shift in Carbon Storage"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+
+
+
+
+
+
+
+
+
+    ## Landscape and Climate Characteristics
+
+    # Land Cover, 2011
+    LAYER
+    	NAME NLCD_2011
+        PROJECTION
+            "proj=aea"
+            "lat_1=29.5"
+            "lat_2=45.5"
+            "lat_0=23"
+            "lon_0=-96"
+            "x_0=0"
+            "y_0=0"
+            "ellps=GRS80"
+            "datum=NAD83"
+            "units=m"
+            "no_defs"
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/NLCD_2011Comp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html	
+	INCLUDE "cmaps/nlcd_2011.cmap"
+        METADATA
+            "wms_title"             "National Land Cover Dataset (NLCD), 2011"
+            "wms_abstract"          "National Land Cover Dataset (NLCD), 2011"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER	
+
+    # Landscape Mosaic Pattern
+    LAYER
+        NAME Riitters_LandPattern         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/Ritters_lpt27_2011.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/riitters_land_pattern.cmap"
+        METADATA
+            "wms_title"             "Riitters Landscape Pattern"
+            "wms_abstract"          "Riitters Landscape Pattern"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Landscape Forest Density
+    LAYER
+        NAME Riitters_ForestDensity         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/Riitters_pf27_2011Comp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html	
+	INCLUDE "cmaps/riitters_forest_density.cmap"
+        METADATA
+            "wms_title"             "Riitters Forest Density"
+            "wms_abstract"          "Riiters Forest Density"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end 
+
+    # Total Tree Basal Area
+    LAYER
+        NAME TotalBasalArea
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+	END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/TotBasalArea.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/total_basal_area.cmap"
+        METADATA
+            "wms_title"             "Total Basal Area"
+            "wms_abstract"          "Total Basal Area"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Tree Basal Area at Risk from Insect and Disease Pathogens
+    LAYER
+        NAME PercentBasalRisk         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+	END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PctBasalRisk.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/percent_basal_risk.cmap"
+        METADATA
+            "wms_title"             "Percent Basal Risk"
+            "wms_abstract"          "Percent Basal Risk"
+            "gml_include_items"     "value_0"
+        END  # end METADATA
+    END # end LAYER
+
+    # Decline in Evergreen Vegetation, 2000-2011
+    LAYER
+        NAME EvergreenDecline
+        PROJECTION
+          "+proj=laea"
+          "+lat_0=45"
+          "+lon_0=-100"
+          "+x_0=0"
+          "+y_0=0"
+          "+a=6370997"
+          "+b=6370997"
+          "+units=m"
+          "+no_defs"
+        END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /var/vsites/fswms.nemac.org/data/fsdata-internal/efetac_nasa/AncillaryData/EvergreenDecline.img
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/evergreen_decline.cmap"		
+        METADATA
+            "wms_title"             "Evergreen Decline"
+            "wms_abstract"          "Evergreen Decline"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Housing Density, 2010
+    LAYER
+        NAME HousingDensity        
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/HousingDensity2010Comp.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+        INCLUDE "cmaps/housing_density.cmap"
+        METADATA
+            "wms_title"             "HousingDensity"
+            "wms_abstract"          "HousingDensity"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER
+
+    # Palmer Drought Severity Index, 2000-2015 Mean	
+    LAYER
+        NAME PalmerMonthly         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PalmerDrought_Monthly.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/palmer_monthly.cmap"
+        METADATA
+            "wms_title"             "Palmer_Monthly"
+            "wms_abstract"          "Palmer_Monthly"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+    # Palmer Drought Severity Index, 2000-2015 Variability
+    LAYER
+        NAME PalmerAnnual         
+        PROJECTION
+			"proj=longlat"
+			"ellps=WGS84"
+			"datum=WGS84"
+			"no_defs"
+		END
+        TYPE     RASTER
+        DUMP     TRUE
+        STATUS   OFF
+        DATA     /fsdata1/landat/PalmerDrought_interannual.tif
+        HEADER   ./templates/layer_query_header.html
+        TEMPLATE ./templates/layer_query_body.html
+	INCLUDE "cmaps/palmer_annual.cmap"
+        METADATA
+            "wms_title"             "Palmer_Interannual"
+            "wms_abstract"          "Palmer_Interannual"   
+            "gml_include_items"     "value_0"			
+        END  # end METADATA
+    END # end LAYER	
+
+END # end MAP

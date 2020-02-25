@@ -1,0 +1,48 @@
+
+  CLASS
+    NAME "2 - 125"
+    EXPRESSION ([PIXEL] >= 2 AND [PIXEL] < 125)
+    STYLE
+      COLOR 0 0 59
+    END
+  END
+  
+  CLASS
+    NAME "125 - 127"
+    EXPRESSION ([PIXEL] >= 125 AND [PIXEL] < 127)
+    STYLE
+      COLOR 13 13 64
+    END
+  END
+  
+  CLASS
+    NAME "127 - 128"
+    EXPRESSION ([PIXEL] >= 127 AND [PIXEL] < 128)
+    STYLE
+      COLOR 53 53 81
+    END
+  END
+  
+  CLASS
+    NAME "128 - 129"
+    EXPRESSION ([PIXEL] >= 128 AND [PIXEL] < 129)
+    STYLE
+      COLOR 107 107 103
+    END
+  END
+  
+  CLASS
+    NAME "129 - 251"
+    EXPRESSION ([PIXEL] >= 129 AND [PIXEL] < 251)
+    STYLE
+      COLOR 242 242 159
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 251)
+    STYLE
+      COLOR 255 255 164
+    END
+  END
+  

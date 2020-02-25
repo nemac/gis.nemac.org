@@ -1,0 +1,99 @@
+		CLASS
+		  NAME "-3.095795255 - -1.26766122"
+		  EXPRESSION ([pixel] >= -3.095795255 AND [pixel] <= -1.26766122)
+		  STYLE
+			COLOR 135 38 38 
+		  END #STYLE  
+		END #end class		
+		CLASS
+		  NAME "-1.26766121 - -0.06766122"
+		  EXPRESSION ([pixel] >= -1.26766122 AND [pixel] <= -0.06766122)
+		  STYLE
+			COLOR 166 69 36 
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.06766121 - -0.046777537"		
+		  EXPRESSION ([pixel] > -0.06766122 AND [pixel] <= -0.046777537)
+		  STYLE
+			COLOR 196 102 29
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.046777536 - -0.025893854"		
+		  EXPRESSION ([pixel] > -0.046777537 AND [pixel] <= -0.025893854)
+		  STYLE
+			COLOR 232 140 19
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.025893853 - -0.005010171"		
+		  EXPRESSION ([pixel] > -0.025893854 AND [pixel] <= -0.005010171)
+		  STYLE
+			COLOR 247 170 54
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "-0.005010170 - -0.000001"		
+		  EXPRESSION ([pixel] > -0.005010171 AND [pixel] <= -0.000001)
+		  STYLE
+			COLOR 255 203 107
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0"		
+		  EXPRESSION ([pixel] > -0.000001 AND [pixel] <= 0.000001)
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.000001 - 0.015873512"		
+		  EXPRESSION ([pixel] > 0.000001 AND [pixel] <= 0.015873512)
+		  STYLE
+			COLOR 204 204 209
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.01587351 - 0.036757195"			
+		  EXPRESSION ([pixel] > 0.015873512 AND [pixel] <= 0.036757195)
+		  STYLE
+			COLOR 174 166 191
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.036757196 - 0.057640878"		
+		  EXPRESSION ([pixel] > 0.036757195 AND [pixel] <= 0.057640878)
+		  STYLE
+			COLOR 118 114 186
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.057640879 - 0.099408244"		  		
+		  EXPRESSION ([pixel] > 0.057640878 AND [pixel] <= 0.099408244)
+		  STYLE
+			COLOR 73 77 179
+		  END #STYLE
+		END #end class			
+		CLASS
+		  NAME "0.099408245 - 0.224710342"		
+		  EXPRESSION ([pixel] > 0.099408244 AND [pixel] <= 0.224710342)
+		  STYLE
+			COLOR 60 60 158
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "0.224710343 - 1.224710343"		
+		  EXPRESSION ([pixel] > 0.224710342 AND [pixel] <= 1.224710343)
+		  STYLE
+			COLOR 51 46 140
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "1.224710344 - 2.229543909"		
+		  EXPRESSION ([pixel] > 1.224710343 AND [pixel] <= 2.229543909)
+		  STYLE
+			COLOR 39 32 122
+		  END #STYLE
+		END #end class		
+

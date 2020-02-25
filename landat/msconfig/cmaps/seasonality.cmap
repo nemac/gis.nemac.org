@@ -1,0 +1,85 @@
+        CLASS
+		  NAME "0 - 1.6"
+		  EXPRESSION ([pixel] >= 0.00038256 AND [pixel] <= 1.650281037)
+		  STYLE
+			COLOR 33 130 145
+		  END #STYLE 
+		END #end class
+		CLASS
+		  NAME "1.6 - 3.2"
+		  EXPRESSION ([pixel] >= 1.650281038 AND [pixel] <= 3.213342753)
+		  STYLE
+			COLOR 81 153 156
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "3.2 - 4.7"
+		  EXPRESSION ([pixel] >= 3.213342754 AND [pixel] <= 4.776404469)
+		  STYLE
+			COLOR 118 173 162
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "4.7 - 6.2"
+		  EXPRESSION ([pixel] >= 4.77640447 AND [pixel] <= 6.252629423)
+		  STYLE
+			COLOR 157 196 171
+     	  END #STYLE
+		END #end class
+		CLASS
+		  NAME "6.2 - 7.6"
+		  EXPRESSION ([pixel] >= 6.252629424 AND [pixel] <= 7.642017615)
+		  STYLE
+			COLOR 196 219 180
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "7.6 - 8.9"
+		  EXPRESSION ([pixel] >=  7.642017616 AND [pixel] <= 8.944569044)
+		  STYLE
+			COLOR 237 245 188
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "8.9 - 10.1"
+		  EXPRESSION ([pixel] >= 8.944569045 AND [pixel] <= 10.16028371)
+		  STYLE
+			COLOR 247 237 173
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "10.1 - 11.2"
+		  EXPRESSION ([pixel] >= 10.16028372 AND [pixel] <= 11.28916162)
+		  STYLE
+			COLOR 230 203 140
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "11.2 - 12.4"
+		  EXPRESSION ([pixel] >= 11.28916163 AND [pixel] <= 12.41803952)
+		  STYLE
+			COLOR 212 170 108
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "12.4 - 13.4"
+		  EXPRESSION ([pixel] >= 12.41803953 AND [pixel] <= 13.46008067)
+		  STYLE
+			COLOR 194 140 79
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "13.4 - 14.5"
+		  EXPRESSION ([pixel] >= 13.46008068 AND [pixel] <= 14.50212181)
+		  STYLE
+			COLOR 176 111 55
+		  END #STYLE
+		END #end class
+		CLASS
+		  NAME "14.5 - 22.1"
+		  EXPRESSION ([pixel] >= 14.50212182 AND [pixel] <= 22.14375687)
+		  STYLE
+			COLOR 156 85 31
+		  END #STYLE
+		END #end class
+

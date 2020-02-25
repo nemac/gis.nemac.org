@@ -1,0 +1,45 @@
+  CLASS
+    EXPRESSION ([PIXEL] >= 22 AND [PIXEL] < 116)
+    STYLE
+      COLORRANGE 255 0 255 0 0 117
+      DATARANGE 90 115
+      RANGEITEM "pixel"
+    END
+  END
+  CLASS
+    EXPRESSION ([PIXEL] >= 115 AND [PIXEL] < 119)
+    STYLE
+      COLORRANGE 0 0 117 143 143 167
+      DATARANGE 115 118
+      RANGEITEM "pixel"
+    END
+  END
+  # -.03  == 118
+  # -.007 == 119
+  #  .05  == 121
+  #  .14  == 123
+  #  .24  == 126
+  #  .4   == 131
+  CLASS
+    EXPRESSION ([PIXEL] >= 119 AND [PIXEL] <= 120)
+    STYLE
+      COLOR 204 204 204 
+    END
+  END
+  CLASS
+    EXPRESSION ([PIXEL] >= 121 AND [PIXEL] < 125)
+    STYLE
+      COLORRANGE 224 182 128 255 204 38
+      DATARANGE 121 124
+      RANGEITEM "pixel"
+    END
+  END
+  CLASS
+    EXPRESSION ([PIXEL] >= 125 AND [PIXEL] <= 190 )
+    STYLE
+      COLORRANGE 255 204 38 255 255 0
+      DATARANGE 125 140
+      RANGEITEM "pixel"
+    END
+  END
+

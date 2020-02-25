@@ -1,0 +1,50 @@
+        CLASS
+		  NAME "Development"
+		  EXPRESSION " "
+		  STYLE
+			COLOR 255 255 255
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0 - 0.25"
+		  EXPRESSION ([pixel] >= 0.000153007 AND [pixel] <= 0.255015966)
+		  STYLE
+			COLOR 255 226 186
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.25 - 0.31"
+		  EXPRESSION ([pixel] >= 0.255015966 AND [pixel] <= 0.317751464)
+		  STYLE
+			COLOR 252 194 139
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.31 - 0.38"
+		  EXPRESSION ([pixel] >= 0.317751464 AND [pixel] <= 0.388328899)
+		  STYLE
+			COLOR 252 140 88
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.38 - 0.47"
+		  EXPRESSION ([pixel] >= 0.388328899 AND [pixel] <= 0.470669239)
+		  STYLE
+			COLOR 232 84 58
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.47 - 0.58"
+		  EXPRESSION ([pixel] >= 0.470669239 AND [pixel] <= 0.584377329)
+		  STYLE
+			COLOR 191 25 13
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "0.58 - 1"
+		  EXPRESSION ([pixel] >= 0.584377329 AND [pixel] <= 1)
+		  STYLE
+			COLOR 128 0 0
+		  END #STYLE
+		END #end class		
+

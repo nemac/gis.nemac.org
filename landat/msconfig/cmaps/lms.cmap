@@ -1,0 +1,2563 @@
+
+  CLASS
+    EXPRESSION ([PIXEL] = 0)
+    STYLE
+      COLOR 230 22 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 1)
+    STYLE
+      COLOR 230 25 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 2)
+    STYLE
+      COLOR 230 29 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 3)
+    STYLE
+      COLOR 230 32 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 4)
+    STYLE
+      COLOR 230 35 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 5)
+    STYLE
+      COLOR 230 39 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 6)
+    STYLE
+      COLOR 230 42 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 7)
+    STYLE
+      COLOR 230 45 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 8)
+    STYLE
+      COLOR 230 49 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 9)
+    STYLE
+      COLOR 230 52 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 10)
+    STYLE
+      COLOR 230 55 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 11)
+    STYLE
+      COLOR 230 59 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 12)
+    STYLE
+      COLOR 230 62 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 13)
+    STYLE
+      COLOR 230 65 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 14)
+    STYLE
+      COLOR 230 69 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 15)
+    STYLE
+      COLOR 230 72 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 16)
+    STYLE
+      COLOR 230 75 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 17)
+    STYLE
+      COLOR 230 79 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 18)
+    STYLE
+      COLOR 230 82 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 19)
+    STYLE
+      COLOR 230 85 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 20)
+    STYLE
+      COLOR 230 89 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 21)
+    STYLE
+      COLOR 230 92 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 22)
+    STYLE
+      COLOR 230 95 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 23)
+    STYLE
+      COLOR 230 99 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 24)
+    STYLE
+      COLOR 230 102 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 25)
+    STYLE
+      COLOR 230 105 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 26)
+    STYLE
+      COLOR 230 109 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 27)
+    STYLE
+      COLOR 230 112 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 28)
+    STYLE
+      COLOR 230 115 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 29)
+    STYLE
+      COLOR 230 119 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 30)
+    STYLE
+      COLOR 230 122 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 31)
+    STYLE
+      COLOR 230 125 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 32)
+    STYLE
+      COLOR 230 129 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 33)
+    STYLE
+      COLOR 230 132 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 34)
+    STYLE
+      COLOR 230 136 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 35)
+    STYLE
+      COLOR 230 139 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 36)
+    STYLE
+      COLOR 230 143 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 37)
+    STYLE
+      COLOR 230 146 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 38)
+    STYLE
+      COLOR 230 150 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 39)
+    STYLE
+      COLOR 230 153 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 40)
+    STYLE
+      COLOR 230 157 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 41)
+    STYLE
+      COLOR 230 160 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 42)
+    STYLE
+      COLOR 230 164 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 43)
+    STYLE
+      COLOR 230 167 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 44)
+    STYLE
+      COLOR 230 171 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 45)
+    STYLE
+      COLOR 230 174 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 46)
+    STYLE
+      COLOR 230 178 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 47)
+    STYLE
+      COLOR 230 181 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 48)
+    STYLE
+      COLOR 230 185 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 49)
+    STYLE
+      COLOR 230 188 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 50)
+    STYLE
+      COLOR 230 192 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 51)
+    STYLE
+      COLOR 230 195 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 52)
+    STYLE
+      COLOR 230 199 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 53)
+    STYLE
+      COLOR 230 202 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 54)
+    STYLE
+      COLOR 230 206 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 55)
+    STYLE
+      COLOR 230 209 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 56)
+    STYLE
+      COLOR 230 213 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 57)
+    STYLE
+      COLOR 230 217 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 58)
+    STYLE
+      COLOR 230 220 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 59)
+    STYLE
+      COLOR 230 224 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 60)
+    STYLE
+      COLOR 230 227 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 61)
+    STYLE
+      COLOR 230 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 62)
+    STYLE
+      COLOR 227 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 63)
+    STYLE
+      COLOR 224 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 64)
+    STYLE
+      COLOR 220 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 65)
+    STYLE
+      COLOR 217 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 66)
+    STYLE
+      COLOR 214 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 67)
+    STYLE
+      COLOR 210 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 68)
+    STYLE
+      COLOR 207 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 69)
+    STYLE
+      COLOR 204 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 70)
+    STYLE
+      COLOR 200 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 71)
+    STYLE
+      COLOR 197 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 72)
+    STYLE
+      COLOR 194 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 73)
+    STYLE
+      COLOR 190 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 74)
+    STYLE
+      COLOR 187 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 75)
+    STYLE
+      COLOR 184 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 76)
+    STYLE
+      COLOR 180 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 77)
+    STYLE
+      COLOR 177 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 78)
+    STYLE
+      COLOR 174 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 79)
+    STYLE
+      COLOR 170 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 80)
+    STYLE
+      COLOR 167 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 81)
+    STYLE
+      COLOR 164 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 82)
+    STYLE
+      COLOR 160 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 83)
+    STYLE
+      COLOR 157 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 84)
+    STYLE
+      COLOR 154 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 85)
+    STYLE
+      COLOR 151 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 86)
+    STYLE
+      COLOR 147 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 87)
+    STYLE
+      COLOR 144 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 88)
+    STYLE
+      COLOR 141 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 89)
+    STYLE
+      COLOR 137 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 90)
+    STYLE
+      COLOR 134 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 91)
+    STYLE
+      COLOR 131 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 92)
+    STYLE
+      COLOR 127 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 93)
+    STYLE
+      COLOR 124 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 94)
+    STYLE
+      COLOR 120 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 95)
+    STYLE
+      COLOR 116 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 96)
+    STYLE
+      COLOR 113 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 97)
+    STYLE
+      COLOR 109 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 98)
+    STYLE
+      COLOR 106 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 99)
+    STYLE
+      COLOR 102 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 100)
+    STYLE
+      COLOR 99 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 101)
+    STYLE
+      COLOR 95 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 102)
+    STYLE
+      COLOR 92 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 103)
+    STYLE
+      COLOR 88 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 104)
+    STYLE
+      COLOR 84 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 105)
+    STYLE
+      COLOR 81 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 106)
+    STYLE
+      COLOR 77 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 107)
+    STYLE
+      COLOR 74 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 108)
+    STYLE
+      COLOR 70 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 109)
+    STYLE
+      COLOR 67 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 110)
+    STYLE
+      COLOR 63 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 111)
+    STYLE
+      COLOR 60 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 112)
+    STYLE
+      COLOR 56 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 113)
+    STYLE
+      COLOR 52 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 114)
+    STYLE
+      COLOR 49 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 115)
+    STYLE
+      COLOR 45 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 116)
+    STYLE
+      COLOR 42 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 117)
+    STYLE
+      COLOR 38 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 118)
+    STYLE
+      COLOR 35 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 119)
+    STYLE
+      COLOR 31 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 120)
+    STYLE
+      COLOR 28 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 121)
+    STYLE
+      COLOR 24 230 22
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 122)
+    STYLE
+      COLOR 22 230 24
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 123)
+    STYLE
+      COLOR 22 230 27
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 124)
+    STYLE
+      COLOR 22 230 30
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 125)
+    STYLE
+      COLOR 22 230 34
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 126)
+    STYLE
+      COLOR 22 230 37
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 127)
+    STYLE
+      COLOR 22 230 41
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 128)
+    STYLE
+      COLOR 22 230 44
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 129)
+    STYLE
+      COLOR 22 230 47
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 130)
+    STYLE
+      COLOR 22 230 51
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 131)
+    STYLE
+      COLOR 22 230 54
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 132)
+    STYLE
+      COLOR 22 230 58
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 133)
+    STYLE
+      COLOR 22 230 61
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 134)
+    STYLE
+      COLOR 22 230 64
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 135)
+    STYLE
+      COLOR 22 230 68
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 136)
+    STYLE
+      COLOR 22 230 71
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 137)
+    STYLE
+      COLOR 22 230 75
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 138)
+    STYLE
+      COLOR 22 230 78
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 139)
+    STYLE
+      COLOR 22 230 81
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 140)
+    STYLE
+      COLOR 22 230 85
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 141)
+    STYLE
+      COLOR 22 230 88
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 142)
+    STYLE
+      COLOR 22 230 91
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 143)
+    STYLE
+      COLOR 22 230 95
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 144)
+    STYLE
+      COLOR 22 230 98
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 145)
+    STYLE
+      COLOR 22 230 102
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 146)
+    STYLE
+      COLOR 22 230 105
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 147)
+    STYLE
+      COLOR 22 230 108
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 148)
+    STYLE
+      COLOR 22 230 112
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 149)
+    STYLE
+      COLOR 22 230 115
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 150)
+    STYLE
+      COLOR 22 230 119
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 151)
+    STYLE
+      COLOR 22 230 122
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 152)
+    STYLE
+      COLOR 22 230 125
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 153)
+    STYLE
+      COLOR 22 230 129
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 154)
+    STYLE
+      COLOR 22 230 132
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 155)
+    STYLE
+      COLOR 22 230 136
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 156)
+    STYLE
+      COLOR 22 230 139
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 157)
+    STYLE
+      COLOR 22 230 143
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 158)
+    STYLE
+      COLOR 22 230 146
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 159)
+    STYLE
+      COLOR 22 230 149
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 160)
+    STYLE
+      COLOR 22 230 153
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 161)
+    STYLE
+      COLOR 22 230 156
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 162)
+    STYLE
+      COLOR 22 230 160
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 163)
+    STYLE
+      COLOR 22 230 163
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 164)
+    STYLE
+      COLOR 22 230 167
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 165)
+    STYLE
+      COLOR 22 230 170
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 166)
+    STYLE
+      COLOR 22 230 174
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 167)
+    STYLE
+      COLOR 22 230 177
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 168)
+    STYLE
+      COLOR 22 230 180
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 169)
+    STYLE
+      COLOR 22 230 184
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 170)
+    STYLE
+      COLOR 22 230 187
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 171)
+    STYLE
+      COLOR 22 230 191
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 172)
+    STYLE
+      COLOR 22 230 194
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 173)
+    STYLE
+      COLOR 22 230 198
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 174)
+    STYLE
+      COLOR 22 230 201
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 175)
+    STYLE
+      COLOR 22 230 205
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 176)
+    STYLE
+      COLOR 22 230 208
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 177)
+    STYLE
+      COLOR 22 230 211
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 178)
+    STYLE
+      COLOR 22 230 215
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 179)
+    STYLE
+      COLOR 22 230 218
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 180)
+    STYLE
+      COLOR 22 230 222
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 181)
+    STYLE
+      COLOR 22 230 225
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 182)
+    STYLE
+      COLOR 22 230 229
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 183)
+    STYLE
+      COLOR 22 229 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 184)
+    STYLE
+      COLOR 22 226 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 185)
+    STYLE
+      COLOR 22 222 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 186)
+    STYLE
+      COLOR 22 219 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 187)
+    STYLE
+      COLOR 22 216 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 188)
+    STYLE
+      COLOR 22 212 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 189)
+    STYLE
+      COLOR 22 209 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 190)
+    STYLE
+      COLOR 22 206 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 191)
+    STYLE
+      COLOR 22 203 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 192)
+    STYLE
+      COLOR 22 199 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 193)
+    STYLE
+      COLOR 22 196 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 194)
+    STYLE
+      COLOR 22 193 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 195)
+    STYLE
+      COLOR 22 190 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 196)
+    STYLE
+      COLOR 22 186 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 197)
+    STYLE
+      COLOR 22 183 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 198)
+    STYLE
+      COLOR 22 180 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 199)
+    STYLE
+      COLOR 22 177 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 200)
+    STYLE
+      COLOR 22 173 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 201)
+    STYLE
+      COLOR 22 170 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 202)
+    STYLE
+      COLOR 22 167 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 203)
+    STYLE
+      COLOR 22 164 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 204)
+    STYLE
+      COLOR 22 160 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 205)
+    STYLE
+      COLOR 22 157 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 206)
+    STYLE
+      COLOR 22 154 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 207)
+    STYLE
+      COLOR 22 150 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 208)
+    STYLE
+      COLOR 22 147 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 209)
+    STYLE
+      COLOR 22 144 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 210)
+    STYLE
+      COLOR 22 141 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 211)
+    STYLE
+      COLOR 22 137 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 212)
+    STYLE
+      COLOR 22 134 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 213)
+    STYLE
+      COLOR 22 131 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 214)
+    STYLE
+      COLOR 22 128 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 215)
+    STYLE
+      COLOR 22 124 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 216)
+    STYLE
+      COLOR 22 121 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 217)
+    STYLE
+      COLOR 22 117 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 218)
+    STYLE
+      COLOR 22 114 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 219)
+    STYLE
+      COLOR 22 111 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 220)
+    STYLE
+      COLOR 22 107 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 221)
+    STYLE
+      COLOR 22 104 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 222)
+    STYLE
+      COLOR 22 100 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 223)
+    STYLE
+      COLOR 22 97 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 224)
+    STYLE
+      COLOR 22 94 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 225)
+    STYLE
+      COLOR 22 90 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 226)
+    STYLE
+      COLOR 22 87 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 227)
+    STYLE
+      COLOR 22 83 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 228)
+    STYLE
+      COLOR 22 80 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 229)
+    STYLE
+      COLOR 22 77 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 230)
+    STYLE
+      COLOR 22 73 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 231)
+    STYLE
+      COLOR 22 70 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 232)
+    STYLE
+      COLOR 22 67 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 233)
+    STYLE
+      COLOR 22 63 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 234)
+    STYLE
+      COLOR 22 60 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 235)
+    STYLE
+      COLOR 22 56 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 236)
+    STYLE
+      COLOR 22 53 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 237)
+    STYLE
+      COLOR 22 50 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 238)
+    STYLE
+      COLOR 22 46 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 239)
+    STYLE
+      COLOR 22 43 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 240)
+    STYLE
+      COLOR 22 39 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 241)
+    STYLE
+      COLOR 22 36 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 242)
+    STYLE
+      COLOR 22 33 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 243)
+    STYLE
+      COLOR 22 29 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 244)
+    STYLE
+      COLOR 22 26 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 245)
+    STYLE
+      COLOR 22 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 246)
+    STYLE
+      COLOR 25 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 247)
+    STYLE
+      COLOR 29 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 248)
+    STYLE
+      COLOR 33 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 249)
+    STYLE
+      COLOR 36 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 250)
+    STYLE
+      COLOR 40 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 251)
+    STYLE
+      COLOR 44 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 252)
+    STYLE
+      COLOR 47 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 253)
+    STYLE
+      COLOR 51 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 254)
+    STYLE
+      COLOR 54 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 255)
+    STYLE
+      COLOR 58 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 256)
+    STYLE
+      COLOR 62 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 257)
+    STYLE
+      COLOR 65 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 258)
+    STYLE
+      COLOR 69 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 259)
+    STYLE
+      COLOR 73 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 260)
+    STYLE
+      COLOR 76 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 261)
+    STYLE
+      COLOR 80 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 262)
+    STYLE
+      COLOR 84 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 263)
+    STYLE
+      COLOR 87 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 264)
+    STYLE
+      COLOR 91 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 265)
+    STYLE
+      COLOR 94 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 266)
+    STYLE
+      COLOR 98 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 267)
+    STYLE
+      COLOR 102 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 268)
+    STYLE
+      COLOR 105 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 269)
+    STYLE
+      COLOR 109 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 270)
+    STYLE
+      COLOR 113 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 271)
+    STYLE
+      COLOR 116 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 272)
+    STYLE
+      COLOR 120 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 273)
+    STYLE
+      COLOR 124 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 274)
+    STYLE
+      COLOR 127 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 275)
+    STYLE
+      COLOR 131 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 276)
+    STYLE
+      COLOR 134 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 277)
+    STYLE
+      COLOR 137 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 278)
+    STYLE
+      COLOR 141 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 279)
+    STYLE
+      COLOR 144 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 280)
+    STYLE
+      COLOR 148 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 281)
+    STYLE
+      COLOR 151 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 282)
+    STYLE
+      COLOR 155 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 283)
+    STYLE
+      COLOR 158 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 284)
+    STYLE
+      COLOR 162 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 285)
+    STYLE
+      COLOR 165 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 286)
+    STYLE
+      COLOR 168 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 287)
+    STYLE
+      COLOR 172 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 288)
+    STYLE
+      COLOR 175 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 289)
+    STYLE
+      COLOR 179 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 290)
+    STYLE
+      COLOR 182 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 291)
+    STYLE
+      COLOR 186 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 292)
+    STYLE
+      COLOR 189 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 293)
+    STYLE
+      COLOR 192 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 294)
+    STYLE
+      COLOR 196 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 295)
+    STYLE
+      COLOR 199 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 296)
+    STYLE
+      COLOR 203 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 297)
+    STYLE
+      COLOR 206 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 298)
+    STYLE
+      COLOR 210 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 299)
+    STYLE
+      COLOR 213 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 300)
+    STYLE
+      COLOR 216 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 301)
+    STYLE
+      COLOR 220 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 302)
+    STYLE
+      COLOR 223 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 303)
+    STYLE
+      COLOR 227 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 304)
+    STYLE
+      COLOR 230 22 230
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 305)
+    STYLE
+      COLOR 230 22 227
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 306)
+    STYLE
+      COLOR 230 22 223
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 307)
+    STYLE
+      COLOR 230 22 220
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 308)
+    STYLE
+      COLOR 230 22 216
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 309)
+    STYLE
+      COLOR 230 22 213
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 310)
+    STYLE
+      COLOR 230 22 209
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 311)
+    STYLE
+      COLOR 230 22 205
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 312)
+    STYLE
+      COLOR 230 22 202
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 313)
+    STYLE
+      COLOR 230 22 198
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 314)
+    STYLE
+      COLOR 230 22 195
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 315)
+    STYLE
+      COLOR 230 22 191
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 316)
+    STYLE
+      COLOR 230 22 188
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 317)
+    STYLE
+      COLOR 230 22 184
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 318)
+    STYLE
+      COLOR 230 22 180
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 319)
+    STYLE
+      COLOR 230 22 177
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 320)
+    STYLE
+      COLOR 230 22 173
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 321)
+    STYLE
+      COLOR 230 22 170
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 322)
+    STYLE
+      COLOR 230 22 166
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 323)
+    STYLE
+      COLOR 230 22 163
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 324)
+    STYLE
+      COLOR 230 22 159
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 325)
+    STYLE
+      COLOR 230 22 155
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 326)
+    STYLE
+      COLOR 230 22 152
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 327)
+    STYLE
+      COLOR 230 22 148
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 328)
+    STYLE
+      COLOR 230 22 145
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 329)
+    STYLE
+      COLOR 230 22 141
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 330)
+    STYLE
+      COLOR 230 22 137
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 331)
+    STYLE
+      COLOR 230 22 134
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 332)
+    STYLE
+      COLOR 230 22 130
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 333)
+    STYLE
+      COLOR 231 22 127
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 334)
+    STYLE
+      COLOR 232 21 123
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 335)
+    STYLE
+      COLOR 232 20 119
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 336)
+    STYLE
+      COLOR 233 20 115
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 337)
+    STYLE
+      COLOR 234 19 111
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 338)
+    STYLE
+      COLOR 235 18 107
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 339)
+    STYLE
+      COLOR 235 18 104
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 340)
+    STYLE
+      COLOR 236 17 100
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 341)
+    STYLE
+      COLOR 237 16 96
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 342)
+    STYLE
+      COLOR 238 16 92
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 343)
+    STYLE
+      COLOR 238 15 88
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 344)
+    STYLE
+      COLOR 239 14 85
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 345)
+    STYLE
+      COLOR 240 14 81
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 346)
+    STYLE
+      COLOR 241 13 77
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 347)
+    STYLE
+      COLOR 241 12 73
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 348)
+    STYLE
+      COLOR 242 12 69
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 349)
+    STYLE
+      COLOR 243 11 66
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 350)
+    STYLE
+      COLOR 243 10 62
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 351)
+    STYLE
+      COLOR 244 10 58
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 352)
+    STYLE
+      COLOR 245 9 54
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 353)
+    STYLE
+      COLOR 246 8 50
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 354)
+    STYLE
+      COLOR 246 8 47
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 355)
+    STYLE
+      COLOR 247 7 43
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 356)
+    STYLE
+      COLOR 248 6 39
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 357)
+    STYLE
+      COLOR 249 6 35
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 358)
+    STYLE
+      COLOR 249 5 31
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 359)
+    STYLE
+      COLOR 250 4 28
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 360)
+    STYLE
+      COLOR 251 4 24
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 361)
+    STYLE
+      COLOR 252 3 20
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 362)
+    STYLE
+      COLOR 252 2 16
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 363)
+    STYLE
+      COLOR 253 2 12
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 364)
+    STYLE
+      COLOR 254 1 9
+    END
+  END
+  
+  CLASS
+    EXPRESSION ([PIXEL] = 365)
+    STYLE
+      COLOR 255 0 0
+    END
+  END
+  

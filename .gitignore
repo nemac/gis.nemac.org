@@ -4,3 +4,4 @@ var
 *.tif
 *.tiff
 *.nc
+cgi-bin/

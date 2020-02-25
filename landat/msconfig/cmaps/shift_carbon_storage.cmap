@@ -1,0 +1,50 @@
+		CLASS
+		  NAME "-479.34 - -50.0"
+		  EXPRESSION ([pixel] >= -479.3432007 AND [pixel] <= -50.0)
+		  STYLE
+			COLOR 102 0 31
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-49.99 - -14.00"
+		  EXPRESSION ([pixel] >= -49.99 AND [pixel] <= -14.00)
+		  STYLE
+			COLOR 201 74 64
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-13.99 - -7.0"
+		  EXPRESSION ([pixel] >= -13.99 AND [pixel] <= -7.0)
+		  STYLE
+			COLOR 247 181 151
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "-6.99 - 7.00"
+		  EXPRESSION ([pixel] >= -6.99 AND [pixel] <= 7.0)
+		  STYLE
+			COLOR 247 247 247
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "7.01 - 14.0"
+		  EXPRESSION ([pixel] >= 7.01 AND [pixel] <= 14.0)
+		  STYLE
+			COLOR 166 207 227
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "14.01 - 50.0"
+		  EXPRESSION ([pixel] >= 14.01 AND [pixel] <= 50.0)
+		  STYLE
+			COLOR 56 130 186
+		  END #STYLE
+		END #end class
+        CLASS
+		  NAME "50.0 - 477.0"
+		  EXPRESSION ([pixel] >= 50.01 AND [pixel] <= 476.6827087)
+		  STYLE
+			COLOR 5 48 97
+		  END #STYLE
+		END #end class		
+

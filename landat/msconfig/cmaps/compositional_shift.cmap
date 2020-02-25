@@ -1,0 +1,26 @@
+		CLASS
+		  NAME "0 - 4"
+		  EXPRESSION ([pixel] >= 0 AND [pixel] <= 4)
+		  COLOR 255 204 204
+		END #end class
+		CLASS
+		  NAME "5 - 8"
+		  EXPRESSION ([pixel] >= 5 AND [pixel] <= 8)
+		  COLOR 255 158 143
+		END #end class
+		CLASS
+		  NAME "9 - 23"
+		  EXPRESSION ([pixel] >= 9 AND [pixel] <= 23)
+		  COLOR 250 114 90
+		END #end class
+		CLASS
+		  NAME "24 - 74"
+		  EXPRESSION ([pixel] >= 24 AND [pixel] <= 74)
+		  COLOR 237 67 45
+		END #end class
+		CLASS
+		  NAME "75 - 100"
+		  EXPRESSION ([pixel] >= 75 AND [pixel] <= 100)
+		  COLOR 219 0 0
+		END #end class		
+

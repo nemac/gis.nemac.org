@@ -11,6 +11,10 @@ Header set Access-Control-Allow-Origin "*"
     Allow from all
     SetHandler cgi-script
 </Files>
+<Files "landat-dev">
+    Allow from all
+    SetHandler cgi-script
+</Files>
 <Files "landat-vector">
     Allow from all
     SetHandler cgi-script
