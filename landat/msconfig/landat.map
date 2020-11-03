@@ -114,7 +114,7 @@ MAP
  
     # Mean Annual Greenness
     LAYER
-        NAME MeanNDVI         
+        NAME MeanAnnualNDVI         
         PROJECTION
 		    '+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
 		    END
@@ -135,7 +135,7 @@ MAP
 
     # Mean Growing Season Greenness
     LAYER
-        NAME MeanAnnualNDVI
+        NAME MeanNDVI
         PROJECTION
 	'+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs '
 		END
